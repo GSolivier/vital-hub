@@ -1,1 +1,1 @@
-# vital-hub
+# VitalHUB

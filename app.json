@@ -1,0 +1,50 @@
+{
+  "expo": {
+    "name": "VitalHUB",
+    "slug": "VitalHUB",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./src/assets/images/app_logoDark.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./src/assets/images/splash_screen.png",
+      "resizeMode": "cover"
+      
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "userInterfaceStyle": "automatic"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./src/assets/images/app_logoDark.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.waternoose.VitalHUB",
+      "permissions": [],
+      "userInterfaceStyle": "automatic"
+    },
+    
+    "web": {
+      "favicon": "./src/assets/images/app_logoDark.png"
+    },
+    "plugins": [
+      "expo-font",
+      "expo-localization",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera."
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "3d8ff236-1e29-492b-a95c-09f4cd8cca33"
+      }
+    }
+  }
+}
