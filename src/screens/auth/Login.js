@@ -13,7 +13,7 @@ import { Flex } from '../../settings/AppEnums'
 import SvgIcon, { Icon } from '../../assets/icons/Icons'
 import { RouteKeys, push } from '../../settings/routes/RouteActions'
 import * as Auth from 'expo-local-authentication'
-import { login } from '../../repositories/AuthRepository'
+import { login, tokenDecode } from '../../repositories/AuthRepository'
 import { AppStorage } from '../../settings/AppStorage'
 import { userDecodeToken } from '../../Utils/Auth'
 
@@ -115,7 +115,7 @@ export default function Login({ navigation }) {
 
               await AppStorage.write(AppStorage.token, data)
 
-              const userData = await userDecodeToken();
+              const userData = await tokenDecode();
 
               push(navigation, userData.role == "paciente" ? RouteKeys.tabNavigationPatient : RouteKeys.tabNavigationDoctor, true)
 
