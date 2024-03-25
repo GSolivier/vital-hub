@@ -38,7 +38,7 @@ export default function AppInput({
     isTextArea = false,
     isEditable = true,
     textValue,
-    onEdit = null,
+    onChangeText = null,
     focus = null,
     focusOut = null,
     isValid = true,
@@ -46,7 +46,7 @@ export default function AppInput({
     ...rest
 }) {
     const handleInputChange = (value) => {
-        onEdit === null ? null : onEdit(value);
+        onChangeText === null ? null : onChangeText(value);
     };
 
 

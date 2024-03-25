@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Row, Spacing } from '../../components/Container'
 import AppInput from '../../components/AppInput'
-import { Image, Text} from 'react-native'
+import { AppState, Image, Text } from 'react-native'
 import { AppAssets } from '../../assets/AppAssets'
 import { TitleSemiBold } from '../../settings/AppFonts'
 import AppButton, { LinkButton } from '../../components/AppButton'
@@ -13,14 +13,18 @@ import { Flex } from '../../settings/AppEnums'
 import SvgIcon, { Icon } from '../../assets/icons/Icons'
 import { RouteKeys, push } from '../../settings/routes/RouteActions'
 import * as Auth from 'expo-local-authentication'
+import { login } from '../../repositories/AuthRepository'
+import { AppStorage } from '../../settings/AppStorage'
 
 
 export default function Login({ navigation }) {
-  const [email, setEmail] = useState('')
+  const [email, setEmail] = useState('cesar')
+  const [senha, setSenha] = useState('123')
   const [isValidated, setIsValidated] = useState(true)
   const [userType, setUserType] = useState('patient')
   const [hasBio, setHasBio] = useState(false)
   const [isAuth, setIsAuth] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   async function CheckAuth() {
 
@@ -40,7 +44,7 @@ export default function Login({ navigation }) {
       promptMessage: 'VitalHub'
     })
 
-    setIsAuth( auth.success)
+    setIsAuth(auth.success)
 
     push(navigation, userType === 'patient' ? RouteKeys.tabNavigationPatient : RouteKeys.tabNavigationDoctor, true)
   }
@@ -50,9 +54,9 @@ export default function Login({ navigation }) {
   }
 
   useEffect(() => {
-    CheckAuth()
-    handleAuth()
-  } , [])
+    // CheckAuth()
+    // handleAuth()
+  }, [])
 
 
   return (
@@ -67,14 +71,18 @@ export default function Login({ navigation }) {
       <Spacing height={20} />
 
       <AppInput hint={t(AppLocalizations.emailPlacehoder)}
-        onEdit={handleEmailChange}
+        onChangeText={handleEmailChange}
         isValid={isValidated}
         textValue={email}
       />
 
       <Spacing height={15} />
 
-      <AppInput hint={t(AppLocalizations.passwordPlaceholder)} isObscure={true} />
+      <AppInput
+        hint={t(AppLocalizations.passwordPlaceholder)}
+        isObscure={true}
+        onChangeText={(value) => setSenha(value)}
+      />
 
       <Spacing height={10} />
 
@@ -92,12 +100,22 @@ export default function Login({ navigation }) {
 
       <AppButton
         textButton={t(AppLocalizations.enterButton).toUpperCase()}
-        onTap={() => {
-          if (email.length != 0) {
-            push(navigation, userType === 'patient' ? RouteKeys.tabNavigationPatient : RouteKeys.tabNavigationDoctor, true)
-          } else {
-            return
-          }
+        isLoading={isLoading}
+        onTap={async () => {
+
+            try {
+              setIsLoading(true)
+              const data = await login(email, senha)
+              console.log(data)
+
+              await AppStorage.write(AppStorage.token, data)
+
+              console.log(await AppStorage.read(AppStorage.token))
+
+              setIsLoading(false)
+            } catch (e) {
+              setIsLoading(false)
+            }
         }} />
 
       <Spacing height={15} />
@@ -120,12 +138,12 @@ export default function Login({ navigation }) {
           color={AppColors.grayV2}>
           {t(AppLocalizations.dontHaveAccount)}
         </TitleSemiBold>
-        <Spacing width={5}/>
+        <Spacing width={5} />
         <LinkButton
           onTap={() => { push(navigation, RouteKeys.createAccount) }}
           color={AppColors.secondaryV6}
           text={t(AppLocalizations.createAccount)}
-           />
+        />
 
       </Row>
 

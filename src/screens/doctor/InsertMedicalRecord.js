@@ -31,11 +31,11 @@ export default function InsertMedicalRecord({ navigation }) {
                         <TextMedium size={14}  textAlign={TextAlign.center}>{params.appointment.email}</TextMedium>
                     </Row>
                     <Spacing height={24} />
-                    <AppInput  label={t(AppLocalizations.appointDescriptionLabel)} hint={t(AppLocalizations.descriptionHint)} isTextArea={true} onEdit={() => { }} />
+                    <AppInput  label={t(AppLocalizations.appointDescriptionLabel)} hint={t(AppLocalizations.descriptionHint)} isTextArea={true} onChangeText={() => { }} />
                     <Spacing height={20} />
-                    <AppInput  label={t(AppLocalizations.patientDiagnosisLabel)} hint={t(AppLocalizations.diagnosisLabel)} onEdit={() => { }} />
+                    <AppInput  label={t(AppLocalizations.patientDiagnosisLabel)} hint={t(AppLocalizations.diagnosisLabel)} onChangeText={() => { }} />
                     <Spacing height={20} />
-                    <AppInput  label={t(AppLocalizations.doctorPrescriptionLabel)} hint={t(AppLocalizations.doctorPrescriptionLabel)} isTextArea={true} onEdit={() => { }} />
+                    <AppInput  label={t(AppLocalizations.doctorPrescriptionLabel)} hint={t(AppLocalizations.doctorPrescriptionLabel)} isTextArea={true} onChangeText={() => { }} />
                     <Spacing height={30} />
                     <AppButton textButton={t(AppLocalizations.saveButton).toUpperCase()} />
                     <Spacing height={30} />

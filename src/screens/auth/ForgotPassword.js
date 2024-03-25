@@ -27,7 +27,7 @@ export default function ForgotPassword({ navigation }) {
             <AppInput
                 hint={t(AppLocalizations.emailPlacehoder)}
                 textValue={email}
-                onEdit={setEmail} />
+                onChangeText={setEmail} />
             <Spacing height={30} />
             <AppButton
                 textButton={t(AppLocalizations.continueButton).toUpperCase()}

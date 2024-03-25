@@ -2,7 +2,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const AppStorage = {
     write: write,
-    read: read
+    read: read,
+
+    
+    token: "token"
 }
 
 export async function write<T>(key: string, data: T): Promise<void> {
