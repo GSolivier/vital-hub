@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components/native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Column, Row, Spacing } from '../../components/Container'
@@ -9,6 +9,8 @@ import { Flex } from '../../settings/AppEnums'
 import t from '../../locale'
 import AppLocalizations from '../../settings/AppLocalizations'
 import SvgIcon, { Icon } from '../../assets/icons/Icons'
+
+import { userDecodeToken } from '../../Utils/Auth'
 
 export const HeaderBox = styled(LinearGradient)`
     width: 100%;
@@ -29,6 +31,16 @@ export const ProfileImage = styled.Image`
 
 
 export default function HomeHeader({ imagePath, name, onTapNotification }) {
+
+    async function profileLoad() {
+        const token = await userDecodeToken();
+
+        console.log(token);
+    }
+
+    useEffect(()=> {
+        profileLoad();
+    }, [])
     return (
 
         <HeaderBox colors={['#60BFC5', '#496BBA']} start={{ x: 0.2, y: 0.1 }} locations={[0.1, 1]}>

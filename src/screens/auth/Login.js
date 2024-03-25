@@ -13,14 +13,37 @@ import { Flex } from '../../settings/AppEnums'
 import SvgIcon, { Icon } from '../../assets/icons/Icons'
 import { RouteKeys, push } from '../../settings/routes/RouteActions'
 import * as Auth from 'expo-local-authentication'
+import api from '../../services/Service'
 
 
 export default function Login({ navigation }) {
-  const [email, setEmail] = useState('')
+  const [email, setEmail] = useState('ianrodrigoassis@vitalhub.com')
+  const [senha, setSenha] = useState('senai123')
+
   const [isValidated, setIsValidated] = useState(true)
   const [userType, setUserType] = useState('patient')
   const [hasBio, setHasBio] = useState(false)
   const [isAuth, setIsAuth] = useState(false)
+  
+  //chamar a funcao de login
+  async function login() {
+   
+    try {
+      //chamar a api de login
+      const response = await api.post('/Login', {
+        email: email,
+        senha: senha
+      })
+
+      console.log("token:", response.data.token)
+    } catch (error) {
+      console.log(error);
+    }
+    
+
+  }
+
+  
 
   async function CheckAuth() {
 
@@ -49,9 +72,10 @@ export default function Login({ navigation }) {
     setEmail(value);
   }
 
+
   useEffect(() => {
-    CheckAuth()
-    handleAuth()
+    /* CheckAuth()
+    handleAuth() */
   } , [])
 
 
@@ -67,14 +91,19 @@ export default function Login({ navigation }) {
       <Spacing height={20} />
 
       <AppInput hint={t(AppLocalizations.emailPlacehoder)}
-        onEdit={handleEmailChange}
+        /* onChangeText={handleEmailChange} */
         isValid={isValidated}
         textValue={email}
+        onChangeText={() => setEmail(value)}
       />
 
       <Spacing height={15} />
 
-      <AppInput hint={t(AppLocalizations.passwordPlaceholder)} isObscure={true} />
+      <AppInput hint={t(AppLocalizations.passwordPlaceholder)} isObscure={true} 
+
+        textValue={senha}
+        onChangeText={(value)=> setSenha(value)}
+      />
 
       <Spacing height={10} />
 
@@ -83,9 +112,10 @@ export default function Login({ navigation }) {
         color={AppColors.grayV4}
         alignSelf={Flex.flexStart}
         text={t(AppLocalizations.forgotPassword)}
-        onTap={() => {
+        /* onTap={() => {
           push(navigation, RouteKeys.forgotPassword)
-        }}
+        }} */
+        
       />
 
       <Spacing height={30} />
@@ -94,7 +124,9 @@ export default function Login({ navigation }) {
         textButton={t(AppLocalizations.enterButton).toUpperCase()}
         onTap={() => {
           if (email.length != 0) {
-            push(navigation, userType === 'patient' ? RouteKeys.tabNavigationPatient : RouteKeys.tabNavigationDoctor, true)
+           
+           login()
+           push(navigation, userType === 'patient' ? RouteKeys.tabNavigationPatient : RouteKeys.tabNavigationDoctor, true)
           } else {
             return
           }

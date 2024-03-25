@@ -67,7 +67,7 @@ export default function ScheduleAppointmentDialog({ visible, onClose, navigation
       <AppInput 
       label={t(AppLocalizations.desiredLocationLabel)} 
       hint={t(AppLocalizations.desiredLocationHint)} 
-      onEdit={() => { }} />
+      onChangeText={() => { }} />
       <Spacing height={30} />
       <AppButton textButton={t(AppLocalizations.continueButton).toUpperCase()} onTap={handleInsertMedicalRecord} />
       <Spacing height={30} />
