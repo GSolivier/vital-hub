@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components/native'
 import { AppColors } from '../settings/AppColors'
 import { Link, TitleBold } from '../settings/AppFonts'
+import { ActivityIndicator } from 'react-native-paper'
 
 
 
@@ -41,6 +42,7 @@ export default function AppButton({
     isOutlined = false,
     isCompact = false,
     isDisabled = false,
+    isLoading = false,
     SvgIcon,
     onTap,
     flex,
@@ -58,11 +60,17 @@ export default function AppButton({
             isDisabled={isDisabled}
             mainColor={mainColor}
         >
-            {SvgIcon ? SvgIcon : null}
-            <TitleBold
-                color={isOutlined ? mainTextColor : AppColors.white}
-                size={isCompact ? 12 : 14}
-            >{textButton}</TitleBold>
+            {isLoading ? <ActivityIndicator color={isOutlined ? AppColors.secondary : AppColors.white }/> :
+
+                <>
+                    {SvgIcon ? SvgIcon : null}
+                    <TitleBold
+                        color={isOutlined ? mainTextColor : AppColors.white}
+                        size={isCompact ? 12 : 14}>{textButton}</TitleBold>
+                </>
+
+            }
+
         </Button>
     )
 }

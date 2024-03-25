@@ -41,8 +41,6 @@ export default function AppRoutes() {
                     name={RouteKeys.seeAppointmentLocalScreen}
                     component={SeeAppointmentLocalScreen} />
 
-
-
                 <Stack.Screen
                     name={RouteKeys.medicalRecordScreen}
                     component={MedicalRecord} />

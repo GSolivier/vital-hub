@@ -2,7 +2,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const AppStorage = {
     write: write,
-    read: read
+    read: read,
+    clear: clear,
+
+    
+    token: "token"
 }
 
 export async function write<T>(key: string, data: T): Promise<void> {
@@ -21,6 +25,15 @@ export async function read<T>(key: string): Promise<T | null> {
     return dataConverted != null ? (JSON.parse(dataConverted) as T) : null;
   } catch (error) {
     console.error("Error reading from AsyncStorage:", error);
+    throw error;
+  }
+}
+
+export async function clear<T>(key: string): Promise<void> {
+  try {
+    await AsyncStorage.removeItem(key);
+  } catch (error) {
+    console.error("Error removing from AsyncStorage:", error);
     throw error;
   }
 }
