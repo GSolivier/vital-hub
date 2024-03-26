@@ -1,14 +1,15 @@
 import axios from 'axios';
 
 const apiPort = '4466';
-const ip = '192.168.19.137';
+const ip = '192.168.19.113';
 const BASE_URL_LOCAL = `http://${ip}:${apiPort}/api`;
 
 export const LoginPath = '/Login'
 
 
 const apiClient = axios.create({
-  baseURL: BASE_URL_LOCAL
+  baseURL: BASE_URL_LOCAL,
+  timeout: 5000
 });
 
 export default apiClient;

@@ -19,8 +19,10 @@ import { userDecodeToken } from '../../Utils/Auth'
 
 
 export default function Login({ navigation }) {
+
   const [email, setEmail] = useState('ianrodrigoassis@vitalhub.com')
   const [senha, setSenha] = useState('senai123')
+
 
   const [isValidated, setIsValidated] = useState(true)
   const [userType, setUserType] = useState('patient')
@@ -48,7 +50,7 @@ export default function Login({ navigation }) {
 
     setIsAuth(auth.success)
 
-    
+
   }
 
   const handleEmailChange = (value) => {
@@ -82,10 +84,10 @@ export default function Login({ navigation }) {
 
       <Spacing height={15} />
 
-      <AppInput hint={t(AppLocalizations.passwordPlaceholder)} isObscure={true} 
+      <AppInput hint={t(AppLocalizations.passwordPlaceholder)} isObscure={true}
 
         textValue={senha}
-        onChangeText={(value)=> setSenha(value)}
+        onChangeText={(value) => setSenha(value)}
       />
 
       <Spacing height={10} />
@@ -98,7 +100,7 @@ export default function Login({ navigation }) {
         onTap={() => {
           push(navigation, RouteKeys.forgotPassword)
         }}
-        
+
       />
 
       <Spacing height={30} />
@@ -108,25 +110,14 @@ export default function Login({ navigation }) {
         isLoading={isLoading}
         onTap={async () => {
 
-            try {
-              setIsLoading(true)
-              const data = await login(email, senha)
-              console.log(data)
-
-              await AppStorage.write(AppStorage.token, data)
-
-              const userData = await tokenDecode();
-
-              push(navigation, userData.role == "paciente" ? RouteKeys.tabNavigationPatient : RouteKeys.tabNavigationDoctor, true)
-
-              console.log(await AppStorage.read(AppStorage.token))
-              setIsLoading(false)
-            } catch (e) {
-              console.log(e);
-              setIsLoading(false)
-            } finally{
-              setIsLoading(false);
-            }
+          try {
+            setIsLoading(true)
+            await login(email, senha)
+            setIsLoading(false)
+          } catch (e) {
+            console.log(e);
+            setIsLoading(false)
+          }
         }} />
 
       <Spacing height={15} />
