@@ -13,6 +13,7 @@ import AppButton from '../components/AppButton'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import SvgIcon, { Icon } from '../assets/icons/Icons'
 import { Logout } from '../repositories/AuthRepository'
+import { isLoading } from 'expo-font'
 
 const HeaderImage = styled.Image`
     width: 100%;
@@ -41,6 +42,7 @@ export default function ProfileScreen({ user, navigation }) {
     const [date, setDate] = useState(new Date())
     const [open, setOpen] = useState(false)
     const [isEditable, setIsEditable] = useState(false)
+  
 
     const formatDate = (rawDate) => {
         let date = new Date(rawDate)

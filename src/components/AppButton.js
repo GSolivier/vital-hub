@@ -56,8 +56,8 @@ export default function AppButton({
             isCompact={isCompact}
             flex={flex}
             activeOpacity={0.8}
-            disabled={isDisabled}
-            isDisabled={isDisabled}
+            disabled={isLoading || isDisabled } 
+            isDisabled={ isLoading ||isDisabled}
             mainColor={mainColor}
         >
             {isLoading ? <ActivityIndicator color={isOutlined ? AppColors.secondary : AppColors.white }/> :

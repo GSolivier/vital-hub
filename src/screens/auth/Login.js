@@ -19,7 +19,7 @@ import { userDecodeToken } from '../../Utils/Auth'
 
 
 export default function Login({ navigation }) {
-  const [email, setEmail] = useState('')
+  const [email, setEmail] = useState('ianrodrigoassis@vitalhub.com')
   const [senha, setSenha] = useState('senai123')
 
   const [isValidated, setIsValidated] = useState(true)
@@ -124,6 +124,8 @@ export default function Login({ navigation }) {
             } catch (e) {
               console.log(e);
               setIsLoading(false)
+            } finally{
+              setIsLoading(false);
             }
         }} />
 
