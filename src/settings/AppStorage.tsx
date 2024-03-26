@@ -6,6 +6,7 @@ export const AppStorage = {
   clear: clear,
 
   token: "token",
+  userData: "userData"
 };
 
 export async function write<T>(key: string, data: T): Promise<void> {
