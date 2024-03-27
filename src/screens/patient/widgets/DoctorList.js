@@ -9,6 +9,7 @@ export const ListDoctor = styled.View`
     width: 100%;
 `
 export default function DoctorList({DATA, tapAction, selected}) {
+  
   return (
     <ListDoctor>
       <FlatList
