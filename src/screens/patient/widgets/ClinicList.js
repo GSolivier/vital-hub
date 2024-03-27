@@ -14,12 +14,14 @@ export default function ClinicList({DATA, tapAction, selected}) {
       <FlatList
         data={DATA}
         renderItem={({item}) =>(
+
             <ClinicCard
                 item={item}
                 onTap={() => tapAction(item)}
                 selected={selected}
             />
         )}
+        
         keyExtractor={item => item.id}
         ItemSeparatorComponent={<Spacing height={12}/>}
         contentContainerStyle={{ paddingVertical: 5, paddingHorizontal: 5 }}

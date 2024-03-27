@@ -6,7 +6,7 @@ const BASE_URL_LOCAL = `http://${ip}:${apiPort}/api`;
 
 export const LoginPath = '/Login'
 export const MedicoPath = '/Medicos'
-
+export const GetClinicPath = '/Clinica/ListarTodas'
 
 const apiClient = axios.create({
   baseURL: BASE_URL_LOCAL,
