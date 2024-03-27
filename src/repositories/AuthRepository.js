@@ -4,6 +4,9 @@ import { AppStorage, AppStorageKeys } from "../settings/AppStorage";
 import { AppNavigation, RouteKeys, } from "../settings/routes/RouteActions";
 import { decode, encode } from 'base-64'
 import { ToastAndroid } from "react-native";
+
+import Toast from "react-native-toast-message";
+
 import { AppToast } from "../components/AppToast";
 
 if (!global.atob) {
@@ -19,6 +22,8 @@ export const AuthRepository = {
     login : login,
     logout: logout
 }
+
+
 
 async function tokenDecode() {
 
