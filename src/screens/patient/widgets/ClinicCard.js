@@ -36,20 +36,20 @@ export default function ClinicCard({selected, item, onTap}) {
         activeOpacity={0.9}
         >
             <Row width={'100%'} justifyContent={Flex.spaceBetween}>
-                <TitleSemiBold size={16}>{item.name}</TitleSemiBold>
+                <TitleSemiBold size={16}>{item.nomeFantasia}</TitleSemiBold>
                 <Row alignItems={Flex.center}>
                     <SvgIcon name={Icon.star} color={AppColors.yellow} />
                     <Spacing width={2} />
-                    <TextSemiBold size={14} color={AppColors.yellow}>{item.rating}</TextSemiBold>
+                    <TextSemiBold size={14} color={AppColors.yellow}>4,5</TextSemiBold>
                 </Row>
             </Row>
             <Spacing height={10}/>
             <Row width={'100%'} justifyContent={Flex.spaceBetween}>
-                <TextSemiBold size={14}>{item.local}</TextSemiBold>
+                <TextSemiBold size={14}>{item.endereco.logradouro}</TextSemiBold>
                 <DayBox>
                     <SvgIcon name={Icon.calendar} color={AppColors.primary}/>
                     <Spacing width={5} />
-                    <TextSemiBold size={14} color={AppColors.primary}>{item.schedule}</TextSemiBold>
+                    <TextSemiBold size={14} color={AppColors.primary}>seg-sex</TextSemiBold>
                 </DayBox>
             </Row>
         </ClinicCardBox>
