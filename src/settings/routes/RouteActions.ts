@@ -27,6 +27,12 @@ export const RouteKeys = {
   scanExamsScreen: "ScanExamsScreen",
 };
 
+export const Navigation = {
+  push : push,
+  pop: pop, 
+  popWithData: popWithData
+}
+
 export async function push<RouteName extends keyof ParamListBase>(
   navigation: NavigationProp<ParamListBase>,
   routeKey: RouteName,

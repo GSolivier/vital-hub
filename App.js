@@ -2,6 +2,8 @@ import { MontserratAlternates_700Bold, MontserratAlternates_500Medium, Montserra
 import { Quicksand_500Medium, Quicksand_600SemiBold, Quicksand_400Regular } from '@expo-google-fonts/quicksand';
 import AppRoutes from './src/settings/routes/AppRoutes';
 import { StatusBar } from 'react-native';
+import Toast from 'react-native-toast-message';
+import { toastConfig } from './src/components/AppToast';
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useFonts({
@@ -20,7 +22,12 @@ export default function App() {
 
   return (
     <>
-    <AppRoutes />
+      <AppRoutes />
+      <Toast
+      config={toastConfig}
+        position='bottom'
+        bottomOffset={20}
+         />
     </>
   );
 }

@@ -12,7 +12,7 @@ import { Platform, Pressable, ScrollView, View } from 'react-native'
 import AppButton from '../components/AppButton'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import SvgIcon, { Icon } from '../assets/icons/Icons'
-import { Logout } from '../repositories/AuthRepository'
+import { AuthRepository, Logout } from '../repositories/AuthRepository'
 import { isLoading } from 'expo-font'
 import { userDecodeToken } from '../Utils/Auth'
 
@@ -128,7 +128,7 @@ export default function ProfileScreen({ user, navigation }) {
                     <Spacing height={30} />
                     <AppButton textButton={t(AppLocalizations.editButton).toUpperCase()} onTap={() => setIsEditable(true)} />
                     <Spacing height={30} />
-                    <AppButton textButton={t(AppLocalizations.logOut).toUpperCase()} mainColor={AppColors.red} onTap={() => Logout(navigation)} />
+                    <AppButton textButton={t(AppLocalizations.logOut).toUpperCase()} mainColor={AppColors.red} onTap={() => AuthRepository.logout(navigation)} />
                 </Container>
             </ScrollView>
 

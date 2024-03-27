@@ -4,6 +4,8 @@ import { AppStorage } from "../settings/AppStorage";
 import { RouteKeys, push } from "../settings/routes/RouteActions";
 import { decode, encode } from 'base-64'
 import { ToastAndroid } from "react-native";
+import Toast from "react-native-toast-message";
+import { AppToast } from "../components/AppToast";
 
 if (!global.atob) {
     global.atob = decode
@@ -13,7 +15,13 @@ if (!global.btoa) {
     global.btoa = encode
 }
 
-export async function tokenDecode() {
+export const AuthRepository = {
+    tokenDecode : tokenDecode,
+    login : login,
+    logout: logout
+}
+
+async function tokenDecode() {
 
     const token = await AppStorage.read(AppStorage.token)
 
@@ -33,7 +41,9 @@ export async function tokenDecode() {
 
 
 
-export async function login(email, senha, navigation) {
+
+async function login(email, senha, navigation) {
+
     await apiClient.post(LoginPath, { email: email, senha: senha })
         .then(async function (response) {
             const data = response.data
@@ -42,11 +52,12 @@ export async function login(email, senha, navigation) {
             
 
             const userData = await tokenDecode();
-            
+
             push(navigation, userData.role == "paciente" ? RouteKeys.tabNavigationPatient : RouteKeys.tabNavigationDoctor, true)
 
         })
         .catch(function (error) {
+
                 console.log(error);
             if (error.request) {
                 ToastAndroid.showWithGravity(
@@ -56,12 +67,17 @@ export async function login(email, senha, navigation) {
                 );
             } else if (error.response) {
 
+
                 ToastAndroid.showWithGravity(
                     error.response.data.message,
                     ToastAndroid.SHORT,
                     ToastAndroid.BOTTOM,
                 );
             } else {
+
+                console.log('=================Error===================');
+                console.log(error);
+                console.log('====================================');
                 ToastAndroid.showWithGravity(
                     "Ocorreu um erro desconhecido",
                     ToastAndroid.SHORT,
@@ -72,7 +88,7 @@ export async function login(email, senha, navigation) {
         })
 }
 
-export async function Logout(navigation) {
+async function logout(navigation) {
     const response = AppStorage.clear(AppStorage.token)
 
     push(navigation, RouteKeys.loginScreen, true)
