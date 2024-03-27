@@ -21,8 +21,8 @@ import { userDecodeToken } from '../../Utils/Auth'
 
 export default function Login({ navigation }) {
 
-  const [email, setEmail] = useState('carla')
-  const [senha, setSenha] = useState('123')
+  const [email, setEmail] = useState('ian@email.com')
+  const [senha, setSenha] = useState('senai123')
 
 
   const [isValidated, setIsValidated] = useState(true)
