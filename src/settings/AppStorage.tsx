@@ -9,7 +9,7 @@ export const AppStorage = {
   userData: "userData"
 };
 
-export async function write<T>(key: string, data: T): Promise<void> {
+async function write<T>(key: string, data: T): Promise<void> {
   try {
     const dataStringified = JSON.stringify(data);
     await AsyncStorage.setItem(key, dataStringified);
@@ -19,7 +19,7 @@ export async function write<T>(key: string, data: T): Promise<void> {
   }
 }
 
-export async function read<T>(key: string): Promise<T | null> {
+async function read<T>(key: string): Promise<T | null> {
   try {
     const dataConverted = await AsyncStorage.getItem(key);
     return dataConverted != null ? (JSON.parse(dataConverted) as T) : null;
@@ -29,7 +29,7 @@ export async function read<T>(key: string): Promise<T | null> {
   }
 }
 
-export async function clear<T>(key: string): Promise<void> {
+async function clear<T>(key: string): Promise<void> {
   try {
     await AsyncStorage.removeItem(key);
   } catch (error) {

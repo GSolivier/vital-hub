@@ -13,15 +13,15 @@ import { Flex } from '../../settings/AppEnums'
 import SvgIcon, { Icon } from '../../assets/icons/Icons'
 import { RouteKeys, push } from '../../settings/routes/RouteActions'
 import * as Auth from 'expo-local-authentication'
-import { login, tokenDecode } from '../../repositories/AuthRepository'
+import { AuthRepository, login, tokenDecode } from '../../repositories/AuthRepository'
 import { AppStorage } from '../../settings/AppStorage'
 import { userDecodeToken } from '../../Utils/Auth'
 
 
 export default function Login({ navigation }) {
 
-  const [email, setEmail] = useState('ianrodrigoassis@vitalhub.com')
-  const [senha, setSenha] = useState('senai123')
+  const [email, setEmail] = useState('carla')
+  const [senha, setSenha] = useState('123')
 
 
   const [isValidated, setIsValidated] = useState(true)
@@ -112,7 +112,7 @@ export default function Login({ navigation }) {
 
           try {
             setIsLoading(true)
-            await login(email, senha)
+            await AuthRepository.login(email, senha, navigation)
             setIsLoading(false)
           } catch (e) {
             console.log(e);

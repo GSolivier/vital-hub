@@ -4,6 +4,7 @@ import { Column, Spacing } from '../../../components/Container'
 import { TextMedium, TitleSemiBold } from '../../../settings/AppFonts'
 import { AppColors } from '../../../settings/AppColors'
 import { Flex } from '../../../settings/AppEnums'
+import { AppAssets } from '../../../assets/AppAssets'
 
 export const DoctorCardBox = styled.TouchableOpacity`
     width: 100%;
@@ -34,13 +35,13 @@ export default function DoctorCard({ selected, item, onTap }) {
             onPress={onTap}
             activeOpacity={0.9}
         >
-            <DoctorImage source={{ uri: item.imagePath }} />
+            <DoctorImage source={AppAssets.placeholder} />
             <Spacing width={10} />
 
             <Column justifyContent={Flex.center}>
-                <TitleSemiBold size={16}>{item.name}</TitleSemiBold>
+                <TitleSemiBold size={16}>{item.idNavigation.nome}</TitleSemiBold>
                 <Spacing height={10} />
-                <TextMedium size={14} color={AppColors.grayV4}>{item.specialty}</TextMedium>
+                <TextMedium size={14} color={AppColors.grayV4}>{item.especialidade.especialidade1}</TextMedium>
             </Column>
 
 
