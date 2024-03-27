@@ -12,6 +12,7 @@ import { RouteKeys } from './RouteActions'
 import HomeScreenDoctor from '../../screens/doctor/HomeScreenDoctor'
 import ClinicScreenDoctor from '../../screens/doctor/ClinicScreenDoctor'
 import ProfileScreen from '../../screens/ProfileScreen'
+import HomeScreen from '../../screens/HomeScreen'
 
 const Tab = createBottomTabNavigator();
 
@@ -69,7 +70,7 @@ export default function HomeBottomNavigation() {
         >
             <Tab.Screen
                 name={RouteKeys.homeScreenDoctor}
-                component={HomeScreenDoctor}
+                component={HomeScreen}
 
             />
 

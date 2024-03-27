@@ -12,6 +12,7 @@ import HomeScreenPatient from '../../screens/patient/HomeScreenPatient'
 import ClinicScreenPatient from '../../screens/patient/ClinicScreenPatient'
 import { Spacing } from '../../components/Container'
 import ProfileScreen from '../../screens/ProfileScreen'
+import HomeScreen from '../../screens/HomeScreen'
 
 const Tab = createBottomTabNavigator();
 
@@ -70,7 +71,7 @@ export default function TabNavigationPatient() {
             >
                 <Tab.Screen 
                 name={RouteKeys.homeScreenPatient} 
-                component={HomeScreenPatient} 
+                component={HomeScreen} 
 
                 />
 

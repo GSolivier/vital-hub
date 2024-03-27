@@ -32,8 +32,8 @@ async function tokenDecode() {
     const decoded = jwtDecode(token)
 
     return {
-        email: decoded.name,
-        name: decoded.email,
+        email: decoded.email,
+        name: decoded.name,
         id: decoded.jti,
         role: decoded.role
     }
@@ -49,6 +49,8 @@ async function login(email, senha, navigation) {
             await AppStorage.write(AppStorage.token, data.token)
 
             const userData = await tokenDecode();
+
+            await AppStorage.write(AppStorage.userData, userData)
 
             push(navigation, userData.role == "paciente" ? RouteKeys.tabNavigationPatient : RouteKeys.tabNavigationDoctor, true)
 

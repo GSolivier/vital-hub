@@ -14,6 +14,7 @@ import AppointmentPatientList from "./widgets/AppointmentPatientList";
 import CancelExamDialog from "../doctor/dialogs/CancelExamDialog";
 import { RouteKeys, push } from "../../settings/routes/RouteActions";
 import SeeAppointmentLocalDialog from "./widgets/dialogs/SeeAppointmentLocalDialog";
+import { AppStorage } from "../../settings/AppStorage";
 
 export const FixedButton = styled.TouchableOpacity`
   padding: 15px;
@@ -34,6 +35,12 @@ export default function HomeScreenPatient({ navigation }) {
   const [appointment, setSelectedAppointment] = useState({})
 
   useEffect(() => {
+    
+    (async () => {
+      console.log('====================================');
+      console.log(await AppStorage.read(AppStorage.userData));
+      console.log('====================================');
+    })();
     filterList()
   }, [selectedTab])
 

@@ -16,6 +16,7 @@ export const RouteKeys = {
   homeScreenDoctor: "HomeScreenDoctor",
   clinicScreenDoctor: "ClinicScreenDoctor",
   profileScreen: "ProfileScreen",
+  homeScreen: "HomeScreen",
   homeScreenPatient: "HomeScreenPatient",
   clinicScreenPatient: "ClinicScreenPatient",
   insertMedicalRecordScreen: "InsertMedicalRecordScreen",

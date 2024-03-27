@@ -19,6 +19,7 @@ import ScanExamsScreen from '../../screens/patient/ScanExamsScreen';
 import { AppColors } from '../AppColors';
 import { Flex } from '../AppEnums';
 import { FontFamily } from '../AppFonts';
+import HomeScreen from '../../screens/HomeScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -27,7 +28,6 @@ export default function AppRoutes() {
     return (
         <NavigationContainer>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
-
                 <Stack.Screen
                     name={RouteKeys.loginScreen}
                     component={Login} />
