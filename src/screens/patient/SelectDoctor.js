@@ -11,6 +11,7 @@ import DoctorList from './widgets/DoctorList'
 export default function SelectDoctor({navigation}) {
   const [selected, setSelected] = useState({ id: 0});
 
+
   const selectDoctor = (doctor) => {
     setSelected(doctor)
   }

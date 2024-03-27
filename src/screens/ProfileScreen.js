@@ -14,6 +14,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import SvgIcon, { Icon } from '../assets/icons/Icons'
 import { Logout } from '../repositories/AuthRepository'
 import { isLoading } from 'expo-font'
+import { userDecodeToken } from '../Utils/Auth'
 
 const HeaderImage = styled.Image`
     width: 100%;

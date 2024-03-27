@@ -33,12 +33,13 @@ export async function tokenDecode() {
 
 
 
-export async function login(email, senha) {
+export async function login(email, senha, navigation) {
     await apiClient.post(LoginPath, { email: email, senha: senha })
         .then(async function (response) {
             const data = response.data
 
             await AppStorage.write(AppStorage.token, data.token)
+            
 
             const userData = await tokenDecode();
             
@@ -46,7 +47,7 @@ export async function login(email, senha) {
 
         })
         .catch(function (error) {
-
+                console.log(error);
             if (error.request) {
                 ToastAndroid.showWithGravity(
                     "Houve um problema desconhecido. Tente novamente mais tarde",

@@ -112,7 +112,7 @@ export default function Login({ navigation }) {
 
           try {
             setIsLoading(true)
-            await login(email, senha)
+            await login(email, senha, navigation)
             setIsLoading(false)
           } catch (e) {
             console.log(e);

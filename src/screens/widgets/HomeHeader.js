@@ -11,6 +11,8 @@ import AppLocalizations from '../../settings/AppLocalizations'
 import SvgIcon, { Icon } from '../../assets/icons/Icons'
 
 import { userDecodeToken } from '../../Utils/Auth'
+import { tokenDecode, } from '../../repositories/AuthRepository'
+
 
 export const HeaderBox = styled(LinearGradient)`
     width: 100%;
