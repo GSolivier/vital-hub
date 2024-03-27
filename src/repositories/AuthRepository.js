@@ -5,10 +5,6 @@ import { AppNavigation, RouteKeys, } from "../settings/routes/RouteActions";
 import { decode, encode } from 'base-64'
 import { ToastAndroid } from "react-native";
 
-import Toast from "react-native-toast-message";
-
-import { AppToast } from "../components/AppToast";
-
 if (!global.atob) {
     global.atob = decode
 }
@@ -17,15 +13,7 @@ if (!global.btoa) {
     global.btoa = encode
 }
 
-export const AuthRepository = {
-    tokenDecode : tokenDecode,
-    login : login,
-    logout: Logout
-}
-
-
-
-async function tokenDecode() {
+export async function tokenDecode() {
 
     const token = await AppStorage.read(AppStorageKeys.token)
 
@@ -46,7 +34,7 @@ async function tokenDecode() {
 
 
 export async function login(email, senha, navigation) {
-    await api.post(LoginPath, { email: email, senha: senha })
+    await apiClient.post(LoginPath, { email: email, senha: senha })
         .then(async function (response) {
 
             const data = response.data
@@ -54,32 +42,26 @@ export async function login(email, senha, navigation) {
             await AppStorage.write(AppStorageKeys.token, data.token)
 
             const userData = await tokenDecode();
-
-            console.log('====================================');
-            console.log(userData);
-            console.log('====================================');
-
-            await AppStorage.write(AppStorageKeys.userData, userData)
-
-            AppNavigation.push(navigation, RouteKeys.tabNavigation, true)
             
-            AppToast.showSucessToast("Login efetuado com sucesso!")
+            push(navigation, userData.role == "paciente" ? RouteKeys.tabNavigationPatient : RouteKeys.tabNavigationDoctor, true)
+
         })
         .catch(function (error) {
-
-
-            if (error.response) {
-
-                console.log('=================Response Error===================');
-                console.log(error.response);
-                console.log('====================================');
-
-                AppToast.showErrorToast(error.response.data.message)
-            } else {
-
-                console.log('=================Error===================');
                 console.log(error);
-                console.log('====================================');
+            if (error.request) {
+                ToastAndroid.showWithGravity(
+                    "Houve um problema desconhecido. Tente novamente mais tarde",
+                    ToastAndroid.SHORT,
+                    ToastAndroid.BOTTOM,
+                );
+            } else if (error.response) {
+
+                ToastAndroid.showWithGravity(
+                    error.response.data.message,
+                    ToastAndroid.SHORT,
+                    ToastAndroid.BOTTOM,
+                );
+            } else {
                 ToastAndroid.showWithGravity(
                     "Ocorreu um erro desconhecido",
                     ToastAndroid.SHORT,
@@ -90,8 +72,8 @@ export async function login(email, senha, navigation) {
         })
 }
 
-async function logout(navigation) {
-    const response = AppStorage.clear(AppStorageKeys.token)
+export async function Logout(navigation) {
+    const response = AppStorage.clear(AppStorage.token)
 
     AppNavigation.push(navigation, RouteKeys.loginScreen, true)
 }

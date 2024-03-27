@@ -13,7 +13,6 @@ import { Flex } from '../../settings/AppEnums'
 import SvgIcon, { Icon } from '../../assets/icons/Icons'
 import { AppNavigation, RouteKeys } from '../../settings/routes/RouteActions'
 import * as Auth from 'expo-local-authentication'
-
 import { AppStorage } from '../../settings/AppStorage'
 
 
@@ -23,6 +22,8 @@ export default function Login({ navigation }) {
 
   const [email, setEmail] = useState('ian@email.com')
   const [senha, setSenha] = useState('senai123')
+  //onst [email, setEmail] = useState('carla')
+  //const [senha, setSenha] = useState('123')
 
 
   const [isValidated, setIsValidated] = useState(true)

@@ -26,6 +26,7 @@ export const RouteKeys = {
   scanExamsScreen: "ScanExamsScreen",
 };
 
+
 export const AppNavigation = {
   push: push,
   pop: pop, 
