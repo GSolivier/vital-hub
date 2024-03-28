@@ -1,5 +1,5 @@
 import { jwtDecode } from "jwt-decode";
-import apiClient, { LoginPath, _post } from "../settings/AppApi";
+import api, { LoginPath, _post } from "../settings/AppApi";
 import { AppStorage, AppStorageKeys } from "../settings/AppStorage";
 import { AppNavigation, RouteKeys, } from "../settings/routes/RouteActions";
 import { decode, encode } from 'base-64'
@@ -40,14 +40,19 @@ async function tokenDecode() {
 
 
 
-async function login(email, senha, navigation) {
-    await apiClient.post(LoginPath, { email: email, senha: senha })
+export async function login(email, senha, navigation) {
+    await api.post(LoginPath, { email: email, senha: senha })
         .then(async function (response) {
+
             const data = response.data
 
             await AppStorage.write(AppStorageKeys.token, data.token)
 
             const userData = await tokenDecode();
+
+            console.log('====================================');
+            console.log(userData);
+            console.log('====================================');
 
             await AppStorage.write(AppStorageKeys.userData, userData)
 
@@ -56,6 +61,7 @@ async function login(email, senha, navigation) {
             AppToast.showSucessToast("Login efetuado com sucesso!")
         })
         .catch(function (error) {
+
 
             if (error.response) {
 

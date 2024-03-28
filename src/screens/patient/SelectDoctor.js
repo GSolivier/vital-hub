@@ -6,30 +6,26 @@ import t from '../../locale'
 import AppButton, { LinkButton } from '../../components/AppButton'
 import { AppNavigation, RouteKeys } from '../../settings/routes/RouteActions'
 import DoctorList from './widgets/DoctorList'
-import apiClient, { MedicoPath } from '../../settings/AppApi'
+import api, { MedicoPath } from '../../settings/AppApi'
+import { DoctorRepository } from '../../repositories/DoctorRepository'
 
 export default function SelectDoctor({ navigation }) {
   const [selected, setSelected] = useState({ id: 0 });
   const [doctorsList, setDoctorsList] = useState([])
 
+
   const selectDoctor = (doctor) => {
     setSelected(doctor)
   }
 
+  async function listDoctors() {
+    const responseDoctorList = await DoctorRepository.getDoctors()
+
+    setDoctorsList(responseDoctorList)
+  }
+
   useEffect(() => {
-    (async () => {
-      apiClient.get(MedicoPath)
-      .then( response => {
-        setDoctorsList(response.data)
-      }
-        
-        )
-      .catch( error => {
-          console.log(error);
-      })
-    })();
-
-
+    listDoctors()
   }, [])
 
 

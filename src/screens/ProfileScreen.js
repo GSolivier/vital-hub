@@ -5,7 +5,7 @@ import { USER_LOGGED } from '../settings/AppUtils'
 import { TextMedium, TitleSemiBold } from '../settings/AppFonts'
 import { AppColors } from '../settings/AppColors'
 import AppInput from '../components/AppInput'
-import { Flex, JustifyContent } from '../settings/AppEnums'
+import { Flex, JustifyContent, TextAlign } from '../settings/AppEnums'
 import t, { changeLanguage } from '../locale'
 import AppLocalizations from '../settings/AppLocalizations'
 import { Platform, Pressable, ScrollView, View } from 'react-native'
@@ -52,10 +52,8 @@ export default function ProfileScreen({ user, navigation }) {
 
     async function getUserData() {
         const data = await AppStorage.read(AppStorageKeys.userData)
-        console.log(data);
         setUserData(data)
     }
-
 
     const formatDate = (rawDate) => {
         let date = new Date(rawDate)
@@ -96,7 +94,7 @@ export default function ProfileScreen({ user, navigation }) {
         <>
             <HeaderImage source={{ uri: USER_LOGGED.imagePath }} />
             <InfoBox>
-                <TitleSemiBold size={16}>{userData.name}</TitleSemiBold>
+                <TitleSemiBold textAlign={TextAlign.center} size={16}>{userData.name}</TitleSemiBold>
                 <Spacing height={10} />
                 <TextMedium size={14}>{userData.email}</TextMedium>
             </InfoBox>

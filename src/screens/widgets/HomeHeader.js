@@ -10,7 +10,6 @@ import t from '../../locale'
 import AppLocalizations from '../../settings/AppLocalizations'
 import SvgIcon, { Icon } from '../../assets/icons/Icons'
 
-import { userDecodeToken } from '../../Utils/Auth'
 
 export const HeaderBox = styled(LinearGradient)`
     width: 100%;

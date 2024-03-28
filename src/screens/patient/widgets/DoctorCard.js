@@ -38,7 +38,7 @@ export default function DoctorCard({ selected, item, onTap }) {
             <DoctorImage source={AppAssets.placeholder} />
             <Spacing width={10} />
 
-            <Column justifyContent={Flex.center}>
+            <Column width={'80%'} justifyContent={Flex.center}>
                 <TitleSemiBold size={16}>{item.idNavigation.nome}</TitleSemiBold>
                 <Spacing height={10} />
                 <TextMedium size={14} color={AppColors.grayV4}>{item.especialidade.especialidade1}</TextMedium>

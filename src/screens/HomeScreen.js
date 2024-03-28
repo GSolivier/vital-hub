@@ -1,4 +1,3 @@
-import { View, Text } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import HomeContainer from './widgets/HomeContainer'
 import { AppStorage, AppStorageKeys } from '../settings/AppStorage'
@@ -15,6 +14,21 @@ import CancelExamDialog from './doctor/dialogs/CancelExamDialog'
 import SeeMedicalRecordDialog from './doctor/dialogs/SeeMedicalRecordDialog'
 import { ActivityIndicator } from 'react-native-paper'
 import SeeAppointmentLocalDialog from './patient/widgets/dialogs/SeeAppointmentLocalDialog'
+import { AppColors } from '../settings/AppColors'
+import styled from 'styled-components'
+import SvgIcon, { Icon } from '../assets/icons/Icons'
+import ScheduleAppointmentDialog from './patient/widgets/dialogs/ScheduleAppointmentDialog'
+
+
+const FixedButton = styled.TouchableOpacity`
+  padding: 15px;
+  background-color: ${AppColors.primary};
+  border-radius: 7px;
+  elevation: 5px;
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+`
 
 export default function HomeScreen({ navigation }) {
     const [userData, setUserData] = useState({})
@@ -54,10 +68,6 @@ export default function HomeScreen({ navigation }) {
 
     function filterList() {
         const data = userData.role == "paciente" ? DOCTORS_DATA : DATA
-
-        console.log('====================================');
-        console.log(data);
-        console.log('====================================');
         var newList = data.filter((data) => data.appointmentStatus == selectedTab)
         setFilteredList(newList);
     }
@@ -65,7 +75,6 @@ export default function HomeScreen({ navigation }) {
     async function getUserData() {
         setUserIsLoading(true)
         const data = await AppStorage.read(AppStorageKeys.userData)
-        console.log(data);
         setUserData(data)
         setUserIsLoading(false)
     }
@@ -103,6 +112,12 @@ export default function HomeScreen({ navigation }) {
                 )
             }
 
+            {userData.role == "paciente" ? (
+                <FixedButton onPress={() => setScheduleAppointmentModalIsVisible(true)}>
+                    <SvgIcon name={Icon.stethoscope} color={AppColors.white} />
+                </FixedButton>) : null}
+
+
             <CancelExamDialog
                 visible={cancelModalIsVisible}
                 onClose={() => setCancelModalIsVisible(false)}
@@ -119,6 +134,12 @@ export default function HomeScreen({ navigation }) {
                 visible={seeAppointmentLocal}
                 onClose={() => setSeeAppointmentLocal(false)}
                 appointment={appointment}
+                navigation={navigation}
+            />
+
+            <ScheduleAppointmentDialog
+                visible={scheduleAppointmentModalIsVisible}
+                onClose={() => setScheduleAppointmentModalIsVisible(false)}
                 navigation={navigation}
             />
 

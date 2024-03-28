@@ -110,7 +110,9 @@ export default function Login({ navigation }) {
 
           try {
             setIsLoading(true)
+
             await AuthRepository.login(email, senha, navigation)
+
             setIsLoading(false)
           } catch (e) {
             console.log(e);
