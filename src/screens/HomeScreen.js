@@ -8,12 +8,13 @@ import { AppointmentFilterList, HomeCardActionType } from '../settings/AppEnums'
 import ButtonSelecter from './widgets/ButtonSelecter'
 import { Spacing } from '../components/Container'
 import AppointmentPatientList from './patient/widgets/AppointmentPatientList'
-import { RouteKeys, push } from '../settings/routes/RouteActions'
+import { AppNavigation, RouteKeys } from '../settings/routes/RouteActions'
 import { DATA, DOCTORS_DATA } from '../settings/AppUtils'
 import AppointmentList from './doctor/widgets/AppointmentList'
 import CancelExamDialog from './doctor/dialogs/CancelExamDialog'
 import SeeMedicalRecordDialog from './doctor/dialogs/SeeMedicalRecordDialog'
 import { ActivityIndicator } from 'react-native-paper'
+import SeeAppointmentLocalDialog from './patient/widgets/dialogs/SeeAppointmentLocalDialog'
 
 export default function HomeScreen({ navigation }) {
     const [userData, setUserData] = useState({})
@@ -43,7 +44,7 @@ export default function HomeScreen({ navigation }) {
 
     const handleSeeMedicalRecord = (appointment) => {
         setSelectedAppointment(appointment);
-        push(navigation, RouteKeys.medicalRecordScreen, { appointment: appointment })
+        AppNavigation.push(navigation, RouteKeys.medicalRecordScreen, { appointment: appointment })
     }
 
     const handleInsertMedicalRecord = (appointment) => {
@@ -71,11 +72,11 @@ export default function HomeScreen({ navigation }) {
 
     useEffect(() => {
         getUserData();
-    }, []); // Executa apenas uma vez ao montar o componente
-    
+    }, []);
+
     useEffect(() => {
         filterList();
-    }, [selectedTab, userData]); 
+    }, [selectedTab, userData]);
 
     return (
         <HomeContainer name={userData.name} imagePath={AppAssets.placeholder}>
@@ -88,7 +89,7 @@ export default function HomeScreen({ navigation }) {
             />
             <Spacing height={20} />
 
-             { loading ? <ActivityIndicator/> :
+            {loading ? <ActivityIndicator /> :
                 userData.role == "paciente" ? (
                     <AppointmentPatientList
                         DATA={filteredList}
@@ -110,6 +111,13 @@ export default function HomeScreen({ navigation }) {
             <SeeMedicalRecordDialog
                 visible={seeMedicalRecordModalIsVisible}
                 onClose={() => setSeeMedicalRecordIsVisible(false)}
+                appointment={appointment}
+                navigation={navigation}
+            />
+
+            <SeeAppointmentLocalDialog
+                visible={seeAppointmentLocal}
+                onClose={() => setSeeAppointmentLocal(false)}
                 appointment={appointment}
                 navigation={navigation}
             />

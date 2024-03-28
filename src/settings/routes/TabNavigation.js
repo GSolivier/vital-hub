@@ -8,8 +8,6 @@ import t from '../../locale'
 import AppLocalizations from '../AppLocalizations'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { RouteKeys } from './RouteActions'
-import HomeScreenPatient from '../../screens/patient/HomeScreenPatient'
-import ClinicScreenPatient from '../../screens/patient/ClinicScreenPatient'
 import { Spacing } from '../../components/Container'
 import ProfileScreen from '../../screens/ProfileScreen'
 import HomeScreen from '../../screens/HomeScreen'
@@ -27,11 +25,11 @@ export const IconButton = styled.View`
     gap: 5px;
 `
 
-export default function TabNavigationPatient() {
+export default function TabNavigation() {
 
     return (
             <Tab.Navigator
-                initialRouteName={RouteKeys.homeScreenPatient}
+                initialRouteName={RouteKeys.homeScreen}
                 
                 screenOptions={({ route }) => ({
                     headerShown: false,
@@ -43,7 +41,7 @@ export default function TabNavigationPatient() {
                     tabBarIcon: ({ focused, color, size }) => {
 
 
-                        if (route.name == RouteKeys.homeScreenPatient) {
+                        if (route.name == RouteKeys.homeScreen) {
                             return <IconButton isSelected={focused}>
                                 <SvgIcon name={Icon.calendarCheck} color={focused ? AppColors.secondaryV2 : AppColors.grayV2} />
                                 {focused ? (<TextMedium size={14} color={AppColors.secondaryV2}>{t(AppLocalizations.schedule)}</TextMedium>) : (<Spacing />)}
@@ -70,7 +68,7 @@ export default function TabNavigationPatient() {
                 })}
             >
                 <Tab.Screen 
-                name={RouteKeys.homeScreenPatient} 
+                name={RouteKeys.homeScreen} 
                 component={HomeScreen} 
 
                 />

@@ -6,7 +6,7 @@ import t from '../../locale'
 import AppLocalizations from '../../settings/AppLocalizations'
 import { ClinicListData } from '../../settings/AppUtils'
 import ClinicList from './widgets/ClinicList'
-import { RouteKeys, pop, push } from '../../settings/routes/RouteActions'
+import { AppNavigation, RouteKeys } from '../../settings/routes/RouteActions'
 
 export default function SelectClinic({navigation}) {
   const [selected, setSelected] = useState({ id: 0});
@@ -24,9 +24,9 @@ export default function SelectClinic({navigation}) {
         selected={selected}
       />
       <Spacing height={30}/>
-      <AppButton textButton={t(AppLocalizations.continueButton).toUpperCase()} onTap={() => push(navigation, RouteKeys.selectDoctorScreen)}/>
+      <AppButton textButton={t(AppLocalizations.continueButton).toUpperCase()} onTap={() => AppNavigation.push(navigation, RouteKeys.selectDoctorScreen)}/>
       <Spacing height={30}/>
-      <LinkButton text={t(AppLocalizations.cancel)} onTap={() => pop(navigation)}/>
+      <LinkButton text={t(AppLocalizations.cancel)} onTap={() => AppNavigation.pop(navigation)}/>
     </Container>
   )
 }

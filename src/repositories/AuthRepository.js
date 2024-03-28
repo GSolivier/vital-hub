@@ -1,10 +1,9 @@
 import { jwtDecode } from "jwt-decode";
 import apiClient, { LoginPath, _post } from "../settings/AppApi";
-import { AppStorage } from "../settings/AppStorage";
-import { RouteKeys, push } from "../settings/routes/RouteActions";
+import { AppStorage, AppStorageKeys } from "../settings/AppStorage";
+import { AppNavigation, RouteKeys, } from "../settings/routes/RouteActions";
 import { decode, encode } from 'base-64'
 import { ToastAndroid } from "react-native";
-import Toast from "react-native-toast-message";
 import { AppToast } from "../components/AppToast";
 
 if (!global.atob) {
@@ -23,7 +22,7 @@ export const AuthRepository = {
 
 async function tokenDecode() {
 
-    const token = await AppStorage.read(AppStorage.token)
+    const token = await AppStorage.read(AppStorageKeys.token)
 
     if (token === null) {
         return;
@@ -46,14 +45,15 @@ async function login(email, senha, navigation) {
         .then(async function (response) {
             const data = response.data
 
-            await AppStorage.write(AppStorage.token, data.token)
+            await AppStorage.write(AppStorageKeys.token, data.token)
 
             const userData = await tokenDecode();
 
-            await AppStorage.write(AppStorage.userData, userData)
+            await AppStorage.write(AppStorageKeys.userData, userData)
 
-            push(navigation, userData.role == "paciente" ? RouteKeys.tabNavigationPatient : RouteKeys.tabNavigationDoctor, true)
-
+            AppNavigation.push(navigation, RouteKeys.tabNavigation, true)
+            
+            AppToast.showSucessToast("Login efetuado com sucesso!")
         })
         .catch(function (error) {
 
@@ -63,11 +63,7 @@ async function login(email, senha, navigation) {
                 console.log(error.response);
                 console.log('====================================');
 
-                ToastAndroid.showWithGravity(
-                    error.response.data.message,
-                    ToastAndroid.SHORT,
-                    ToastAndroid.BOTTOM,
-                );
+                AppToast.showErrorToast(error.response.data.message)
             } else {
 
                 console.log('=================Error===================');
@@ -84,8 +80,8 @@ async function login(email, senha, navigation) {
 }
 
 async function logout(navigation) {
-    const response = AppStorage.clear(AppStorage.token)
+    const response = AppStorage.clear(AppStorageKeys.token)
 
-    push(navigation, RouteKeys.loginScreen, true)
+    AppNavigation.push(navigation, RouteKeys.loginScreen, true)
 }
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import AppDialog from '../../../../components/AppDialog'
-import { RouteKeys, push } from '../../../../settings/routes/RouteActions';
+import { AppNavigation, RouteKeys } from '../../../../settings/routes/RouteActions';
 import { Row, Spacing } from '../../../../components/Container';
 import { TextMedium, TitleSemiBold } from '../../../../settings/AppFonts';
 import { Flex, TextAlign, TextDecoration } from '../../../../settings/AppEnums';
@@ -21,7 +21,7 @@ export default function SeeAppointmentLocalDialog({ visible, onClose, appointmen
     return null;
   }
   const handleInsertMedicalRecord = () => {
-    push(navigation, RouteKeys.seeAppointmentLocalScreen, { appointment: appointment });
+    AppNavigation.push(navigation, RouteKeys.seeAppointmentLocalScreen, { appointment: appointment });
     onClose();
   };
   return (

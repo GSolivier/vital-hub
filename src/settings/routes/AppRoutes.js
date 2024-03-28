@@ -8,18 +8,15 @@ import RedefinePassword from '../../screens/auth/RedefinePassword';
 import CreateAccount from '../../screens/auth/CreateAccount';
 import { RouteKeys } from './RouteActions';
 import InsertMedicalRecord from '../../screens/doctor/InsertMedicalRecord';
-import TabNavigationDoctor from './TabNavigationDoctor';
-import TabNavigationPatient from './TabNavigationPatient';
 import SelectClinic from '../../screens/patient/SelectClinic';
 import SelectDoctor from '../../screens/patient/SelectDoctor';
 import SelectDate from '../../screens/patient/SelectDate';
 import SeeAppointmentLocalScreen from '../../screens/patient/SeeAppointmentLocalScreen';
 import MedicalRecord from '../../screens/patient/MedicalRecord';
 import ScanExamsScreen from '../../screens/patient/ScanExamsScreen';
-import { AppColors } from '../AppColors';
 import { Flex } from '../AppEnums';
 import { FontFamily } from '../AppFonts';
-import HomeScreen from '../../screens/HomeScreen';
+import TabNavigation from './TabNavigation';
 
 const Stack = createNativeStackNavigator();
 
@@ -32,11 +29,8 @@ export default function AppRoutes() {
                     name={RouteKeys.loginScreen}
                     component={Login} />
                 <Stack.Screen
-                    name={RouteKeys.tabNavigationDoctor}
-                    component={TabNavigationDoctor} />
-                <Stack.Screen
-                    name={RouteKeys.tabNavigationPatient}
-                    component={TabNavigationPatient} />
+                    name={RouteKeys.tabNavigation}
+                    component={TabNavigation} />
                 <Stack.Screen
                     name={RouteKeys.seeAppointmentLocalScreen}
                     component={SeeAppointmentLocalScreen} />

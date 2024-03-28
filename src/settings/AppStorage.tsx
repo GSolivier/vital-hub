@@ -4,9 +4,6 @@ export const AppStorage = {
   write: write,
   read: read,
   clear: clear,
-
-  token: "token",
-  userData: "userData",
 };
 
 export const AppStorageKeys = {

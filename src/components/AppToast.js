@@ -17,7 +17,7 @@ export const toastConfig = {
                 fontSize: 15,
                 color: AppColors.red
             }}
-            style={{height: undefined, maxHeight: 200, paddingVertical: 5, borderLeftColor: AppColors.red,}}
+            style={{paddingVertical: 5, borderLeftColor: AppColors.red,}}
             text2Style={{
                 fontSize: 12
             }}
@@ -34,11 +34,12 @@ async function showErrorToast(title = '', message = '') {
 }
 async function showSucessToast(title = '', message = '') {
     Toast.show({
-        type: 'sucess',
+        type: 'success',
         text1: title,
         text1Style: {
             fontFamily: FontFamily.montSerratBold,
-            fontSize: 16
+            fontSize: 16,
+            color: AppColors.green
         },
         text2: message,
         text2Style: {

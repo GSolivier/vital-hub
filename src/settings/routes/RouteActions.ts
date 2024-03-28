@@ -11,13 +11,11 @@ export const RouteKeys = {
   emailVerify: "EmailVerify",
   redefinePassword: "RedefinePassword",
   createAccount: "CreateAccount",
-  tabNavigationDoctor: "TabNavigationDoctor",
-  tabNavigationPatient: "TabNavigationPatient",
+  tabNavigation: "TabNavigation",
   homeScreenDoctor: "HomeScreenDoctor",
   clinicScreenDoctor: "ClinicScreenDoctor",
   profileScreen: "ProfileScreen",
   homeScreen: "HomeScreen",
-  homeScreenPatient: "HomeScreenPatient",
   clinicScreenPatient: "ClinicScreenPatient",
   insertMedicalRecordScreen: "InsertMedicalRecordScreen",
   selectClinicScreen: "SelectClinicScreen",
@@ -28,13 +26,13 @@ export const RouteKeys = {
   scanExamsScreen: "ScanExamsScreen",
 };
 
-export const Navigation = {
-  push : push,
+export const AppNavigation = {
+  push: push,
   pop: pop, 
   popWithData: popWithData
 }
 
-export async function push<RouteName extends keyof ParamListBase>(
+async function push<RouteName extends keyof ParamListBase>(
   navigation: NavigationProp<ParamListBase>,
   routeKey: RouteName,
   params?: ParamListBase[RouteName],
@@ -57,7 +55,7 @@ export async function push<RouteName extends keyof ParamListBase>(
   }
 }
 
-export async function pop(
+async function pop(
   navigation: NavigationProp<ParamListBase>,
   screensToPop: number = 1
 ): Promise<void> {
@@ -69,7 +67,7 @@ export async function pop(
   }
 }
 
-export async function popWithData<RouteName extends keyof ParamListBase>(
+async function popWithData<RouteName extends keyof ParamListBase>(
   navigation: NavigationProp<ParamListBase>,
   routeKey: any,
   params?: ParamListBase[RouteName]
