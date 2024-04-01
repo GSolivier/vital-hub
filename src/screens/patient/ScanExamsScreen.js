@@ -6,7 +6,7 @@ import styled from 'styled-components/native';
 import { AppColors } from '../../settings/AppColors';
 import SvgIcon, { Icon } from '../../assets/icons/Icons';
 import { Flex } from '../../settings/AppEnums';
-import { RouteKeys, pop, popWithData, popWithReturn, push } from '../../settings/routes/RouteActions';
+import { AppNavigation, RouteKeys, pop } from '../../settings/routes/RouteActions';
 
 const AppCamera = styled(Camera)`
     flex: 1;
@@ -80,7 +80,7 @@ export default function ScanExamsScreen({ navigation }) {
             ToastAndroid.SHORT,
             ToastAndroid.BOTTOM,
         );
-        pop(navigation)
+        AppNavigation.pop(navigation)
     }
     return (
         <Container paddingTop={0} paddingRight={0} paddingLeft={0} paddingBottom={0} alignItems={Flex.flexStart}>
@@ -118,7 +118,7 @@ export default function ScanExamsScreen({ navigation }) {
 
                                     <TouchableOpacity
                                     onPress={() => {
-                                        popWithData(navigation, RouteKeys.medicalRecordScreen, {image: image})
+                                        AppNavigation.popWithData(navigation, RouteKeys.medicalRecordScreen, {image: image})
                                     }}
                                     activeOpacity={0.5}>
                                         <SvgIcon name={Icon.check} color={AppColors.primary} size={80} />

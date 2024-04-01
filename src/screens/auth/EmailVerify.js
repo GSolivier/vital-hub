@@ -11,7 +11,7 @@ import AppButton, { LinkButton } from "../../components/AppButton";
 import { AppCodeInput } from "../../components/AppInput";
 import { useState } from "react";
 import { TextAlign } from "../../settings/AppEnums";
-import { RouteKeys, pop, push } from "../../settings/routes/RouteActions";
+import { AppNavigation, RouteKeys } from "../../settings/routes/RouteActions";
 
 export default function EmailVerify({ navigation }) {
     const [codeValue, setCodeValue] = useState('');
@@ -19,7 +19,7 @@ export default function EmailVerify({ navigation }) {
     const { params } = useRoute();
 
     return (
-        <AuthContainer hasLeading={true} isClosable={true} onTap={() => { pop(navigation) }}>
+        <AuthContainer hasLeading={true} isClosable={true} onTap={() => { AppNavigation.pop(navigation) }}>
             <Image source={AppAssets.appLogoDark} />
             <Spacing height={25}/>
             <TitleSemiBold size={20}>{t(AppLocalizations.emailVerify)}</TitleSemiBold>
@@ -28,7 +28,7 @@ export default function EmailVerify({ navigation }) {
             <Spacing height={20}/>
             <AppCodeInput onValueChange={setCodeValue}/>
             <Spacing height={30}/>
-            <AppButton textButton={t(AppLocalizations.enterButton).toUpperCase()} onTap={() => {push(navigation, RouteKeys.redefinePassword)}}/>
+            <AppButton textButton={t(AppLocalizations.enterButton).toUpperCase()} onTap={() => {AppNavigation.push(navigation, RouteKeys.redefinePassword)}}/>
             <Spacing height={30}/>
             <LinkButton text={t(AppLocalizations.resentCode)} color={AppColors.secondaryV1} />
         </AuthContainer>

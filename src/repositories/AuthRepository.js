@@ -1,11 +1,9 @@
 import { jwtDecode } from "jwt-decode";
-import apiClient, { LoginPath, _post } from "../settings/AppApi";
-import { AppStorage } from "../settings/AppStorage";
-import { RouteKeys, push } from "../settings/routes/RouteActions";
+import api, { LoginPath, _post } from "../settings/AppApi";
+import { AppStorage, AppStorageKeys } from "../settings/AppStorage";
+import { AppNavigation, RouteKeys, } from "../settings/routes/RouteActions";
 import { decode, encode } from 'base-64'
 import { ToastAndroid } from "react-native";
-import Toast from "react-native-toast-message";
-import { AppToast } from "../components/AppToast";
 
 if (!global.atob) {
     global.atob = decode
@@ -23,7 +21,7 @@ export const AuthRepository = {
 
 async function tokenDecode() {
 
-    const token = await AppStorage.read(AppStorage.token)
+    const token = await AppStorage.read(AppStorageKeys.token)
 
     if (token === null) {
         return;
@@ -32,8 +30,8 @@ async function tokenDecode() {
     const decoded = jwtDecode(token)
 
     return {
-        email: decoded.name,
-        name: decoded.email,
+        email: decoded.email,
+        name: decoded.name,
         id: decoded.jti,
         role: decoded.role
     }
@@ -41,23 +39,20 @@ async function tokenDecode() {
 
 
 
-
-async function login(email, senha, navigation) {
-
+export async function login(email, senha, navigation) {
     await apiClient.post(LoginPath, { email: email, senha: senha })
         .then(async function (response) {
+
             const data = response.data
 
-            await AppStorage.write(AppStorage.token, data.token)
-            
+            await AppStorage.write(AppStorageKeys.token, data.token)
 
             const userData = await tokenDecode();
-
+            
             push(navigation, userData.role == "paciente" ? RouteKeys.tabNavigationPatient : RouteKeys.tabNavigationDoctor, true)
 
         })
         .catch(function (error) {
-
                 console.log(error);
             if (error.request) {
                 ToastAndroid.showWithGravity(
@@ -67,17 +62,12 @@ async function login(email, senha, navigation) {
                 );
             } else if (error.response) {
 
-
                 ToastAndroid.showWithGravity(
                     error.response.data.message,
                     ToastAndroid.SHORT,
                     ToastAndroid.BOTTOM,
                 );
             } else {
-
-                console.log('=================Error===================');
-                console.log(error);
-                console.log('====================================');
                 ToastAndroid.showWithGravity(
                     "Ocorreu um erro desconhecido",
                     ToastAndroid.SHORT,
@@ -88,9 +78,9 @@ async function login(email, senha, navigation) {
         })
 }
 
-async function logout(navigation) {
+export async function Logout(navigation) {
     const response = AppStorage.clear(AppStorage.token)
 
-    push(navigation, RouteKeys.loginScreen, true)
+    AppNavigation.push(navigation, RouteKeys.loginScreen, true)
 }
 

@@ -10,7 +10,7 @@ import AppLocalizations from '../../../../settings/AppLocalizations'
 import AppDropdown from '../../../../components/AppDropdown'
 import { AppColors } from '../../../../settings/AppColors'
 import ButtonSelecter from '../../../widgets/ButtonSelecter'
-import { RouteKeys, push } from '../../../../settings/routes/RouteActions'
+import { AppNavigation, RouteKeys } from '../../../../settings/routes/RouteActions'
 
 export default function ScheduleAppointmentDialog({ visible, onClose, navigation }) {
   const [selectedAppointmentType, setSelectedAppointmentType] = useState('');`
@@ -31,7 +31,7 @@ export default function ScheduleAppointmentDialog({ visible, onClose, navigation
   };
 
   const handleInsertMedicalRecord = () => {
-    push(navigation, RouteKeys.selectClinicScreen);
+    AppNavigation.push(navigation, RouteKeys.selectClinicScreen);
     onClose();
   };
   return (

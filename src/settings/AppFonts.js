@@ -37,6 +37,7 @@ export const TextMedium = styled.Text`
     font-size: ${({ size = 16 }) => `${size}px`};
     color: ${({ color = AppColors.grayV1 }) => color};
     text-align: ${({ textAlign = 'auto' }) => textAlign};
+    flex-wrap: wrap;
 `
 export const TextRegular = styled.Text`
     font-family: ${FontFamily.quickSandRegular};

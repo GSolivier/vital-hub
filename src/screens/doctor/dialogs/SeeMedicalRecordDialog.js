@@ -7,7 +7,7 @@ import { Flex, TextAlign, TextDecoration } from '../../../settings/AppEnums'
 import t from '../../../locale'
 import styled from 'styled-components/native'
 import AppDialog from '../../../components/AppDialog'
-import { RouteKeys, push } from '../../../settings/routes/RouteActions'
+import { AppNavigation, RouteKeys } from '../../../settings/routes/RouteActions'
 import AppLocalizations from '../../../settings/AppLocalizations'
 
 const ImageModal = styled.Image`
@@ -22,7 +22,7 @@ export default function SeeMedicalRecordDialog({ visible, onClose, appointment, 
         return null;
     }
     const handleInsertMedicalRecord = () => {
-        push(navigation, RouteKeys.insertMedicalRecordScreen, { appointment: appointment });
+        AppNavigation.push(navigation, RouteKeys.insertMedicalRecordScreen, { appointment: appointment });
         onClose();
     };
     return (

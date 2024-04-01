@@ -11,14 +11,16 @@ import t from '../../locale'
 import AppLocalizations from '../../settings/AppLocalizations'
 import { Flex } from '../../settings/AppEnums'
 import SvgIcon, { Icon } from '../../assets/icons/Icons'
-import { RouteKeys, push } from '../../settings/routes/RouteActions'
+import { AppNavigation, RouteKeys } from '../../settings/routes/RouteActions'
 import * as Auth from 'expo-local-authentication'
 import { AuthRepository, login, tokenDecode } from '../../repositories/AuthRepository'
 import { AppStorage } from '../../settings/AppStorage'
 import { userDecodeToken } from '../../Utils/Auth'
 
 
+
 export default function Login({ navigation }) {
+
 
   const [email, setEmail] = useState('ian@email.com')
   const [senha, setSenha] = useState('senai123')
@@ -98,7 +100,7 @@ export default function Login({ navigation }) {
         alignSelf={Flex.flexStart}
         text={t(AppLocalizations.forgotPassword)}
         onTap={() => {
-          push(navigation, RouteKeys.forgotPassword)
+          AppNavigation.push(navigation, RouteKeys.forgotPassword)
         }}
 
       />
@@ -144,7 +146,7 @@ export default function Login({ navigation }) {
         </TitleSemiBold>
         <Spacing width={5} />
         <LinkButton
-          onTap={() => { push(navigation, RouteKeys.createAccount) }}
+          onTap={() => { AppNavigation.push(navigation, RouteKeys.createAccount) }}
           color={AppColors.secondaryV6}
           text={t(AppLocalizations.createAccount)}
         />

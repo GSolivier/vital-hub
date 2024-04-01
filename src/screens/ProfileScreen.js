@@ -1,11 +1,11 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Container, Row, Spacing } from '../components/Container'
 import styled from 'styled-components/native'
 import { USER_LOGGED } from '../settings/AppUtils'
 import { TextMedium, TitleSemiBold } from '../settings/AppFonts'
 import { AppColors } from '../settings/AppColors'
 import AppInput from '../components/AppInput'
-import { Flex, JustifyContent } from '../settings/AppEnums'
+import { Flex, JustifyContent, TextAlign } from '../settings/AppEnums'
 import t, { changeLanguage } from '../locale'
 import AppLocalizations from '../settings/AppLocalizations'
 import { Platform, Pressable, ScrollView, View } from 'react-native'
@@ -14,7 +14,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import SvgIcon, { Icon } from '../assets/icons/Icons'
 import { AuthRepository, Logout } from '../repositories/AuthRepository'
 import { isLoading } from 'expo-font'
-import { userDecodeToken } from '../Utils/Auth'
+import { AppStorage, AppStorageKeys } from '../settings/AppStorage'
 
 const HeaderImage = styled.Image`
     width: 100%;
@@ -43,7 +43,17 @@ export default function ProfileScreen({ user, navigation }) {
     const [date, setDate] = useState(new Date())
     const [open, setOpen] = useState(false)
     const [isEditable, setIsEditable] = useState(false)
-  
+    const [userData, setUserData] = useState({})
+
+
+    useEffect(() => {
+        getUserData() 
+    }, [])
+
+    async function getUserData() {
+        const data = await AppStorage.read(AppStorageKeys.userData)
+        setUserData(data)
+    }
 
     const formatDate = (rawDate) => {
         let date = new Date(rawDate)
@@ -84,16 +94,16 @@ export default function ProfileScreen({ user, navigation }) {
         <>
             <HeaderImage source={{ uri: USER_LOGGED.imagePath }} />
             <InfoBox>
-                <TitleSemiBold size={16}>{USER_LOGGED.name}</TitleSemiBold>
+                <TitleSemiBold textAlign={TextAlign.center} size={16}>{userData.name}</TitleSemiBold>
                 <Spacing height={10} />
-                <TextMedium size={14}>{USER_LOGGED.email}</TextMedium>
+                <TextMedium size={14}>{userData.email}</TextMedium>
             </InfoBox>
             <ScrollView>
                 <Container justifyContent={Flex.flexStart}>
                     <Spacing height={80} />
 
-                    <Pressable style={{width: '100%'}} onPress={isEditable ? toggleDatePicker : null}>
-                        <View style={{width: '100%'}} pointerEvents='none'>
+                    <Pressable style={{ width: '100%' }} onPress={isEditable ? toggleDatePicker : null}>
+                        <View style={{ width: '100%' }} pointerEvents='none'>
                             <AppInput
                                 isEditable={isEditable}
                                 label={t(AppLocalizations.dateOfBirth)}
@@ -124,7 +134,7 @@ export default function ProfileScreen({ user, navigation }) {
                         </InputContainer>
                     </Row>
                     <Spacing height={32} />
-                    <AppButton textButton={t(AppLocalizations.saveButton).toUpperCase()} onTap={() => setIsEditable(false)}  />
+                    <AppButton textButton={t(AppLocalizations.saveButton).toUpperCase()} onTap={() => setIsEditable(false)} />
                     <Spacing height={30} />
                     <AppButton textButton={t(AppLocalizations.editButton).toUpperCase()} onTap={() => setIsEditable(true)} />
                     <Spacing height={30} />

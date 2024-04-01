@@ -1,15 +1,19 @@
-import apiClient, { MedicoPath } from "../settings/AppApi";
+
+import api, { MedicoPath } from "../settings/AppApi";
+
+export const DoctorRepository = {
+  getDoctors: getDoctors
+}
+
+async function getDoctors(){
+
+  try {
+    const {data: response } = await api.get(MedicoPath)
+
+    return response
+  } catch (error) {
+    console.log(error);
+  }
 
 
-export async function getDoctors(){
-
-    var data = {};
-
-    apiClient.get(MedicoPath)
-        .then( response => data = response.data )
-        .catch( error => {
-            console.log(error);
-        })
-
-    return data;
 }

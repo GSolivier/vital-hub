@@ -4,10 +4,14 @@ export const AppStorage = {
   write: write,
   read: read,
   clear: clear,
-
-  token: "token",
-  userData: "userData"
 };
+
+
+export const AppStorageKeys = {
+  token: "token",
+  userData: "userData",
+};
+
 
 async function write<T>(key: string, data: T): Promise<void> {
   try {

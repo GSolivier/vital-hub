@@ -9,7 +9,7 @@ import AppLocalizations from '../../settings/AppLocalizations';
 import AppInput from '../../components/AppInput';
 import AppButton from '../../components/AppButton';
 import { TextAlign } from '../../settings/AppEnums';
-import { RouteKeys, pop, push } from '../../settings/routes/RouteActions';
+import { AppNavigation, RouteKeys } from '../../settings/routes/RouteActions';
 import { AppColors } from '../../settings/AppColors';
 
 export default function ForgotPassword({ navigation }) {
@@ -17,7 +17,7 @@ export default function ForgotPassword({ navigation }) {
     const [email, setEmail] = useState('')
 
     return (
-        <AuthContainer hasLeading={true} onTap={() => { pop(navigation) }}>
+        <AuthContainer hasLeading={true} onTap={() => { AppNavigation.pop(navigation) }}>
             <Image source={AppAssets.appLogoDark} />
             <Spacing height={25} />
             <TitleSemiBold size={20} >{t(AppLocalizations.recoveryPassword)}</TitleSemiBold>
@@ -31,7 +31,7 @@ export default function ForgotPassword({ navigation }) {
             <Spacing height={30} />
             <AppButton
                 textButton={t(AppLocalizations.continueButton).toUpperCase()}
-                onTap={() => { push(navigation, RouteKeys.emailVerify, { email: email }) }}
+                onTap={() => { AppNavigation.push(navigation, RouteKeys.emailVerify, { email: email }) }}
             />
 
         </AuthContainer>

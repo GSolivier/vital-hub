@@ -10,8 +10,7 @@ import t from '../../locale'
 import AppLocalizations from '../../settings/AppLocalizations'
 import AppButton, { LinkButton } from '../../components/AppButton'
 import { AppColors } from '../../settings/AppColors'
-import SvgIcon, { Icon } from '../../assets/icons/Icons'
-import { RouteKeys, pop, push } from '../../settings/routes/RouteActions'
+import { AppNavigation, RouteKeys, pop } from '../../settings/routes/RouteActions'
 import PhotoSelector from './widgets/PhotoSelector'
 import SeeImageModal from './widgets/dialogs/SeeImageModal'
 
@@ -92,7 +91,7 @@ export default function MedicalRecord({ navigation, navigation: { setParams } })
                         label={t(AppLocalizations.medicalExams)}
                         photoList={photoList}
                         openImage={handleOpenImage}
-                        onTap={() => push(navigation, RouteKeys.scanExamsScreen)}/>
+                        onTap={() => AppNavigation.push(navigation, RouteKeys.scanExamsScreen)}/>
                     <Spacing height={10} />
                     <Row>
                         <ButtonContainer>

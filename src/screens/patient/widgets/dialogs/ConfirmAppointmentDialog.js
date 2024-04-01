@@ -6,12 +6,12 @@ import AppLocalizations from '../../../../settings/AppLocalizations'
 import { Column, Spacing } from '../../../../components/Container'
 import { TextSemiBold, TextMedium, TitleSemiBold } from '../../../../settings/AppFonts'
 import { Flex, TextAlign } from '../../../../settings/AppEnums'
-import { RouteKeys, push } from '../../../../settings/routes/RouteActions'
+import { AppNavigation, RouteKeys } from '../../../../settings/routes/RouteActions'
 
 export default function ConfirmAppointmentDialog({ visible, onClose, navigation }) {
 
   const handleConfirm = () => {
-    push(navigation, RouteKeys.tabNavigationPatient)
+    AppNavigation.push(navigation, RouteKeys.tabNavigationPatient)
     onClose()
   }
   return (

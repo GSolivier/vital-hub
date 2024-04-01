@@ -10,9 +10,6 @@ import t from '../../locale'
 import AppLocalizations from '../../settings/AppLocalizations'
 import SvgIcon, { Icon } from '../../assets/icons/Icons'
 
-import { userDecodeToken } from '../../Utils/Auth'
-import { tokenDecode, } from '../../repositories/AuthRepository'
-
 
 export const HeaderBox = styled(LinearGradient)`
     width: 100%;
@@ -34,15 +31,7 @@ export const ProfileImage = styled.Image`
 
 export default function HomeHeader({ imagePath, name, onTapNotification }) {
 
-    async function profileLoad() {
-        const token = await userDecodeToken();
 
-        console.log(token);
-    }
-
-    useEffect(()=> {
-        profileLoad();
-    }, [])
     return (
 
         <HeaderBox colors={['#60BFC5', '#496BBA']} start={{ x: 0.2, y: 0.1 }} locations={[0.1, 1]}>
@@ -55,7 +44,7 @@ export default function HomeHeader({ imagePath, name, onTapNotification }) {
                 <Row alignItems={Flex.center}>
                     <ProfileImage source={imagePath} />
                     <Spacing width={10} />
-                    <Column>
+                    <Column width={'70%'}>
                         <TextMedium size={14}>{t(AppLocalizations.welcome)}</TextMedium>
                         <TitleSemiBold size={16} color={AppColors.white}>{name}</TitleSemiBold>
                     </Column>
