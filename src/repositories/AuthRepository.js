@@ -55,31 +55,29 @@ export async function login(email, senha, navigation) {
 
             const userData = await tokenDecode();
 
-            console.log('====================================');
-            console.log(userData);
-            console.log('====================================');
-
-            await AppStorage.write(AppStorageKeys.userData, userData)
-
-            AppNavigation.push(navigation, RouteKeys.tabNavigation, true)
+            await AppStorage.write(AppStorageKeys.userData,userData)
             
-            AppToast.showSucessToast("Login efetuado com sucesso!")
+            AppNavigation.push(navigation, RouteKeys.tabNavigation, true)
+
+           
+
         })
         .catch(function (error) {
-
-
-            if (error.response) {
-
-                console.log('=================Response Error===================');
-                console.log(error.response);
-                console.log('====================================');
-
-                AppToast.showErrorToast(error.response.data.message)
-            } else {
-
-                console.log('=================Error===================');
                 console.log(error);
-                console.log('====================================');
+            if (error.request) {
+                ToastAndroid.showWithGravity(
+                    "Houve um problema desconhecido. Tente novamente mais tarde",
+                    ToastAndroid.SHORT,
+                    ToastAndroid.BOTTOM,
+                );
+            } else if (error.response) {
+
+                ToastAndroid.showWithGravity(
+                    error.response.data.message,
+                    ToastAndroid.SHORT,
+                    ToastAndroid.BOTTOM,
+                );
+            } else {
                 ToastAndroid.showWithGravity(
                     "Ocorreu um erro desconhecido",
                     ToastAndroid.SHORT,
@@ -90,8 +88,8 @@ export async function login(email, senha, navigation) {
         })
 }
 
-async function logout(navigation) {
-    const response = AppStorage.clear(AppStorageKeys.token)
+export async function Logout(navigation) {
+    const response = AppStorage.clear(AppStorage.token)
 
     AppNavigation.push(navigation, RouteKeys.loginScreen, true)
 }

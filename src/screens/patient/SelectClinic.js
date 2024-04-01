@@ -6,8 +6,7 @@ import t from '../../locale'
 import AppLocalizations from '../../settings/AppLocalizations'
 import { ClinicListData } from '../../settings/AppUtils'
 import ClinicList from './widgets/ClinicList'
-import { AppNavigation, RouteKeys } from '../../settings/routes/RouteActions'
-import api, { GetClinicPath } from '../../settings/AppApi'
+import { AppNavigation, RouteKeys, pop, push } from '../../settings/routes/RouteActions'
 
 export default function SelectClinic({navigation}) {
   const [selected, setSelected] = useState({ id: 0});
@@ -17,23 +16,7 @@ export default function SelectClinic({navigation}) {
       setSelected(clinic)
     }
 
-    useEffect(() => {
-      (async () => {
-        api.get(GetClinicPath)
-        .then( response => {
-          setClinicList(response.data)
-          
-        }
-          
-          )
-        .catch( error => {
-            console.log(error);
-        })
-      })();
-      
-      
-  
-    }, [])
+    
   return (
     <Container paddingTop={30}>
       <TitleSemiBold>{t(AppLocalizations.selectClinic)}</TitleSemiBold>
