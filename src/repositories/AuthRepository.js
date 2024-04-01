@@ -20,7 +20,7 @@ if (!global.btoa) {
 export const AuthRepository = {
     tokenDecode : tokenDecode,
     login : login,
-    logout: logout
+    logout: Logout
 }
 
 
