@@ -7,14 +7,33 @@ import AppLocalizations from '../../settings/AppLocalizations'
 import { ClinicListData } from '../../settings/AppUtils'
 import ClinicList from './widgets/ClinicList'
 import { AppNavigation, RouteKeys, pop, push } from '../../settings/routes/RouteActions'
+import api, { GetClinicPath } from '../../settings/AppApi'
 
 export default function SelectClinic({navigation}) {
   const [selected, setSelected] = useState({ id: 0});
   const [clinicList, setClinicList] = useState([]);
 
-    const selectClinic = (clinic) => {
-      setSelected(clinic)
-    }
+  const selectClinic = (clinic) => {
+    setSelected(clinic)
+  }
+
+  useEffect(() => {
+    (async () => {
+      api.get(GetClinicPath)
+      .then( response => {
+        setClinicList(response.data)
+        
+      }
+        
+        )
+      .catch( error => {
+          console.log(error);
+      })
+    })();
+    
+    
+
+  }, [])
 
     
   return (

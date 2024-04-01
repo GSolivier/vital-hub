@@ -120,7 +120,7 @@ export default function MedicalRecord({ navigation, navigation: { setParams } })
                         isTextArea={true}
                         textValue={'Resultado do exame de sangue: tudo normal'} />
                     <Spacing height={30} />
-                    <LinkButton text={t(AppLocalizations.back)} onTap={() => pop(navigation)} />
+                    <LinkButton text={t(AppLocalizations.back)} onTap={() => AppNavigation.pop(navigation)} />
                     <SeeImageModal
                         visible={imageModalIsVisible}
                         image={selectedImage}

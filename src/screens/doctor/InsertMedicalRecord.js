@@ -7,7 +7,7 @@ import { Flex, TextAlign } from '../../settings/AppEnums';
 import AppInput from '../../components/AppInput';
 import { ScrollView } from 'react-native';
 import AppButton, { LinkButton } from '../../components/AppButton';
-import { pop } from '../../settings/routes/RouteActions';
+import { AppNavigation, pop } from '../../settings/routes/RouteActions';
 import t from '../../locale';
 import AppLocalizations from '../../settings/AppLocalizations';
 
@@ -41,7 +41,7 @@ export default function InsertMedicalRecord({ navigation }) {
                     <Spacing height={30} />
                     <AppButton textButton={t(AppLocalizations.editButton).toUpperCase()} isDisabled={true}/>
                     <Spacing height={25} />
-                    <LinkButton text={t(AppLocalizations.cancel)} onTap={() => pop(navigation)} />
+                    <LinkButton text={t(AppLocalizations.cancel)} onTap={() => AppNavigation.pop(navigation)} />
                 </Container>
             </ScrollView>
         </>

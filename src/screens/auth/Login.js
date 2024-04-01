@@ -14,6 +14,7 @@ import SvgIcon, { Icon } from '../../assets/icons/Icons'
 import { AppNavigation, RouteKeys } from '../../settings/routes/RouteActions'
 import * as Auth from 'expo-local-authentication'
 import { AppStorage } from '../../settings/AppStorage'
+import { AuthRepository } from '../../repositories/AuthRepository'
 
 
 
