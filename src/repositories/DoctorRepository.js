@@ -1,3 +1,4 @@
+
 import api, { MedicoPath } from "../settings/AppApi";
 
 export const DoctorRepository = {
@@ -13,5 +14,6 @@ async function getDoctors(){
   } catch (error) {
     console.log(error);
   }
+
 
 }

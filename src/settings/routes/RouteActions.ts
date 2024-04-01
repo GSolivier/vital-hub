@@ -29,11 +29,14 @@ export const RouteKeys = {
 
 export const AppNavigation = {
   push: push,
+
   pop: pop, 
   popWithData: popWithData
 }
 
+
 async function push<RouteName extends keyof ParamListBase>(
+
   navigation: NavigationProp<ParamListBase>,
   routeKey: RouteName,
   params?: ParamListBase[RouteName],
