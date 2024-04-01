@@ -4,7 +4,7 @@ import { AppStorage, AppStorageKeys } from "../settings/AppStorage";
 import { AppNavigation, RouteKeys, } from "../settings/routes/RouteActions";
 import { decode, encode } from 'base-64'
 import { ToastAndroid } from "react-native";
-
+import { AppToast } from '../components/AppToast'
 if (!global.atob) {
     global.atob = decode
 }
@@ -13,7 +13,14 @@ if (!global.btoa) {
     global.btoa = encode
 }
 
-export async function tokenDecode() {
+export const AuthRepository = {
+    tokenDecode : tokenDecode,
+    login : login,
+    logout: Logout
+}
+
+async function tokenDecode() {
+
 
     const token = await AppStorage.read(AppStorageKeys.token)
 
@@ -34,7 +41,7 @@ export async function tokenDecode() {
 
 
 export async function login(email, senha, navigation) {
-    await apiClient.post(LoginPath, { email: email, senha: senha })
+    await api.post(LoginPath, { email: email, senha: senha })
         .then(async function (response) {
 
             const data = response.data
@@ -42,8 +49,12 @@ export async function login(email, senha, navigation) {
             await AppStorage.write(AppStorageKeys.token, data.token)
 
             const userData = await tokenDecode();
+
+            await AppStorage.write(AppStorageKeys.userData,userData)
             
-            push(navigation, userData.role == "paciente" ? RouteKeys.tabNavigationPatient : RouteKeys.tabNavigationDoctor, true)
+            AppNavigation.push(navigation, RouteKeys.tabNavigation, true)
+
+           
 
         })
         .catch(function (error) {
