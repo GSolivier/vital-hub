@@ -31,7 +31,7 @@ export default function InsertMedicalRecord({ navigation }) {
                         <TextMedium size={14}  textAlign={TextAlign.center}>{params.appointment.email}</TextMedium>
                     </Row>
                     <Spacing height={24} />
-                    <AppInput  label={t(AppLocalizations.appointDescriptionLabel)} hint={t(AppLocalizations.descriptionHint)} isTextArea={true} onChangeText={() => { }} />
+                    <AppInput  label={t(AppLocalizations.appointDescriptionLabel)} hint={params.appointment.descriptionHint} isTextArea={true} onChangeText={() => { }} />
                     <Spacing height={20} />
                     <AppInput  label={t(AppLocalizations.patientDiagnosisLabel)} hint={t(AppLocalizations.diagnosisLabel)} onChangeText={() => { }} />
                     <Spacing height={20} />

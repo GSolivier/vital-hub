@@ -8,6 +8,7 @@ export const DATA = [
         examType: 'Urgente',
         time: '11:00',
         date: '16/02/2024',
+        descriptionHint: 'testando',
         appointmentStatus: HomeCardActionType.carriedOut,
         imagePath: "https://github.com/gsolivier.png",
         email: "guilherme.sousa@example.com"

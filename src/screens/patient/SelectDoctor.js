@@ -45,7 +45,7 @@ export default function SelectDoctor({ navigation }) {
         selected={selected}
       />
       <Spacing height={30} />
-      <AppButton textButton={t(AppLocalizations.continueButton).toUpperCase()} onTap={() => push(navigation, RouteKeys.selectDateScreen)} />
+      <AppButton textButton={t(AppLocalizations.continueButton).toUpperCase()} onTap={() => AppNavigation.push(navigation, RouteKeys.selectDateScreen)} />
       <Spacing height={30} />
       <LinkButton text={t(AppLocalizations.cancel)} onTap={() => pop(navigation)} />
     </Container>
