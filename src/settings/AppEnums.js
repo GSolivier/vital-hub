@@ -66,14 +66,14 @@ export const AppointmentLevelsButtons = [
 export const AppointmentFilterList = [
     {
         text: t(AppLocalizations.scheduled),
-        type: HomeCardActionType.scheduled
+        type: "agendada"
     },
     {
         text: t(AppLocalizations.carriedOut),
-        type: HomeCardActionType.carriedOut
+        type: "realizada"
     },
     {
         text: t(AppLocalizations.canceled),
-        type: HomeCardActionType.canceled
+        type: "cancelada"
     }
 ]

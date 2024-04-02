@@ -77,12 +77,14 @@ const styles = StyleSheet.create({
     }
 })
 
-export default function HomeCalendar() {
+export default function HomeCalendar({ setDate }) {
     return (
         <StyledCalendarStrip
             // animação e seleção de cada data
             calendarAnimation={{ type: "sequence", duration: 30 }}
             daySelectionAnimation={styles.selectedAnimationStyle}
+            onDateSelected={(date) => { 
+                 setDate(date.toDate()) }}
 
             // seta esquerda e direita para avançar e voltar(aqui como display none)
             iconLeftStyle={styles.iconsStyle}

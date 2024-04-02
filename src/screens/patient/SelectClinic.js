@@ -17,25 +17,20 @@ export default function SelectClinic({navigation}) {
     setSelected(clinic)
   }
 
-  useEffect(() => {
-    (async () => {
-      api.get(GetClinicPath)
-      .then( response => {
-        setClinicList(response.data)
-        
-      }
-        
-        )
-      .catch( error => {
-          console.log(error);
-      })
-    })();
-    
-    
-
-  }, [])
-
-    
+    useEffect(() => {
+      (async () => {
+        api.get(GetClinicPath)
+        .then( response => {
+          setClinicList(response.data)
+          
+        }
+          
+          )
+        .catch( error => {
+            console.log(error);
+        })
+      })();
+    }, [])
   return (
     <Container paddingTop={30}>
       <TitleSemiBold>{t(AppLocalizations.selectClinic)}</TitleSemiBold>

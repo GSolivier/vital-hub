@@ -16,8 +16,10 @@ if (!global.btoa) {
 export const AuthRepository = {
     tokenDecode : tokenDecode,
     login : login,
-    logout: Logout
+    logout: logout
 }
+
+
 
 async function tokenDecode() {
 
@@ -53,9 +55,8 @@ export async function login(email, senha, navigation) {
             await AppStorage.write(AppStorageKeys.userData,userData)
             
             AppNavigation.push(navigation, RouteKeys.tabNavigation, true)
-
-           
-
+            
+            AppToast.showSucessToast("Login efetuado com sucesso!")
         })
         .catch(function (error) {
                 console.log(error);
