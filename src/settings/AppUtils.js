@@ -333,4 +333,18 @@ export const USER_LOGGED = {
 
 export const mapskey = "AIzaSyAqIF5MN4yo8ZHwg9WsKP14I-fAK6hpKWY";
 
+export function decodePriority(code){
+    switch (code) {
+        case 1:
+            return "Emergência"
+        case 2:
+            return "Urgente"
+        case 3:
+            return "Rotina"
+        default:
+            return "Sem prioridade"
+            break;
+    }
+}
+
 

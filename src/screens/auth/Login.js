@@ -18,7 +18,7 @@ import { AuthRepository, login, tokenDecode } from '../../repositories/AuthRepos
 
 export default function Login({ navigation }) {
 
-  const [email, setEmail] = useState('carla')
+  const [email, setEmail] = useState('carol@email')
   const [senha, setSenha] = useState('123')
 
 

@@ -18,6 +18,8 @@ import { AppColors } from '../settings/AppColors'
 import styled from 'styled-components'
 import SvgIcon, { Icon } from '../assets/icons/Icons'
 import ScheduleAppointmentDialog from './patient/widgets/dialogs/ScheduleAppointmentDialog'
+import { AuthRepository } from '../repositories/AuthRepository'
+import { PatientRepository } from '../repositories/PatientRepository'
 
 
 const FixedButton = styled.TouchableOpacity`
@@ -32,7 +34,8 @@ const FixedButton = styled.TouchableOpacity`
 
 export default function HomeScreen({ navigation }) {
     const [userData, setUserData] = useState({})
-    const [selectedTab, setSelectedTab] = useState(HomeCardActionType.scheduled);
+    const [selectedTab, setSelectedTab] = useState("agendada");
+    const [rawList, setRawList] = useState([])
     const [filteredList, setFilteredList] = useState([]);
     const [scheduleAppointmentModalIsVisible, setScheduleAppointmentModalIsVisible] = useState(false)
     const [seeAppointmentLocal, setSeeAppointmentLocal] = useState(false)
@@ -40,9 +43,11 @@ export default function HomeScreen({ navigation }) {
     const [appointment, setSelectedAppointment] = useState({})
     const [seeMedicalRecordModalIsVisible, setSeeMedicalRecordIsVisible] = useState(false)
     const [loading, setUserIsLoading] = useState(false)
+    const [listIsLoading, setListIsLoading] = useState(false)
+    const [date, setDate] = useState()
 
 
-    const handleTabSelected = (value) => {
+    const handleTabSelected = async (value) => {
         setSelectedTab(value);
     };
 
@@ -66,10 +71,15 @@ export default function HomeScreen({ navigation }) {
         setSeeMedicalRecordIsVisible(true);
     }
 
-    function filterList() {
-        const data = userData.role == "paciente" ? DOCTORS_DATA : DATA
-        var newList = data.filter((data) => data.appointmentStatus == selectedTab)
-        setFilteredList(newList);
+    async function getAppointmentList() {
+        setListIsLoading(true)
+        const data = await PatientRepository.getPatientAppointments(userData.id, date ? date : new Date())
+        setRawList(data.data)
+        setListIsLoading(false)
+    }
+
+    async function filterAppointmentList() {
+        setFilteredList(rawList.filter((data) => data.situacao.situacao == selectedTab));
     }
 
     async function getUserData() {
@@ -77,72 +87,78 @@ export default function HomeScreen({ navigation }) {
         const data = await AppStorage.read(AppStorageKeys.userData)
         setUserData(data)
         setUserIsLoading(false)
+        await getAppointmentList();
     }
 
     useEffect(() => {
-        getUserData();
-    }, []);
+        getUserData()
+    }, [date]);
 
     useEffect(() => {
-        filterList();
-    }, [selectedTab, userData]);
+        filterAppointmentList()
+    }, [rawList, selectedTab]);
+
+    
 
     return (
-        <HomeContainer name={userData.name} imagePath={AppAssets.placeholder}>
-            <HomeCalendar />
-            <Spacing height={20} />
-            <ButtonSelecter
-                selected={selectedTab}
-                handleTabSelected={handleTabSelected}
-                buttonList={AppointmentFilterList}
-            />
-            <Spacing height={20} />
+        <>
+            <HomeContainer name={userData.name} imagePath={AppAssets.placeholder}>
+                <HomeCalendar setDate={setDate} />
+                <Spacing height={20} />
+                <ButtonSelecter
+                    selected={selectedTab}
+                    handleTabSelected={handleTabSelected}
+                    buttonList={AppointmentFilterList}
+                />
+                <Spacing height={20} />
 
-            {loading ? <ActivityIndicator /> :
-                userData.role == "paciente" ? (
+
+                {listIsLoading ? <ActivityIndicator /> : userData.role == "paciente" ? (
                     <AppointmentPatientList
                         DATA={filteredList}
-                        tapAction={selectedTab == HomeCardActionType.scheduled ? handleCancelAppointment : handleSeeMedicalRecord}
-                        cardTapAction={selectedTab == HomeCardActionType.scheduled ? handleSeeAppointmentLocal : null}
+                        tapAction={selectedTab == "agendada" ? handleCancelAppointment : handleSeeMedicalRecord}
+                        cardTapAction={selectedTab == "agendada" ? handleSeeAppointmentLocal : null}
                     />
                 ) : (
                     <AppointmentList
                         DATA={filteredList}
-                        tapAction={selectedTab == HomeCardActionType.scheduled ? handleCancelAppointment : handleInsertMedicalRecord} />
+                        tapAction={selectedTab == "agendada" ? handleCancelAppointment : handleInsertMedicalRecord} />
                 )
-            }
+                }
 
-            {userData.role == "paciente" ? (
-                <FixedButton onPress={() => setScheduleAppointmentModalIsVisible(true)}>
-                    <SvgIcon name={Icon.stethoscope} color={AppColors.white} />
-                </FixedButton>) : null}
+                {userData.role == "paciente" ? (
+                    <FixedButton onPress={() => setScheduleAppointmentModalIsVisible(true)}>
+                        <SvgIcon name={Icon.stethoscope} color={AppColors.white} />
+                    </FixedButton>) : null}
 
 
-            <CancelExamDialog
-                visible={cancelModalIsVisible}
-                onClose={() => setCancelModalIsVisible(false)}
-                appointment={appointment} />
+                <CancelExamDialog
+                    visible={cancelModalIsVisible}
+                    onClose={() => setCancelModalIsVisible(false)}
+                    appointment={appointment} />
 
-            <SeeMedicalRecordDialog
-                visible={seeMedicalRecordModalIsVisible}
-                onClose={() => setSeeMedicalRecordIsVisible(false)}
-                appointment={appointment}
-                navigation={navigation}
-            />
+                <SeeMedicalRecordDialog
+                    visible={seeMedicalRecordModalIsVisible}
+                    onClose={() => setSeeMedicalRecordIsVisible(false)}
+                    appointment={appointment}
+                    navigation={navigation}
+                />
 
-            <SeeAppointmentLocalDialog
-                visible={seeAppointmentLocal}
-                onClose={() => setSeeAppointmentLocal(false)}
-                appointment={appointment}
-                navigation={navigation}
-            />
+                <SeeAppointmentLocalDialog
+                    visible={seeAppointmentLocal}
+                    onClose={() => setSeeAppointmentLocal(false)}
+                    appointment={appointment}
+                    navigation={navigation}
+                />
 
-            <ScheduleAppointmentDialog
-                visible={scheduleAppointmentModalIsVisible}
-                onClose={() => setScheduleAppointmentModalIsVisible(false)}
-                navigation={navigation}
-            />
+                <ScheduleAppointmentDialog
+                    visible={scheduleAppointmentModalIsVisible}
+                    onClose={() => setScheduleAppointmentModalIsVisible(false)}
+                    navigation={navigation}
+                />
 
-        </HomeContainer>
+            </HomeContainer>
+
+        </>
     )
 }

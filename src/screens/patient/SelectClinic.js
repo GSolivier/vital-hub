@@ -30,9 +30,6 @@ export default function SelectClinic({navigation}) {
             console.log(error);
         })
       })();
-      
-      
-  
     }, [])
   return (
     <Container paddingTop={30}>
