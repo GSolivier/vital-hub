@@ -82,7 +82,7 @@ export default function AppointmentPatientCard({
                                             />
                                         )
                                         :
-                                        actionType == HomeCardActionType.carriedOut ?
+                                        actionType == "realizada" ?
                                             (
                                                 <LinkButton
                                                     color={AppColors.secondaryV1}

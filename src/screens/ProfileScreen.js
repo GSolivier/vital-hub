@@ -15,6 +15,7 @@ import SvgIcon, { Icon } from '../assets/icons/Icons'
 import { AuthRepository, Logout } from '../repositories/AuthRepository'
 import { isLoading } from 'expo-font'
 import { AppStorage, AppStorageKeys } from '../settings/AppStorage'
+import { PatientRepository, getPatient } from "../repositories/PatientRepository";
 
 const HeaderImage = styled.Image`
     width: 100%;
@@ -44,16 +45,41 @@ export default function ProfileScreen({ user, navigation }) {
     const [open, setOpen] = useState(false)
     const [isEditable, setIsEditable] = useState(false)
     const [userData, setUserData] = useState({})
+    const [dataUser, setDataUser] = useState({})
 
 
     useEffect(() => {
         getUserData() 
+        getDataUser()
     }, [])
+
+    useEffect(() => {
+        
+        getDataUser()
+    }, [userData])
+
 
     async function getUserData() {
         const data = await AppStorage.read(AppStorageKeys.userData)
         setUserData(data)
+        
+        
     }
+
+    async function getDataUser(){
+        const dataUser = await PatientRepository.getPatient(userData.id)
+        setDataUser(dataUser.data)
+       console.log(dataUser.data);
+    }
+
+    const formatCPF = (cpf) => {
+        if (!cpf) return '';
+        return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+    }
+
+
+
+  
 
     const formatDate = (rawDate) => {
         let date = new Date(rawDate)
@@ -107,7 +133,7 @@ export default function ProfileScreen({ user, navigation }) {
                             <AppInput
                                 isEditable={isEditable}
                                 label={t(AppLocalizations.dateOfBirth)}
-                                textValue={formatDate(date)}
+                                textValue={formatDate(dataUser.dataNascimento)}
                                 showSoftInputOnFocus={false}
                                 Icon={<SvgIcon name={Icon.calendar} color={isEditable ? AppColors.primary : AppColors.gray} />}
                             />
@@ -117,20 +143,20 @@ export default function ProfileScreen({ user, navigation }) {
                     <AppInput
                         isEditable={isEditable}
                         label={t(AppLocalizations.cpf)}
-                        textValue={'426********'} />
+                        textValue={formatCPF(dataUser.cpf)} />
                     <Spacing height={20} />
                     <AppInput
                         isEditable={isEditable}
                         label={t(AppLocalizations.adress)}
-                        textValue={'Rua Vicenzo da Silva, 181'} />
+                        textValue={dataUser.endereco ? `${dataUser.endereco.logradouro}, ${dataUser.endereco.numero}` : "N/A"} />
                     <Spacing height={24} />
                     <Row justifyContent={Flex.spaceBetween} width={'100%'}>
                         <InputContainer>
-                            <AppInput isEditable={isEditable} label={t(AppLocalizations.cep)} hint={'09586-754'} />
+                            <AppInput isEditable={isEditable} label={t(AppLocalizations.cep)} hint={dataUser.endereco ? dataUser.endereco.cep : "N/A"} />
                         </InputContainer>
                         <Spacing width={32} />
                         <InputContainer>
-                            <AppInput isEditable={isEditable} label={t(AppLocalizations.city)} hint={'Moema-SP'} />
+                            <AppInput isEditable={isEditable} label={t(AppLocalizations.city)} hint={dataUser.endereco ? dataUser.endereco.cidade : "N/A"} />
                         </InputContainer>
                     </Row>
                     <Spacing height={32} />

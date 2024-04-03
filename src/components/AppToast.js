@@ -34,7 +34,7 @@ async function showErrorToast(title = '', message = '') {
 }
 async function showSucessToast(title = '', message = '') {
     Toast.show({
-        type: 'sucess',
+        type: 'success',
         text1: title,
         text1Style: {
             fontFamily: FontFamily.montSerratBold,

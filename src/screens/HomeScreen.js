@@ -74,6 +74,7 @@ export default function HomeScreen({ navigation }) {
     async function getAppointmentList() {
         setListIsLoading(true)
         const data = await PatientRepository.getPatientAppointments(userData.id, date ? date : new Date())
+        console.log(data.data);
         setRawList(data.data)
         setListIsLoading(false)
     }
