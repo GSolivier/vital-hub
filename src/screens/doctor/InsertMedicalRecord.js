@@ -7,7 +7,7 @@ import { Flex, TextAlign } from '../../settings/AppEnums';
 import AppInput from '../../components/AppInput';
 import { ScrollView } from 'react-native';
 import AppButton, { LinkButton } from '../../components/AppButton';
-import { AppNavigation, pop } from '../../settings/routes/RouteActions';
+import { AppNavigation } from '../../settings/routes/RouteActions';
 import t from '../../locale';
 import AppLocalizations from '../../settings/AppLocalizations';
 

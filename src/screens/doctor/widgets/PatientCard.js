@@ -30,10 +30,10 @@ const SchedulesBox = styled.View`
     padding: 4px;
     width: 100px;
     border-radius: 5px;
-    background-color: ${({ actionCard = HomeCardActionType.scheduled }) => actionCard == HomeCardActionType.scheduled ? AppColors.lightGreen : AppColors.whiteGray};
+    background-color: ${({ actionCard = "agendada" }) => actionCard == "agendada" ? AppColors.lightGreen : AppColors.whiteGray};
 `
 
-export default function HomeCard({ imagePath, name, age, examType, schedule, actionType = HomeCardActionType.scheduled, actionTap }) {
+export default function HomeCard({ imagePath, name, age, examType, schedule, actionType = "agendada", actionTap }) {
     return (
         <CardBox>
             <Row justifyContent={Flex.spaceBetween}>
@@ -41,7 +41,7 @@ export default function HomeCard({ imagePath, name, age, examType, schedule, act
                     <CardImage source={{uri: imagePath}} />
                     <Spacing width={10} />
                     <Column justifyContent={Flex.spaceBetween}>
-                        <Column>
+                        <Column width={'90%'}>
                             <TitleSemiBold size={16}>{name}</TitleSemiBold>
                             <Spacing width={5} />
                             <Row justifyContent={Flex.flexStart} alignItems={Flex.center}>
@@ -55,12 +55,12 @@ export default function HomeCard({ imagePath, name, age, examType, schedule, act
 
                         <Row width={'81%'} justifyContent={Flex.spaceBetween} alignItems={Flex.center}>
                             <SchedulesBox actionCard={actionType}>
-                                <SvgIcon name={Icon.clock} size={15} color={actionType == HomeCardActionType.scheduled ? AppColors.primary : AppColors.grayV1} />
+                                <SvgIcon name={Icon.clock} size={15} color={actionType == "agendada" ? AppColors.primary : AppColors.grayV1} />
                                 <Spacing width={6} />
-                                <TextSemiBold alignSelf={Flex.center} color={actionType == HomeCardActionType.scheduled ? AppColors.primary : AppColors.grayV1} size={14}>{schedule}</TextSemiBold>
+                                <TextSemiBold alignSelf={Flex.center} color={actionType == "agendada" ? AppColors.primary : AppColors.grayV1} size={14}>{schedule}</TextSemiBold>
                             </SchedulesBox>
                             {
-                                actionType == HomeCardActionType.scheduled ?
+                                actionType == "agendada" ?
                                     (
                                         <LinkButton
                                             color={AppColors.red}
@@ -72,7 +72,7 @@ export default function HomeCard({ imagePath, name, age, examType, schedule, act
                                         />
                                     )
                                     :
-                                    actionType == HomeCardActionType.carriedOut ?
+                                    actionType == "realizada" ?
                                         (
                                             <LinkButton
                                                 color={AppColors.secondaryV1}

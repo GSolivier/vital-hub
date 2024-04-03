@@ -53,9 +53,9 @@ export default function AppointmentPatientCard({
                         <Spacing width={10} />
                         <Column justifyContent={Flex.spaceBetween}>
                             <Column width={'90%'}>
-                                <TitleSemiBold size={16}>{name}</TitleSemiBold>
+                                <TitleSemiBold size={16}>Dr. {name}</TitleSemiBold>
                                 <Row justifyContent={Flex.flexStart} alignItems={Flex.center}>
-                                    <TextRegular size={14}>CRM: {crm}</TextRegular>
+                                    <TextRegular size={14}>CRM - {crm}</TextRegular>
                                     <Spacing width={7} />
                                     <TextSemiBold size={14} color={AppColors.grayV6}>•</TextSemiBold>
                                     <Spacing width={7} />

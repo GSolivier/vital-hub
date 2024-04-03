@@ -8,11 +8,11 @@ import AppLocalizations from '../../settings/AppLocalizations';
 import t from '../../locale';
 import AppInput from '../../components/AppInput';
 import AppButton from '../../components/AppButton';
-import { pop } from '../../settings/routes/RouteActions';
+import { AppNavigation } from '../../settings/routes/RouteActions';
 
 export default function RedefinePassword({ navigation }) {
     return (
-        <AuthContainer hasLeading={true} isClosable={true} onTap={() => { pop(navigation) }}>
+        <AuthContainer hasLeading={true} isClosable={true} onTap={() => { AppNavigation.pop(navigation) }}>
             <Image source={AppAssets.appLogoDark} />
             <Spacing height={25} />
             <TitleSemiBold size={20}>{t(AppLocalizations.redefinePassword)}</TitleSemiBold>

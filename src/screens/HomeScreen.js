@@ -20,6 +20,7 @@ import SvgIcon, { Icon } from '../assets/icons/Icons'
 import ScheduleAppointmentDialog from './patient/widgets/dialogs/ScheduleAppointmentDialog'
 import { AuthRepository } from '../repositories/AuthRepository'
 import { PatientRepository } from '../repositories/PatientRepository'
+import { DoctorRepository } from '../repositories/DoctorRepository'
 
 
 const FixedButton = styled.TouchableOpacity`
@@ -73,8 +74,7 @@ export default function HomeScreen({ navigation }) {
 
     async function getAppointmentList() {
         setListIsLoading(true)
-        const data = await PatientRepository.getPatientAppointments(userData.id, date ? date : new Date())
-        console.log(data.data);
+        const data = userData.role == "paciente" ? await PatientRepository.getPatientAppointments(userData.id, date ? date : new Date()) : await DoctorRepository.getDoctorAppointments(userData.id, date ? date : new Date())
         setRawList(data.data)
         setListIsLoading(false)
     }
@@ -99,7 +99,7 @@ export default function HomeScreen({ navigation }) {
         filterAppointmentList()
     }, [rawList, selectedTab]);
 
-    
+
 
     return (
         <>
@@ -133,24 +133,28 @@ export default function HomeScreen({ navigation }) {
                     </FixedButton>) : null}
 
 
-                <CancelExamDialog
-                    visible={cancelModalIsVisible}
-                    onClose={() => setCancelModalIsVisible(false)}
-                    appointment={appointment} />
+                {!appointment ? null : (
+                    <>
+                        <CancelExamDialog
+                            visible={cancelModalIsVisible}
+                            onClose={() => setCancelModalIsVisible(false)}
+                            appointment={appointment} />
 
-                <SeeMedicalRecordDialog
-                    visible={seeMedicalRecordModalIsVisible}
-                    onClose={() => setSeeMedicalRecordIsVisible(false)}
-                    appointment={appointment}
-                    navigation={navigation}
-                />
+                        <SeeMedicalRecordDialog
+                            visible={seeMedicalRecordModalIsVisible}
+                            onClose={() => setSeeMedicalRecordIsVisible(false)}
+                            appointment={appointment}
+                            navigation={navigation}
+                        />
 
-                <SeeAppointmentLocalDialog
-                    visible={seeAppointmentLocal}
-                    onClose={() => setSeeAppointmentLocal(false)}
-                    appointment={appointment}
-                    navigation={navigation}
-                />
+                        <SeeAppointmentLocalDialog
+                            visible={seeAppointmentLocal}
+                            onClose={() => setSeeAppointmentLocal(false)}
+                            appointment={appointment}
+                            navigation={navigation}
+                        />
+                    </>
+                )}
 
                 <ScheduleAppointmentDialog
                     visible={scheduleAppointmentModalIsVisible}

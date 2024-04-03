@@ -1,8 +1,8 @@
-
-import api, { MedicoPath } from "../settings/AppApi";
+import api, { GetMedicoAppointmentPath, MedicoPath } from "../settings/AppApi";
 
 export const DoctorRepository = {
-  getDoctors: getDoctors
+  getDoctors: getDoctors,
+  getDoctorAppointments: getDoctorAppointments
 }
 
 async function getDoctors(){
@@ -15,5 +15,21 @@ async function getDoctors(){
     console.log(error);
   }
 
+}
 
+async function getDoctorAppointments(id, data) {
+  try {
+      const response = await api.get(GetMedicoAppointmentPath, {
+          params: {
+              id: id,
+              data: data
+          }
+      })
+
+      return response
+  } catch (error) {
+      console.log('====================================');
+      console.log(error);
+      console.log('====================================');
+  }
 }
