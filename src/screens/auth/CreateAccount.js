@@ -9,7 +9,7 @@ import AppLocalizations from '../../settings/AppLocalizations'
 import AppInput from '../../components/AppInput'
 import AppButton, { LinkButton } from '../../components/AppButton'
 import { TextAlign } from '../../settings/AppEnums'
-import { pop } from '../../settings/routes/RouteActions'
+import { AppNavigation } from '../../settings/routes/RouteActions'
 
 export default function CreateAccount({ navigation }) {
   return (
@@ -28,7 +28,7 @@ export default function CreateAccount({ navigation }) {
       <Spacing height={30} />
       <AppButton textButton={t(AppLocalizations.signUp).toUpperCase()} />
       <Spacing height={30} />
-      <LinkButton text={t(AppLocalizations.cancel)} onTap={() => pop(navigation)}/>
+      <LinkButton text={t(AppLocalizations.cancel)} onTap={() => AppNavigation.pop(navigation)}/>
     </AuthContainer>
   )
 }

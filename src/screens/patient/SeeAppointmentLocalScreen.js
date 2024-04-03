@@ -8,7 +8,7 @@ import AppInput from '../../components/AppInput'
 import t from '../../locale'
 import AppLocalizations from '../../settings/AppLocalizations'
 import AppButton from '../../components/AppButton'
-import { pop } from '../../settings/routes/RouteActions'
+import { AppNavigation } from '../../settings/routes/RouteActions'
 import * as Location from 'expo-location';
 import { ActivityIndicator, Appearance, Text, TouchableOpacity, useColorScheme } from 'react-native'
 import { AppColors } from '../../settings/AppColors'
@@ -166,7 +166,7 @@ export default function SeeAppointmentLocalScreen({ navigation }) {
           </InputContainer>
         </Row>
         <Spacing height={50} />
-        <AppButton textButton={t(AppLocalizations.back).toUpperCase()} onTap={() => pop(navigation)} />
+        <AppButton textButton={t(AppLocalizations.back).toUpperCase()} onTap={() => AppNavigation.pop(navigation)} />
       </Container>
     </>
   )

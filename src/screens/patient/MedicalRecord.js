@@ -10,7 +10,7 @@ import t from '../../locale'
 import AppLocalizations from '../../settings/AppLocalizations'
 import AppButton, { LinkButton } from '../../components/AppButton'
 import { AppColors } from '../../settings/AppColors'
-import { AppNavigation, RouteKeys, pop } from '../../settings/routes/RouteActions'
+import { AppNavigation, RouteKeys } from '../../settings/routes/RouteActions'
 import PhotoSelector from './widgets/PhotoSelector'
 import SeeImageModal from './widgets/dialogs/SeeImageModal'
 
@@ -38,6 +38,9 @@ export default function MedicalRecord({ navigation, navigation: { setParams } })
     const [imageModalIsVisible, setImageModalIsVisible] = useState(false)
 
     useEffect(() => {
+        console.log('====================================');
+        console.log(params);
+        console.log('====================================');
         if (params.image) {
             setPhotoList([...photoList, params.image])
             setParams({ image: undefined })
@@ -62,12 +65,12 @@ export default function MedicalRecord({ navigation, navigation: { setParams } })
             <HeaderImage source={{ uri: params.appointment.imagePath }} />
             <ScrollView nestedScrollEnabled={true}>
                 <Container justifyContent={Flex.flexStart}>
-                    <TitleSemiBold>{params.appointment.name}</TitleSemiBold>
+                    <TitleSemiBold>{params.appointment.medicoClinica.medico.idNavigation.nome}</TitleSemiBold>
                     <Spacing width={6} />
                     <Row>
-                        <TextMedium size={14}>{params.appointment.specialty}</TextMedium>
+                        <TextMedium size={14}>{params.appointment.medicoClinica.medico.especialidade.especialidade1}</TextMedium>
                         <Spacing width={20} />
-                        <TextMedium size={14}>CRM-{params.appointment.crm}</TextMedium>
+                        <TextMedium size={14}>CRM-{params.appointment.medicoClinica.medico.crm}</TextMedium>
                     </Row>
                     <Spacing height={28} />
                     <AppInput
@@ -120,7 +123,7 @@ export default function MedicalRecord({ navigation, navigation: { setParams } })
                         isTextArea={true}
                         textValue={'Resultado do exame de sangue: tudo normal'} />
                     <Spacing height={30} />
-                    <LinkButton text={t(AppLocalizations.back)} onTap={() => pop(navigation)} />
+                    <LinkButton text={t(AppLocalizations.back)} onTap={() => AppNavigation.pop(navigation)} />
                     <SeeImageModal
                         visible={imageModalIsVisible}
                         image={selectedImage}

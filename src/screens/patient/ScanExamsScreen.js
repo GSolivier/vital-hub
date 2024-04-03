@@ -6,7 +6,7 @@ import styled from 'styled-components/native';
 import { AppColors } from '../../settings/AppColors';
 import SvgIcon, { Icon } from '../../assets/icons/Icons';
 import { Flex } from '../../settings/AppEnums';
-import { AppNavigation, RouteKeys, pop } from '../../settings/routes/RouteActions';
+import { AppNavigation, RouteKeys } from '../../settings/routes/RouteActions';
 
 const AppCamera = styled(Camera)`
     flex: 1;

@@ -4,7 +4,7 @@ import AppLocalizations from '../../settings/AppLocalizations'
 import { TitleSemiBold } from '../../settings/AppFonts'
 import t from '../../locale'
 import AppButton, { LinkButton } from '../../components/AppButton'
-import { pop } from '../../settings/routes/RouteActions'
+import { AppNavigation } from '../../settings/routes/RouteActions'
 import AppDropdown from '../../components/AppDropdown'
 import SelectDateCalendar from './widgets/SelectDateCalendar'
 import ConfirmAppointmentDialog from './widgets/dialogs/ConfirmAppointmentDialog'
@@ -42,7 +42,7 @@ export default function SelectDate({ navigation }) {
       <Spacing height={42} />
       <AppButton textButton={t(AppLocalizations.confirm).toUpperCase()} onTap={() => setConfirmDialog(true)} />
       <Spacing height={30} />
-      <LinkButton text={t(AppLocalizations.cancel)} onTap={() => pop(navigation)} />
+      <LinkButton text={t(AppLocalizations.cancel)} onTap={() => AppNavigation.pop(navigation)} />
       <ConfirmAppointmentDialog visible={confirmDialog}   onClose={() => setConfirmDialog(false)} navigation={navigation}/>
     </Container>
   )
