@@ -8,7 +8,7 @@ import { AppAssets } from '../../../assets/AppAssets'
 
 export const DoctorCardBox = styled.TouchableOpacity`
     width: 100%;
-    elevation: ${({ selected = false }) => selected ? '0px' : '5px'};;
+    elevation: ${({ selected = false }) => selected ? '0' : '5'};;
     padding: 10px;
     background-color: ${AppColors.white};
     border-radius: 5px;

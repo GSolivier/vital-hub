@@ -11,7 +11,7 @@ import SvgIcon, { Icon } from '../../../assets/icons/Icons'
 
 const CardBox = styled.View`
     width: 100%;
-    elevation: 5px;
+    elevation: 5;
     padding: 11px 20px 11px 10px;
     border-radius: 5px;
     background-color: ${AppColors.white};

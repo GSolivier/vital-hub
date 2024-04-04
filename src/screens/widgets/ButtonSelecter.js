@@ -27,6 +27,7 @@ export default function ButtonSelecter({
                     return <>
 
                         <AppButton
+                        
                             isOutlined={selected !== buttonPreferences.type}
                             textButton={buttonPreferences.text}
                             flex={1}

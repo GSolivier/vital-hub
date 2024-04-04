@@ -25,7 +25,7 @@ const HeaderImage = styled.Image`
 const InfoBox = styled.View`
     width: 80%;
     padding: 25px;
-    elevation: 5px;
+    elevation: 5;
     align-items: center;
     background-color: ${AppColors.white};
     border-radius: 5px;
@@ -69,7 +69,6 @@ export default function ProfileScreen({ user, navigation }) {
     async function getDataUser(){
         const dataUser = await PatientRepository.getPatient(userData.id)
         setDataUser(dataUser.data)
-       console.log(dataUser.data);
     }
 
     const formatCPF = (cpf) => {

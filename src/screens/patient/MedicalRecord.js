@@ -38,9 +38,6 @@ export default function MedicalRecord({ navigation, navigation: { setParams } })
     const [imageModalIsVisible, setImageModalIsVisible] = useState(false)
 
     useEffect(() => {
-        console.log('====================================');
-        console.log(params);
-        console.log('====================================');
         if (params.image) {
             setPhotoList([...photoList, params.image])
             setParams({ image: undefined })
@@ -77,16 +74,16 @@ export default function MedicalRecord({ navigation, navigation: { setParams } })
                         isEditable={false}
                         label={t(AppLocalizations.appointDescriptionLabel)}
                         isTextArea={true}
-                        textValue={'O paciente possuí uma infecção noouvido. Necessário repouse de 2 diase acompanhamento médico constante'} />
+                        textValue={params.appointment.descricao ? params.appointment.descricao : "Digite a descrição da consulta" } />
                     <Spacing height={20} />
                     <AppInput
                         isEditable={false}
                         label={t(AppLocalizations.patientDiagnosisLabel)}
-                        textValue={'Infecção no ouvido'} />
+                        textValue={params.appointment.diagnostico ? params.appointment.diagnostico : "Digite o diagnóstico da consulta"} />
                     <Spacing height={20} />
                     <AppInput
                         isEditable={false}
-                        label={t(AppLocalizations.appointDescriptionLabel)}
+                        label={t(AppLocalizations.doctorPrescriptionLabel)}
                         isTextArea={true}
                         textValue={'O paciente possuí uma infecção noouvido. Necessário repouse de 2 diase acompanhamento médico constante'} />
                     <Spacing height={20} />

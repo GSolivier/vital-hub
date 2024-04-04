@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import HomeContainer from './widgets/HomeContainer'
-import { AppStorage, AppStorageKeys } from '../settings/AppStorage'
 import { AppAssets } from '../assets/AppAssets'
 import HomeCalendar from './widgets/HomeCalendar'
-import { AppointmentFilterList, HomeCardActionType } from '../settings/AppEnums'
+import { AppointmentFilterList, TextAlign } from '../settings/AppEnums'
 import ButtonSelecter from './widgets/ButtonSelecter'
 import { Spacing } from '../components/Container'
 import AppointmentPatientList from './patient/widgets/AppointmentPatientList'
 import { AppNavigation, RouteKeys } from '../settings/routes/RouteActions'
-import { DATA, DOCTORS_DATA } from '../settings/AppUtils'
 import AppointmentList from './doctor/widgets/AppointmentList'
 import CancelExamDialog from './doctor/dialogs/CancelExamDialog'
 import SeeMedicalRecordDialog from './doctor/dialogs/SeeMedicalRecordDialog'
@@ -18,23 +16,23 @@ import { AppColors } from '../settings/AppColors'
 import styled from 'styled-components'
 import SvgIcon, { Icon } from '../assets/icons/Icons'
 import ScheduleAppointmentDialog from './patient/widgets/dialogs/ScheduleAppointmentDialog'
-import { AuthRepository } from '../repositories/AuthRepository'
 import { PatientRepository } from '../repositories/PatientRepository'
 import { DoctorRepository } from '../repositories/DoctorRepository'
+import { TextMedium} from '../settings/AppFonts'
+import { useRoute } from '@react-navigation/native'
 
 
 const FixedButton = styled.TouchableOpacity`
   padding: 15px;
   background-color: ${AppColors.primary};
   border-radius: 7px;
-  elevation: 5px;
+  elevation: 5;
   position: absolute;
   bottom: 10px;
   right: 20px;
 `
 
 export default function HomeScreen({ navigation }) {
-    const [userData, setUserData] = useState({})
     const [selectedTab, setSelectedTab] = useState("agendada");
     const [rawList, setRawList] = useState([])
     const [filteredList, setFilteredList] = useState([]);
@@ -43,9 +41,10 @@ export default function HomeScreen({ navigation }) {
     const [cancelModalIsVisible, setCancelModalIsVisible] = useState(false)
     const [appointment, setSelectedAppointment] = useState({})
     const [seeMedicalRecordModalIsVisible, setSeeMedicalRecordIsVisible] = useState(false)
-    const [loading, setUserIsLoading] = useState(false)
     const [listIsLoading, setListIsLoading] = useState(false)
     const [date, setDate] = useState()
+
+    const {params} = useRoute()
 
 
     const handleTabSelected = async (value) => {
@@ -74,7 +73,7 @@ export default function HomeScreen({ navigation }) {
 
     async function getAppointmentList() {
         setListIsLoading(true)
-        const data = userData.role == "paciente" ? await PatientRepository.getPatientAppointments(userData.id, date ? date : new Date()) : await DoctorRepository.getDoctorAppointments(userData.id, date ? date : new Date())
+        const data = params.userData.role == "paciente" ? await PatientRepository.getPatientAppointments(params.userData.id, date ? date : new Date()) : await DoctorRepository.getDoctorAppointments(params.userData.id, date ? date : new Date())
         setRawList(data.data)
         setListIsLoading(false)
     }
@@ -84,10 +83,6 @@ export default function HomeScreen({ navigation }) {
     }
 
     async function getUserData() {
-        setUserIsLoading(true)
-        const data = await AppStorage.read(AppStorageKeys.userData)
-        setUserData(data)
-        setUserIsLoading(false)
         await getAppointmentList();
     }
 
@@ -103,7 +98,7 @@ export default function HomeScreen({ navigation }) {
 
     return (
         <>
-            <HomeContainer name={userData.name} imagePath={AppAssets.placeholder}>
+            <HomeContainer name={params.userData.name} imagePath={AppAssets.placeholder}>
                 <HomeCalendar setDate={setDate} />
                 <Spacing height={20} />
                 <ButtonSelecter
@@ -114,7 +109,10 @@ export default function HomeScreen({ navigation }) {
                 <Spacing height={20} />
 
 
-                {listIsLoading ? <ActivityIndicator /> : userData.role == "paciente" ? (
+                {listIsLoading ? 
+                <ActivityIndicator color={AppColors.primary}/> : 
+                filteredList.length == 0 ? <TextMedium textAlign={TextAlign.center}>{`Nenhuma consulta ${selectedTab} cadastrada na data atual`}</TextMedium> 
+                : params.userData.role == "paciente" ? (
                     <AppointmentPatientList
                         DATA={filteredList}
                         tapAction={selectedTab == "agendada" ? handleCancelAppointment : handleSeeMedicalRecord}
@@ -127,7 +125,7 @@ export default function HomeScreen({ navigation }) {
                 )
                 }
 
-                {userData.role == "paciente" ? (
+                {params.userData.role == "paciente" ? (
                     <FixedButton onPress={() => setScheduleAppointmentModalIsVisible(true)}>
                         <SvgIcon name={Icon.stethoscope} color={AppColors.white} />
                     </FixedButton>) : null}

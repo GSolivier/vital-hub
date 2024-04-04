@@ -11,6 +11,7 @@ import { RouteKeys } from './RouteActions'
 import { Spacing } from '../../components/Container'
 import ProfileScreen from '../../screens/ProfileScreen'
 import HomeScreen from '../../screens/HomeScreen'
+import { useRoute } from '@react-navigation/native'
 
 const Tab = createBottomTabNavigator();
 
@@ -26,7 +27,7 @@ export const IconButton = styled.View`
 `
 
 export default function TabNavigation() {
-
+    const { params } = useRoute();
     return (
             <Tab.Navigator
                 initialRouteName={RouteKeys.homeScreen}
@@ -70,7 +71,7 @@ export default function TabNavigation() {
                 <Tab.Screen 
                 name={RouteKeys.homeScreen} 
                 component={HomeScreen} 
-
+                initialParams={{userData : params.userData}}
                 />
 
                 {/* <Tab.Screen 

@@ -13,7 +13,7 @@ import { Flex } from '../../settings/AppEnums'
 import SvgIcon, { Icon } from '../../assets/icons/Icons'
 import { AppNavigation, RouteKeys } from '../../settings/routes/RouteActions'
 import * as Auth from 'expo-local-authentication'
-import { AppStorage } from '../../settings/AppStorage'
+import { AppStorage, AppStorageKeys } from '../../settings/AppStorage'
 import { AuthRepository } from '../../repositories/AuthRepository'
 
 
@@ -21,7 +21,7 @@ import { AuthRepository } from '../../repositories/AuthRepository'
 
 export default function Login({ navigation }) {
 
-  const [email, setEmail] = useState('martin@medico')
+  const [email, setEmail] = useState('carol@email')
   const [senha, setSenha] = useState('123')
 
 
@@ -115,6 +115,10 @@ export default function Login({ navigation }) {
             setIsLoading(true)
 
             await AuthRepository.login(email, senha, navigation)
+
+            const userData = await AppStorage.read(AppStorageKeys.userData)
+
+            AppNavigation.push(navigation, RouteKeys.tabNavigation, {userData: userData})
 
             setIsLoading(false)
           } catch (e) {

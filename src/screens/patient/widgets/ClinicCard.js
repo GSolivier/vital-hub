@@ -8,7 +8,7 @@ import { Flex } from '../../../settings/AppEnums'
 
 export const ClinicCardBox = styled.TouchableOpacity`
     width: 100%;
-    elevation: ${({selected = false}) => selected  ? '0px' : '5px'};;
+    elevation: ${({selected = false}) => selected  ? '0' : '5'};;
     padding: 18px;
     background-color: ${AppColors.white};
     border-radius: 5px;
