@@ -74,18 +74,18 @@ export default function MedicalRecord({ navigation, navigation: { setParams } })
                         isEditable={false}
                         label={t(AppLocalizations.appointDescriptionLabel)}
                         isTextArea={true}
-                        textValue={params.appointment.descricao ? params.appointment.descricao : "Digite a descrição da consulta" } />
+                        textValue={params.appointment.descricao ? params.appointment.descricao : "Nada cadastrado" } />
                     <Spacing height={20} />
                     <AppInput
                         isEditable={false}
                         label={t(AppLocalizations.patientDiagnosisLabel)}
-                        textValue={params.appointment.diagnostico ? params.appointment.diagnostico : "Digite o diagnóstico da consulta"} />
+                        textValue={params.appointment.diagnostico ? params.appointment.diagnostico : "Nada cadastrado"} />
                     <Spacing height={20} />
                     <AppInput
                         isEditable={false}
                         label={t(AppLocalizations.doctorPrescriptionLabel)}
                         isTextArea={true}
-                        textValue={'O paciente possuí uma infecção noouvido. Necessário repouse de 2 diase acompanhamento médico constante'} />
+                        textValue={params.appointment.receita.medicamento ? `${params.appointment.receita.medicamento}\n${params.appointment.receita.observacoes}` : "Nada cadastrado"} />
                     <Spacing height={20} />
                     <PhotoSelector
                         label={t(AppLocalizations.medicalExams)}

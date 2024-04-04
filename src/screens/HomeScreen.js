@@ -18,6 +18,7 @@ import SvgIcon, { Icon } from '../assets/icons/Icons'
 import ScheduleAppointmentDialog from './patient/widgets/dialogs/ScheduleAppointmentDialog'
 import { PatientRepository } from '../repositories/PatientRepository'
 import { DoctorRepository } from '../repositories/DoctorRepository'
+import { AppToast } from '../components/AppToast'
 import { TextMedium} from '../settings/AppFonts'
 import { useRoute } from '@react-navigation/native'
 
@@ -63,7 +64,13 @@ export default function HomeScreen({ navigation }) {
 
     const handleSeeMedicalRecord = (appointment) => {
         setSelectedAppointment(appointment);
-        AppNavigation.push(navigation, RouteKeys.medicalRecordScreen, { appointment: appointment })
+
+        if (appointment.receitaId) {
+            AppNavigation.push(navigation, RouteKeys.medicalRecordScreen, { appointment: appointment })
+        } else{
+            AppToast.showInfoToast("Prontuário não cadastrado pelo médico")
+        }
+        
     }
 
     const handleInsertMedicalRecord = (appointment) => {

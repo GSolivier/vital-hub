@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useRoute } from '@react-navigation/native';
 import styled from 'styled-components/native';
 import { Container, Row, Spacing } from '../../components/Container';
@@ -19,6 +19,10 @@ const HeaderImage = styled.Image`
 
 export default function InsertMedicalRecord({ navigation }) {
     const { params } = useRoute();
+    
+    useEffect( ()=>{
+        console.log(params.appointment.receita);
+    }, [])
     return (
         <>
             <HeaderImage source={{ uri: params.appointment.imagePath }} />
@@ -32,11 +36,11 @@ export default function InsertMedicalRecord({ navigation }) {
                         <TextMedium size={14} textAlign={TextAlign.center}>{params.appointment.paciente.idNavigation.email}</TextMedium>
                     </Row>
                     <Spacing height={24} />
-                    <AppInput label={t(AppLocalizations.appointDescriptionLabel)} hint={params.appointment.descriptionHint} isTextArea={true} onChangeText={() => { }} />
+                    <AppInput  label={t(AppLocalizations.appointDescriptionLabel)} hint={params.appointment.descricao ? params.appointment.descricao : "NA" } isTextArea={true} onChangeText={() => { }} />
                     <Spacing height={20} />
-                    <AppInput label={t(AppLocalizations.patientDiagnosisLabel)} hint={t(AppLocalizations.diagnosisLabel)} onChangeText={() => { }} />
+                    <AppInput  label={t(AppLocalizations.patientDiagnosisLabel)} hint={params.appointment.diagnostico ? params.appointment.diagnostico : "NA" } onChangeText={() => { }} />
                     <Spacing height={20} />
-                    <AppInput label={t(AppLocalizations.doctorPrescriptionLabel)} hint={t(AppLocalizations.doctorPrescriptionLabel)} isTextArea={true} onChangeText={() => { }} />
+                    <AppInput  label={t(AppLocalizations.doctorPrescriptionLabel)} hint={params.appointment.receita ? `Medicamento: ${params.appointment.receita.medicamento}\n${params.appointment.receita.observacoes}` : "NA"} isTextArea={true} onChangeText={() => { }} />
                     <Spacing height={30} />
                     <AppButton textButton={t(AppLocalizations.saveButton).toUpperCase()} />
                     <Spacing height={30} />
