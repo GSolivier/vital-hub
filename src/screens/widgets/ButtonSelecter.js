@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { TextSemiBold } from '../../settings/AppFonts'
 import { Row, Spacing } from '../../components/Container'
 import { Flex } from '../../settings/AppEnums'
@@ -12,7 +12,7 @@ export default function ButtonSelecter({
     label,
     buttonList = [],
     spacing = 10
- }) {
+}) {
     return (
         <>
             {label ? (
@@ -24,10 +24,10 @@ export default function ButtonSelecter({
             <Row justifyContent={Flex.spaceBetween} width={'100%'}>
                 {buttonList.map((buttonPreferences, index) => {
                     const isLastItem = index === buttonList.length - 1;
-                    return <>
+                    return <Fragment key={index}>
 
                         <AppButton
-                        
+
                             isOutlined={selected !== buttonPreferences.type}
                             textButton={buttonPreferences.text}
                             flex={1}
@@ -39,7 +39,7 @@ export default function ButtonSelecter({
                             mainTextColor={mainTextColor}
                         />
                         {!isLastItem && <Spacing width={spacing} />}
-                    </>
+                    </Fragment>
                 })}
             </Row>
         </>

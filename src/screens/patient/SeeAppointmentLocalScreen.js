@@ -15,6 +15,7 @@ import { AppColors } from '../../settings/AppColors'
 import MapViewDirections from 'react-native-maps-directions'
 import { mapskey } from '../../settings/AppUtils'
 import SvgIcon, { Icon } from '../../assets/icons/Icons'
+import { useRoute } from '@react-navigation/native'
 
 const Map = styled(MapView)`
   width: 100%;
@@ -46,6 +47,7 @@ export default function SeeAppointmentLocalScreen({ navigation }) {
   const [theme, setTheme] = useState(null)
   let colorScheme = useColorScheme()
 
+  const {params} = useRoute()
 
   async function getCurrentLocalization() {
     const { granted } = await Location.requestForegroundPermissionsAsync()
