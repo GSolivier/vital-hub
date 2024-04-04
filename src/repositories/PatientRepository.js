@@ -25,6 +25,9 @@ async function getPatient(id) {
 
 async function getPatientAppointments(id, data) {
     try {
+        console.log('====================================');
+        console.log(id);
+        console.log('====================================');
         const response = await api.get(GetPatientAppointmentPath, {
             params: {
                 id: id,

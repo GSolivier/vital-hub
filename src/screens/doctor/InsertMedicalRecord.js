@@ -10,6 +10,7 @@ import AppButton, { LinkButton } from '../../components/AppButton';
 import { AppNavigation } from '../../settings/routes/RouteActions';
 import t from '../../locale';
 import AppLocalizations from '../../settings/AppLocalizations';
+import moment from 'moment';
 
 const HeaderImage = styled.Image`
     width: 100%;
@@ -23,23 +24,23 @@ export default function InsertMedicalRecord({ navigation }) {
             <HeaderImage source={{ uri: params.appointment.imagePath }} />
             <ScrollView>
                 <Container justifyContent={Flex.flexStart}>
-                    <TitleSemiBold>{params.appointment.name}</TitleSemiBold>
+                    <TitleSemiBold>{params.appointment.paciente.idNavigation.nome}</TitleSemiBold>
                     <Spacing height={10} />
                     <Row justifyContent={Flex.spaceAround} width={'85%'}>
 
-                        <TextMedium size={14} textAlign={TextAlign.center}>{params.appointment.age} {t(AppLocalizations.yearsOld)}</TextMedium>
-                        <TextMedium size={14}  textAlign={TextAlign.center}>{params.appointment.email}</TextMedium>
+                        <TextMedium size={14} textAlign={TextAlign.center}>{moment(moment()).diff(params.appointment.paciente.dataNascimento, 'years')} {t(AppLocalizations.yearsOld)}</TextMedium>
+                        <TextMedium size={14} textAlign={TextAlign.center}>{params.appointment.paciente.idNavigation.email}</TextMedium>
                     </Row>
                     <Spacing height={24} />
-                    <AppInput  label={t(AppLocalizations.appointDescriptionLabel)} hint={params.appointment.descriptionHint} isTextArea={true} onChangeText={() => { }} />
+                    <AppInput label={t(AppLocalizations.appointDescriptionLabel)} hint={params.appointment.descriptionHint} isTextArea={true} onChangeText={() => { }} />
                     <Spacing height={20} />
-                    <AppInput  label={t(AppLocalizations.patientDiagnosisLabel)} hint={t(AppLocalizations.diagnosisLabel)} onChangeText={() => { }} />
+                    <AppInput label={t(AppLocalizations.patientDiagnosisLabel)} hint={t(AppLocalizations.diagnosisLabel)} onChangeText={() => { }} />
                     <Spacing height={20} />
-                    <AppInput  label={t(AppLocalizations.doctorPrescriptionLabel)} hint={t(AppLocalizations.doctorPrescriptionLabel)} isTextArea={true} onChangeText={() => { }} />
+                    <AppInput label={t(AppLocalizations.doctorPrescriptionLabel)} hint={t(AppLocalizations.doctorPrescriptionLabel)} isTextArea={true} onChangeText={() => { }} />
                     <Spacing height={30} />
                     <AppButton textButton={t(AppLocalizations.saveButton).toUpperCase()} />
                     <Spacing height={30} />
-                    <AppButton textButton={t(AppLocalizations.editButton).toUpperCase()} isDisabled={true}/>
+                    <AppButton textButton={t(AppLocalizations.editButton).toUpperCase()} isDisabled={true} />
                     <Spacing height={25} />
                     <LinkButton text={t(AppLocalizations.cancel)} onTap={() => AppNavigation.pop(navigation)} />
                 </Container>
