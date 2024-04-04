@@ -3,7 +3,7 @@ import { AppStorage, AppStorageKeys } from './AppStorage';
 
 const apiPort = '4466';
 
-const ip = '192.168.0.4';
+const ip = '192.168.19.137';
 
 //const ip = '172.16.39.113';
 
