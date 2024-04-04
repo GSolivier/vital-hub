@@ -21,7 +21,7 @@ import { AuthRepository } from '../../repositories/AuthRepository'
 
 export default function Login({ navigation }) {
 
-  const [email, setEmail] = useState('ian@email.com')
+  const [email, setEmail] = useState('samuel@email.com')
   const [senha, setSenha] = useState('senai123')
 
 
