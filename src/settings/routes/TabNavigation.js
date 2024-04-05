@@ -81,7 +81,8 @@ export default function TabNavigation() {
 
                 <Tab.Screen 
                 name={RouteKeys.profileScreen} 
-                component={ProfileScreen} 
+                component={ProfileScreen}
+                initialParams={{userData : params.userData}}
                 />
             </Tab.Navigator>
     )

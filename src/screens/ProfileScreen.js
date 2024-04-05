@@ -16,6 +16,9 @@ import { AuthRepository, Logout } from '../repositories/AuthRepository'
 import { isLoading } from 'expo-font'
 import { AppStorage, AppStorageKeys } from '../settings/AppStorage'
 import { PatientRepository, getPatient } from "../repositories/PatientRepository";
+import { UserRepository } from '../repositories/UserRepository'
+import { useRoute } from '@react-navigation/native'
+import { AppAssets } from '../assets/AppAssets'
 
 const HeaderImage = styled.Image`
     width: 100%;
@@ -47,27 +50,16 @@ export default function ProfileScreen({ user, navigation }) {
     const [userData, setUserData] = useState({})
     const [dataUser, setDataUser] = useState({})
 
+    const { params } = useRoute()
+
 
     useEffect(() => {
-        getUserData() 
-        getDataUser()
-    }, [])
-
-    useEffect(() => {
-        
         getDataUser()
     }, [userData])
 
 
-    async function getUserData() {
-        const data = await AppStorage.read(AppStorageKeys.userData)
-        setUserData(data)
-        
-        
-    }
-
-    async function getDataUser(){
-        const dataUser = await PatientRepository.getPatient(userData.id)
+    async function getDataUser() {
+        const dataUser = await PatientRepository.getPatient(params.userData.id)
         setDataUser(dataUser.data)
     }
 
@@ -75,10 +67,6 @@ export default function ProfileScreen({ user, navigation }) {
         if (!cpf) return '';
         return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
     }
-
-
-
-  
 
     const formatDate = (rawDate) => {
         let date = new Date(rawDate)
@@ -117,11 +105,11 @@ export default function ProfileScreen({ user, navigation }) {
 
     return (
         <>
-            <HeaderImage source={{ uri: USER_LOGGED.imagePath }} />
+            <HeaderImage source={{ uri: params.userData.foto }} />
             <InfoBox>
-                <TitleSemiBold textAlign={TextAlign.center} size={16}>{userData.name}</TitleSemiBold>
+                <TitleSemiBold textAlign={TextAlign.center} size={16}>{params.userData.name}</TitleSemiBold>
                 <Spacing height={10} />
-                <TextMedium size={14}>{userData.email}</TextMedium>
+                <TextMedium size={14}>{params.userData.email}</TextMedium>
             </InfoBox>
             <ScrollView>
                 <Container justifyContent={Flex.flexStart}>

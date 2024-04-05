@@ -5,6 +5,7 @@ import { AppNavigation, RouteKeys, } from "../settings/routes/RouteActions";
 import { decode, encode } from 'base-64'
 import { ToastAndroid } from "react-native";
 import { AppToast } from '../components/AppToast'
+import { UserRepository } from "./UserRepository";
 if (!global.atob) {
     global.atob = decode
 }
@@ -14,8 +15,8 @@ if (!global.btoa) {
 }
 
 export const AuthRepository = {
-    tokenDecode : tokenDecode,
-    login : login,
+    tokenDecode: tokenDecode,
+    login: login,
     logout: Logout
 }
 
@@ -36,7 +37,8 @@ async function tokenDecode() {
         email: decoded.email,
         name: decoded.name,
         id: decoded.jti,
-        role: decoded.role
+        role: decoded.role,
+        photo: decoded.photo
     }
 }
 
@@ -48,16 +50,30 @@ export async function login(email, senha, navigation) {
 
             const data = response.data
 
+
             await AppStorage.write(AppStorageKeys.token, data.token)
 
             const userData = await tokenDecode();
 
-            await AppStorage.write(AppStorageKeys.userData,userData)
-            
+            await AppStorage.write(AppStorageKeys.userData, userData)
+
+            const userExtraData = await UserRepository.getUserById(userData.id)
+            console.log('=================Usuário Logado===================');
+            console.log(userExtraData.data)
+            console.log(userData);
+            console.log('====================================');
+
+            AppNavigation.push(navigation, RouteKeys.tabNavigation, {
+                userData: {
+                    ...userData,
+                    ...userExtraData.data
+                }
+            })
+
             AppToast.showSucessToast("Login efetuado com sucesso!")
         })
         .catch(function (error) {
-                console.log(error);
+            console.log(error.request);
             if (error.request) {
                 ToastAndroid.showWithGravity(
                     "Houve um problema desconhecido. Tente novamente mais tarde",
@@ -83,7 +99,7 @@ export async function login(email, senha, navigation) {
 }
 
 export async function Logout(navigation) {
-    const response = AppStorage.clear(AppStorage.token)
+    const response = AppStorage.clear(AppStorageKeys.token)
 
     AppNavigation.push(navigation, RouteKeys.loginScreen, true)
 }
