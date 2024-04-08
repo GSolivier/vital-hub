@@ -20,6 +20,8 @@ export const AppointmentPath = '/Consultas'
 export const GetPatientAppointmentPath = `${PatientPath}/BuscarPorData`
 export const PostAppointmentPath = `${AppointmentPath}/Cadastrar`
 
+export const GetUserById = `/Usuario/BuscarPorID`
+
 const api = axios.create({
 
   baseURL: BASE_URL_LOCAL,

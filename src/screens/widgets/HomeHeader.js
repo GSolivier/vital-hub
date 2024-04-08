@@ -9,6 +9,7 @@ import { Flex } from '../../settings/AppEnums'
 import t from '../../locale'
 import AppLocalizations from '../../settings/AppLocalizations'
 import SvgIcon, { Icon } from '../../assets/icons/Icons'
+import { AppAssets } from '../../assets/AppAssets'
 
 
 export const HeaderBox = styled(LinearGradient)`
@@ -31,7 +32,6 @@ export const ProfileImage = styled.Image`
 
 export default function HomeHeader({ imagePath, name, onTapNotification }) {
 
-
     return (
 
         <HeaderBox colors={['#60BFC5', '#496BBA']} start={{ x: 0.2, y: 0.1 }} locations={[0.1, 1]}>
@@ -42,7 +42,7 @@ export default function HomeHeader({ imagePath, name, onTapNotification }) {
             justifyContent={Flex.spaceBetween} 
             width={'100%'}>
                 <Row alignItems={Flex.center}>
-                    <ProfileImage source={imagePath} />
+                    <ProfileImage source={imagePath ? {uri : imagePath} : AppAssets.placeholder} />
                     <Spacing width={10} />
                     <Column width={'70%'}>
                         <TextMedium size={14}>{t(AppLocalizations.welcome)}</TextMedium>

@@ -28,7 +28,7 @@ const InputContainer = styled.View`
 
 const ZoomOut = styled.TouchableOpacity`
   position: absolute;
-  top: -20%;
+  top: -30%;
   right: 5%;
   z-index: 9999;
   background-color: ${AppColors.white};
@@ -47,7 +47,7 @@ export default function SeeAppointmentLocalScreen({ navigation }) {
   const [theme, setTheme] = useState(null)
   let colorScheme = useColorScheme()
 
-  const {params} = useRoute()
+  const { params } = useRoute()
 
   async function getCurrentLocalization() {
     const { granted } = await Location.requestForegroundPermissionsAsync()
@@ -62,6 +62,10 @@ export default function SeeAppointmentLocalScreen({ navigation }) {
   useEffect(() => {
     getCurrentLocalization()
     setTheme(colorScheme)
+    setFinalPosition({
+      latitude: params.clinicAdress.latitude,
+      longitude: params.clinicAdress.longitude,
+    })
 
     Location.watchPositionAsync({
       accuracy: Location.LocationAccuracy.Highest,
@@ -95,8 +99,8 @@ export default function SeeAppointmentLocalScreen({ navigation }) {
   if (initialPosition == null) {
     return <Container>
       <TitleSemiBold>Carregando</TitleSemiBold>
-      <Spacing height={10}/>
-      <ActivityIndicator/>
+      <Spacing height={10} />
+      <ActivityIndicator />
     </Container>
   }
 
@@ -125,8 +129,8 @@ export default function SeeAppointmentLocalScreen({ navigation }) {
         <MapViewDirections
           origin={initialPosition.coords}
           destination={{
-            latitude: -23.698023,
-            longitude: -46.598395,
+            latitude: finalPosition.latitude,
+            longitude: finalPosition.longitude,
             latitudeDelta: 0.005,
             longitudeDelta: 0.005
           }}
@@ -147,24 +151,24 @@ export default function SeeAppointmentLocalScreen({ navigation }) {
 
       </Map>
       <Container justifyContent={Flex.flexStart}>
-        <ZoomOut onPress={ () => reloadView()} activeOpacity={.8}>
+        <ZoomOut onPress={() => reloadView()} activeOpacity={.8}>
 
           <SvgIcon name={Icon.zoomOut} size={30} color={AppColors.secondary} />
         </ZoomOut>
         <Spacing height={10} />
-        <TitleSemiBold size={20}>Clinica Natureh</TitleSemiBold>
+        <TitleSemiBold size={20}>{params.clinicName}</TitleSemiBold>
         <Spacing height={8} />
-        <TextSemiBold size={14}>São Paulo - SP</TextSemiBold>
+        <TextSemiBold size={14}>{params.clinicAdress.clinicCity}</TextSemiBold>
         <Spacing height={20} />
-        <AppInput isEditable={false} label={t(AppLocalizations.adress)} hint={'Rua Vicenso Silva, 987'} />
+        <AppInput isEditable={false} label={t(AppLocalizations.adress)} hint={params.clinicAdress.street} />
         <Spacing height={24} />
         <Row justifyContent={Flex.spaceBetween} width={'100%'}>
           <InputContainer>
-            <AppInput isEditable={false} label={t(AppLocalizations.number)} hint={'578'} />
+            <AppInput isEditable={false} label={t(AppLocalizations.number)} hint={params.clinicAdress.number.toString()} />
           </InputContainer>
           <Spacing width={32} />
           <InputContainer>
-            <AppInput isEditable={false} label={t(AppLocalizations.neighborhood)} hint={'Moema-SP'} />
+            <AppInput isEditable={false} label={t(AppLocalizations.neighborhood)} hint={params.clinicAdress.clinicCity} />
           </InputContainer>
         </Row>
         <Spacing height={50} />
@@ -392,162 +396,162 @@ const lightMap = [
 
 const darkMap = [
   {
-      "elementType": "geometry",
-      "stylers": [
-          {
-              "color": "#242f3e"
-          }
-      ]
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#242f3e"
+      }
+    ]
   },
   {
-      "elementType": "labels.text.fill",
-      "stylers": [
-          {
-              "color": "#746855"
-          }
-      ]
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#746855"
+      }
+    ]
   },
   {
-      "elementType": "labels.text.stroke",
-      "stylers": [
-          {
-              "color": "#242f3e"
-          }
-      ]
+    "elementType": "labels.text.stroke",
+    "stylers": [
+      {
+        "color": "#242f3e"
+      }
+    ]
   },
   {
-      "featureType": "administrative.locality",
-      "elementType": "labels.text.fill",
-      "stylers": [
-          {
-              "color": "#d59563"
-          }
-      ]
+    "featureType": "administrative.locality",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#d59563"
+      }
+    ]
   },
   {
-      "featureType": "poi",
-      "elementType": "labels.text.fill",
-      "stylers": [
-          {
-              "color": "#d59563"
-          }
-      ]
+    "featureType": "poi",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#d59563"
+      }
+    ]
   },
   {
-      "featureType": "poi.park",
-      "elementType": "geometry",
-      "stylers": [
-          {
-              "color": "#263c3f"
-          }
-      ]
+    "featureType": "poi.park",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#263c3f"
+      }
+    ]
   },
   {
-      "featureType": "poi.park",
-      "elementType": "labels.text.fill",
-      "stylers": [
-          {
-              "color": "#6b9a76"
-          }
-      ]
+    "featureType": "poi.park",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#6b9a76"
+      }
+    ]
   },
   {
-      "featureType": "road",
-      "elementType": "geometry",
-      "stylers": [
-          {
-              "color": "#38414e"
-          }
-      ]
+    "featureType": "road",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#38414e"
+      }
+    ]
   },
   {
-      "featureType": "road",
-      "elementType": "geometry.stroke",
-      "stylers": [
-          {
-              "color": "#212a37"
-          }
-      ]
+    "featureType": "road",
+    "elementType": "geometry.stroke",
+    "stylers": [
+      {
+        "color": "#212a37"
+      }
+    ]
   },
   {
-      "featureType": "road",
-      "elementType": "labels.text.fill",
-      "stylers": [
-          {
-              "color": "#9ca5b3"
-          }
-      ]
+    "featureType": "road",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#9ca5b3"
+      }
+    ]
   },
   {
-      "featureType": "road.highway",
-      "elementType": "geometry",
-      "stylers": [
-          {
-              "color": "#746855"
-          }
-      ]
+    "featureType": "road.highway",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#746855"
+      }
+    ]
   },
   {
-      "featureType": "road.highway",
-      "elementType": "geometry.stroke",
-      "stylers": [
-          {
-              "color": "#1f2835"
-          }
-      ]
+    "featureType": "road.highway",
+    "elementType": "geometry.stroke",
+    "stylers": [
+      {
+        "color": "#1f2835"
+      }
+    ]
   },
   {
-      "featureType": "road.highway",
-      "elementType": "labels.text.fill",
-      "stylers": [
-          {
-              "color": "#f3d19c"
-          }
-      ]
+    "featureType": "road.highway",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#f3d19c"
+      }
+    ]
   },
   {
-      "featureType": "transit",
-      "elementType": "geometry",
-      "stylers": [
-          {
-              "color": "#2f3948"
-          }
-      ]
+    "featureType": "transit",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#2f3948"
+      }
+    ]
   },
   {
-      "featureType": "transit.station",
-      "elementType": "labels.text.fill",
-      "stylers": [
-          {
-              "color": "#d59563"
-          }
-      ]
+    "featureType": "transit.station",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#d59563"
+      }
+    ]
   },
   {
-      "featureType": "water",
-      "elementType": "geometry",
-      "stylers": [
-          {
-              "color": "#17263c"
-          }
-      ]
+    "featureType": "water",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#17263c"
+      }
+    ]
   },
   {
-      "featureType": "water",
-      "elementType": "labels.text.fill",
-      "stylers": [
-          {
-              "color": "#515c6d"
-          }
-      ]
+    "featureType": "water",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#515c6d"
+      }
+    ]
   },
   {
-      "featureType": "water",
-      "elementType": "labels.text.stroke",
-      "stylers": [
-          {
-              "color": "#17263c"
-          }
-      ]
+    "featureType": "water",
+    "elementType": "labels.text.stroke",
+    "stylers": [
+      {
+        "color": "#17263c"
+      }
+    ]
   }
 ]

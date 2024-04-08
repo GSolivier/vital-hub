@@ -23,7 +23,7 @@ export default function AppointmentPatientList({ DATA, tapAction, cardTapAction 
                 renderItem={({ item }) =>
                 (
                     <AppointmentPatientCard 
-                    imagePath={item.imagePath}
+                    imagePath={item.medicoClinica.medico.idNavigation.foto}
                     name={item.medicoClinica.medico.idNavigation.nome}
                     crm={item.medicoClinica.medico.crm}
                     examType={decodePriority(item.prioridade.prioridade)}

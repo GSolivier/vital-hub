@@ -21,6 +21,7 @@ import { DoctorRepository } from '../repositories/DoctorRepository'
 import { AppToast } from '../components/AppToast'
 import { TextMedium} from '../settings/AppFonts'
 import { useRoute } from '@react-navigation/native'
+import { UserRepository } from '../repositories/UserRepository'
 
 
 const FixedButton = styled.TouchableOpacity`
@@ -105,7 +106,7 @@ export default function HomeScreen({ navigation }) {
 
     return (
         <>
-            <HomeContainer name={params.userData.name} imagePath={AppAssets.placeholder}>
+            <HomeContainer name={params.userData.name} imagePath={params.userData.foto}>
                 <HomeCalendar setDate={setDate} />
                 <Spacing height={20} />
                 <ButtonSelecter

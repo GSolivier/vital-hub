@@ -22,12 +22,14 @@ import { AuthRepository } from '../../repositories/AuthRepository'
 export default function Login({ navigation }) {
 
 
- /*  const [email, setEmail] = useState('carol@email')
-  const [senha, setSenha] = useState('123') */
+  //const [email, setEmail] = useState('carol@email')
+
 
   //const [email, setEmail] = useState('samuel@email.com')
   const [email, setEmail] = useState('nelson@email.com')
   const [senha, setSenha] = useState('senai123')
+  // const [email, setEmail] = useState('ian@email.com')
+  // const [senha, setSenha] = useState('senai123')
 
 
 
@@ -120,11 +122,7 @@ export default function Login({ navigation }) {
           try {
             setIsLoading(true)
 
-            await AuthRepository.login(email, senha, navigation)
-
-            const userData = await AppStorage.read(AppStorageKeys.userData)
-
-            AppNavigation.push(navigation, RouteKeys.tabNavigation, {userData: userData})
+            await AuthRepository.login(email, senha, navigation)  
 
             setIsLoading(false)
           } catch (e) {

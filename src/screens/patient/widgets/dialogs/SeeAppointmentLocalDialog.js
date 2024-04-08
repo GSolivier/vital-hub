@@ -21,7 +21,19 @@ export default function SeeAppointmentLocalDialog({ visible, onClose, appointmen
     return null;
   }
   const handleInsertMedicalRecord = () => {
-    AppNavigation.push(navigation, RouteKeys.seeAppointmentLocalScreen, { appointment: appointment });
+    AppNavigation.push(
+      navigation,
+      RouteKeys.seeAppointmentLocalScreen,
+      {
+        clinicName: appointment.medicoClinica.clinica.nomeFantasia,
+        clinicAdress: {
+          clinicCity: appointment.medicoClinica.clinica.endereco.cidade,
+          street: appointment.medicoClinica.clinica.endereco.logradouro,
+          number: appointment.medicoClinica.clinica.endereco.numero,
+          longitude: appointment.medicoClinica.clinica.endereco.longitude,
+          latitude: appointment.medicoClinica.clinica.endereco.latitude,
+        }
+      });
     onClose();
   };
   return (
@@ -29,7 +41,11 @@ export default function SeeAppointmentLocalDialog({ visible, onClose, appointmen
       visible={visible}
       flex={0.6}
     >
-      <ImageModal source={{ uri: appointment.imagePath }} />
+      <ImageModal source={{
+        uri: appointment.medicoClinica && appointment.medicoClinica.medico.idNavigation
+          ? appointment.medicoClinica.medico.idNavigation.foto
+          : ""
+      }} />
       <Spacing height={20} />
       <TitleSemiBold textAlign={TextAlign.center} size={20}>
         {appointment.medicoClinica && appointment.medicoClinica.medico.idNavigation

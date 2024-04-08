@@ -9,6 +9,7 @@ import t from '../../../locale'
 import AppLocalizations from '../../../settings/AppLocalizations'
 import SvgIcon, { Icon } from '../../../assets/icons/Icons'
 import { TouchableOpacity, View } from 'react-native'
+import { AppAssets } from '../../../assets/AppAssets'
 
 const CardBox = styled.View`
     width: 100%;
@@ -46,10 +47,10 @@ export default function AppointmentPatientCard({
     actionTap }) {
     const CardContainer = isTappable ? TouchableOpacity : View;
     return (
-        <CardContainer activeOpacity={0.8} onPress={isTappable ? cardTap : null}>
+        <CardContainer activeOpacity={1} onPress={isTappable ? cardTap : null}>
             <CardBox>
-                <Row justifyContent={Flex.spaceBetween}>
-                        <CardImage source={{ uri: imagePath }} />
+                <Row justifyContent={Flex.spaceBetween} alignItems={Flex.center}>
+                        <CardImage source={imagePath ? { uri: imagePath } : AppAssets.placeholder} />
                         <Spacing width={10} />
                         <Column justifyContent={Flex.spaceBetween}>
                             <Column width={'90%'}>
@@ -63,7 +64,7 @@ export default function AppointmentPatientCard({
                                 </Row>
                             </Column>
                             <Spacing height={5} />
-                            <Row width={'85%'} justifyContent={Flex.spaceBetween} alignItems={Flex.center}>
+                            <Row width={'80%'} justifyContent={Flex.spaceBetween} alignItems={Flex.center}>
                                 <SchedulesBox actionCard={actionType}>
                                     <SvgIcon name={Icon.clock} size={15} color={actionType == "agendada" ? AppColors.primary : AppColors.grayV1} />
                                     <Spacing width={6} />
@@ -90,7 +91,7 @@ export default function AppointmentPatientCard({
                                                     textDecoration={TextDecoration.none}
                                                     alignSelf={Flex.flexEnd}
                                                     justifySelf={Flex.flexEnd}
-                                                    size={12}
+                                                   
                                                     onTap={actionTap}
                                                 />
                                             ) :
