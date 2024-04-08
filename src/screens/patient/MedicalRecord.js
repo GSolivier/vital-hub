@@ -62,7 +62,7 @@ export default function MedicalRecord({ navigation, navigation: { setParams } })
             <HeaderImage source={{ uri: params.appointment.imagePath }} />
             <ScrollView nestedScrollEnabled={true}>
                 <Container justifyContent={Flex.flexStart}>
-                    <TitleSemiBold>{params.appointment.medicoClinica.medico.idNavigation.nome}</TitleSemiBold>
+                    <TitleSemiBold>{`Dr.  ${params.appointment.medicoClinica.medico.idNavigation.nome}`}</TitleSemiBold>
                     <Spacing width={6} />
                     <Row>
                         <TextMedium size={14}>{params.appointment.medicoClinica.medico.especialidade.especialidade1}</TextMedium>

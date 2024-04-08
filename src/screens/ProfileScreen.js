@@ -16,6 +16,7 @@ import { AuthRepository, Logout } from '../repositories/AuthRepository'
 import { isLoading } from 'expo-font'
 import { AppStorage, AppStorageKeys } from '../settings/AppStorage'
 import { PatientRepository, getPatient } from "../repositories/PatientRepository";
+import { DoctorRepository } from '../repositories/DoctorRepository'
 
 const HeaderImage = styled.Image`
     width: 100%;
@@ -61,14 +62,26 @@ export default function ProfileScreen({ user, navigation }) {
 
     async function getUserData() {
         const data = await AppStorage.read(AppStorageKeys.userData)
+        console.log(data);
         setUserData(data)
+        
         
         
     }
 
     async function getDataUser(){
-        const dataUser = await PatientRepository.getPatient(userData.id)
-        setDataUser(dataUser.data)
+
+        if (userData.role == "paciente") {
+            const dataUser = await PatientRepository.getPatient(userData.id)
+            setDataUser(dataUser.data)
+            console.log(dataUser.data);
+        } else {
+            const dataUser = await DoctorRepository.getDoctorAppointments(userData.id, userData.data)
+            setDataUser(dataUser.data)
+            console.log(dataUser);
+        }
+       
+        
     }
 
     const formatCPF = (cpf) => {

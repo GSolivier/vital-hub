@@ -25,7 +25,8 @@ export default function Login({ navigation }) {
  /*  const [email, setEmail] = useState('carol@email')
   const [senha, setSenha] = useState('123') */
 
-  const [email, setEmail] = useState('ian@email.com')
+  //const [email, setEmail] = useState('samuel@email.com')
+  const [email, setEmail] = useState('nelson@email.com')
   const [senha, setSenha] = useState('senai123')
 
 
@@ -128,6 +129,7 @@ export default function Login({ navigation }) {
             setIsLoading(false)
           } catch (e) {
             console.log(e);
+            console.log(e.message);
             setIsLoading(false)
           }
         }} />
