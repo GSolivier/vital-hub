@@ -43,6 +43,9 @@ export default function AppInput({
     focusOut = null,
     isValid = true,
     onChange = null,
+    keyboardType = 'default',
+    maxLength = null,
+    onEndEditing = null,
     ...rest
 }) {
     const handleInputChange = (value) => {
@@ -72,6 +75,9 @@ export default function AppInput({
                 isValid={isValid}
                 editable={isEditable}
                 isEditable={isEditable}
+                keyboardType={keyboardType}
+                maxLength={maxLength}
+                onEndEditing={onEndEditing}
                 {...rest}
             />
             <IconBox>

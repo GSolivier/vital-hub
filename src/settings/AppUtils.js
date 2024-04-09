@@ -334,7 +334,7 @@ export const USER_LOGGED = {
 
 export const mapskey = "AIzaSyAqIF5MN4yo8ZHwg9WsKP14I-fAK6hpKWY";
 
-export function decodePriority(code){
+export function decodePriority(code) {
     switch (code) {
         case 1:
             return "Emergência"
@@ -346,6 +346,18 @@ export function decodePriority(code){
             return "Sem prioridade"
             break;
     }
+}
+
+export const validateEmail = (email) => {
+    return email ? String(email)
+        .toLowerCase()
+        .match(
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        ) : true
+};
+
+export function isSamePassword(pass1, pass2) {
+    return pass1 === pass2
 }
 
 

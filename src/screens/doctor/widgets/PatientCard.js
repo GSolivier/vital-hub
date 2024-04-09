@@ -36,9 +36,9 @@ const SchedulesBox = styled.View`
 export default function HomeCard({ imagePath, name, age, examType, schedule, actionType = "agendada", actionTap }) {
     return (
         <CardBox>
-            <Row justifyContent={Flex.spaceBetween}>
-                <Row>
-                    <CardImage source={{uri: imagePath}} />
+            <Row justifyContent={Flex.spaceBetween} >
+                <Row alignItems={Flex.center}>
+                    <CardImage source={{ uri: imagePath }} />
                     <Spacing width={10} />
                     <Column justifyContent={Flex.spaceBetween}>
                         <Column width={'90%'}>

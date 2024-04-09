@@ -25,7 +25,7 @@ export default function InsertMedicalRecord({ navigation }) {
     }, [])
     return (
         <>
-            <HeaderImage source={{ uri: params.appointment.imagePath }} />
+            <HeaderImage source={{ uri: params.appointment.paciente.idNavigation.foto }} />
             <ScrollView>
                 <Container justifyContent={Flex.flexStart}>
                     <TitleSemiBold>{params.appointment.paciente.idNavigation.nome}</TitleSemiBold>
