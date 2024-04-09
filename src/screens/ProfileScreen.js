@@ -61,40 +61,13 @@ export default function ProfileScreen({ user, navigation }) {
     }, [userData])
 
 
-<<<<<<< HEAD
-    async function getUserData() {
-        const data = await AppStorage.read(AppStorageKeys.userData)
-        console.log(data);
-        setUserData(data)
-        
-        
-        
-    }
-
-    async function getDataUser(){
-
-        if (userData.role == "paciente") {
-            const dataUser = await PatientRepository.getPatient(userData.id)
-            setDataUser(dataUser.data)
-            console.log(dataUser.data);
-        } else {
-            const dataUser = await DoctorRepository.getDoctorAppointments(userData.id, userData.data)
-            setDataUser(dataUser.data)
-            console.log(dataUser);
-        }
-       
-        
-    /* async function getDataUser() {
-        const dataUser = await PatientRepository.getPatient(params.userData.id)
-=======
     async function getDataUser() {
         const dataUser = params.userData.role == "paciente" ? await PatientRepository.getPatient(params.userData.id) : await DoctorRepository.getDoctorById(params.userData.id)
         console.log('====================================');
         console.log(dataUser.data);
         console.log('====================================');
->>>>>>> guilherme
         setDataUser(dataUser.data)
-    } */
+    } 
 
     const formatCPF = (cpf) => {
         if (!cpf) return '';
@@ -220,4 +193,4 @@ export default function ProfileScreen({ user, navigation }) {
             <ActivityIndicator/>
         </>
     )
-}}
+}

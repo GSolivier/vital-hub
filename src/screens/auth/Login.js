@@ -22,7 +22,6 @@ import { AuthRepository } from '../../repositories/AuthRepository'
 export default function Login({ navigation }) {
 
 
-<<<<<<< HEAD
   //const [email, setEmail] = useState('carol@email')
 
 
@@ -31,10 +30,6 @@ export default function Login({ navigation }) {
   const [senha, setSenha] = useState('senai123')
   //const [email, setEmail] = useState('ian@email.com')
   const [email, setEmail] = useState('filipe@email.com')
-=======
-  const [email, setEmail] = useState('martin@medico')
-  const [senha, setSenha] = useState('123') 
->>>>>>> guilherme
 
 
 
