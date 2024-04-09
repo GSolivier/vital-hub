@@ -26,10 +26,11 @@ export default function Login({ navigation }) {
 
 
   //const [email, setEmail] = useState('samuel@email.com')
-  const [email, setEmail] = useState('nelson@email.com')
+  //const [email, setEmail] = useState('nelson@email.com')
   const [senha, setSenha] = useState('senai123')
-  // const [email, setEmail] = useState('ian@email.com')
-  // const [senha, setSenha] = useState('senai123')
+  //const [email, setEmail] = useState('ian@email.com')
+  const [email, setEmail] = useState('filipe@email.com')
+
 
 
 
