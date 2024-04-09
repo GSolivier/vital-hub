@@ -18,6 +18,7 @@ export const GetClinicPath = '/Clinica/ListarTodas'
 export const PatientPath = '/Pacientes'
 export const GetPatientByIdPath = `${PatientPath}/BuscarPorId`
 export const AppointmentPath = '/Consultas'
+export const PutAppointment = '/Consultas/Prontuario'
 export const GetPatientAppointmentPath = `${PatientPath}/BuscarPorData`
 export const PostAppointmentPath = `${AppointmentPath}/Cadastrar`
 

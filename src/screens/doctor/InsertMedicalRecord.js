@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRoute } from '@react-navigation/native';
 import styled from 'styled-components/native';
 import { Container, Row, Spacing } from '../../components/Container';
@@ -11,6 +11,7 @@ import { AppNavigation } from '../../settings/routes/RouteActions';
 import t from '../../locale';
 import AppLocalizations from '../../settings/AppLocalizations';
 import moment from 'moment';
+import { DoctorRepository } from '../../repositories/DoctorRepository';
 
 const HeaderImage = styled.Image`
     width: 100%;
@@ -19,9 +20,15 @@ const HeaderImage = styled.Image`
 
 export default function InsertMedicalRecord({ navigation }) {
     const { params } = useRoute();
+    const [isLoading, setIsLoading] = useState(false)
+
+    const [descricao, setDescricao] = useState(params.appointment.descricao ? params.appointment.descricao : "NA" )
+    const [diagnostico, setDiagnostico] = useState(params.appointment.diagnostico ? params.appointment.diagnostico : "NA")
+    const [receita, setReceita] = useState(params.appointment.receita ? `Medicamento: ${params.appointment.receita.medicamento}\n${params.appointment.receita.observacoes}` : "NA")
     
     useEffect( ()=>{
         console.log(params.appointment.receita);
+        console.log(params.appointment.paciente);
     }, [])
     return (
         <>
@@ -36,15 +43,32 @@ export default function InsertMedicalRecord({ navigation }) {
                         <TextMedium size={14} textAlign={TextAlign.center}>{params.appointment.paciente.idNavigation.email}</TextMedium>
                     </Row>
                     <Spacing height={24} />
-                    <AppInput  label={t(AppLocalizations.appointDescriptionLabel)} hint={params.appointment.descricao ? params.appointment.descricao : "NA" } isTextArea={true} onChangeText={() => { }} />
+                    <AppInput  label={t(AppLocalizations.appointDescriptionLabel)} textValue={descricao} isTextArea={true} onChangeText={(value) => { setDescricao(value) }} />
                     <Spacing height={20} />
-                    <AppInput  label={t(AppLocalizations.patientDiagnosisLabel)} hint={params.appointment.diagnostico ? params.appointment.diagnostico : "NA" } onChangeText={() => { }} />
+                    <AppInput  label={t(AppLocalizations.patientDiagnosisLabel)} textValue={diagnostico} onChangeText={(value) => { setDiagnostico(value) }} />
                     <Spacing height={20} />
-                    <AppInput  label={t(AppLocalizations.doctorPrescriptionLabel)} hint={params.appointment.receita ? `Medicamento: ${params.appointment.receita.medicamento}\n${params.appointment.receita.observacoes}` : "NA"} isTextArea={true} onChangeText={() => { }} />
+                    <AppInput  label={t(AppLocalizations.doctorPrescriptionLabel)} textValue={receita} isTextArea={true} onChangeText={(value) => { setReceita(value) }} />
                     <Spacing height={30} />
-                    <AppButton textButton={t(AppLocalizations.saveButton).toUpperCase()} />
+                    <AppButton textButton={t(AppLocalizations.saveButton).toUpperCase()} 
+                    />
                     <Spacing height={30} />
-                    <AppButton textButton={t(AppLocalizations.editButton).toUpperCase()} isDisabled={true} />
+                    <AppButton textButton={t(AppLocalizations.editButton).toUpperCase()} 
+                    isLoading={isLoading} 
+                    onTap={async () => {
+
+                        try {
+                          setIsLoading(true)
+              
+                          await DoctorRepository.PutAppointmentMedicalRecord()  
+              
+                          setIsLoading(false)
+                        } catch (e) {
+                          console.log(e);
+                          console.log(e.message);
+                          setIsLoading(false)
+                        }
+                      }} 
+                    />
                     <Spacing height={25} />
                     <LinkButton text={t(AppLocalizations.cancel)} onTap={() => AppNavigation.pop(navigation)} />
                 </Container>

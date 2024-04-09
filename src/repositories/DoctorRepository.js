@@ -1,9 +1,10 @@
-import api, { GetMedicoAppointmentPath, GetMedicoByIdPath, MedicoPath } from "../settings/AppApi";
+import api, { GetMedicoAppointmentPath, GetMedicoByIdPath, MedicoPath, PutAppointment } from "../settings/AppApi";
 
 export const DoctorRepository = {
   getDoctorById: getDoctorById,
   getDoctors: getDoctors,
-  getDoctorAppointments: getDoctorAppointments
+  getDoctorAppointments: getDoctorAppointments,
+  PutAppointmentMedicalRecord: PutAppointmentMedicalRecord
 }
 
 async function getDoctors() {
@@ -41,6 +42,26 @@ async function getDoctorAppointments(id, data) {
       params: {
         id: id,
         data: data
+      }
+    })
+
+    return response
+  } catch (error) {
+    console.log('====================================');
+    console.log(error);
+    console.log('====================================');
+  }
+}
+
+async function PutAppointmentMedicalRecord(id, descricao, diagnostico, receita){
+
+  try {
+    const response = await api.put(PutAppointment, {
+      params: {
+        id:id,
+        descricao: descricao,
+        diagnostico: diagnostico,
+        receita: receita
       }
     })
 

@@ -20,7 +20,6 @@ import { DoctorRepository } from '../repositories/DoctorRepository'
 import { UserRepository } from '../repositories/UserRepository'
 import { useRoute } from '@react-navigation/native'
 import { AppAssets } from '../assets/AppAssets'
-import { DoctorRepository } from '../repositories/DoctorRepository'
 import { ActivityIndicator } from 'react-native-paper'
 
 const HeaderImage = styled.Image`
