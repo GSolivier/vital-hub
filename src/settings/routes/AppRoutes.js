@@ -17,6 +17,7 @@ import ScanExamsScreen from '../../screens/patient/ScanExamsScreen';
 import { Flex } from '../AppEnums';
 import { FontFamily } from '../AppFonts';
 import TabNavigation from './TabNavigation';
+import CreateAccountAdditionalInfo from '../../screens/auth/CreateAccountAdditionalInfo';
 
 const Stack = createNativeStackNavigator();
 
@@ -82,6 +83,11 @@ export default function AppRoutes() {
                 <Stack.Screen
                     name={RouteKeys.createAccount}
                     component={CreateAccount} />
+                
+                <Stack.Screen
+                    name={RouteKeys.createAccountAdditionalInfo}
+                    component={CreateAccountAdditionalInfo}
+                />
 
                 <Stack.Screen
                     name={RouteKeys.insertMedicalRecordScreen}

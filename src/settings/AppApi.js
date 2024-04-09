@@ -12,6 +12,7 @@ const BASE_URL_LOCAL = `http://${ip}:${apiPort}/api`;
 export const LoginPath = '/Login'
 export const MedicoPath = '/Medicos'
 export const GetMedicoAppointmentPath = `${MedicoPath}/BuscarPorData`
+export const GetMedicoByIdPath = `${MedicoPath}/BuscarPorId`
 export const GetClinicPath = '/Clinica/ListarTodas'
 
 export const PatientPath = '/Pacientes'
@@ -21,6 +22,10 @@ export const GetPatientAppointmentPath = `${PatientPath}/BuscarPorData`
 export const PostAppointmentPath = `${AppointmentPath}/Cadastrar`
 
 export const GetUserById = `/Usuario/BuscarPorID`
+
+export const apiViaCep = axios.create({
+  baseURL: 'https://viacep.com.br/ws/'
+})
 
 const api = axios.create({
 
@@ -35,7 +40,7 @@ api.interceptors.request.use(async (config) => {
   }
   return config
 },
-(error) => Promise.reject(error)
+  (error) => Promise.reject(error)
 )
 
 export default api;

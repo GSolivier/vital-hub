@@ -11,6 +11,7 @@ export const RouteKeys = {
   emailVerify: "EmailVerify",
   redefinePassword: "RedefinePassword",
   createAccount: "CreateAccount",
+  createAccountAdditionalInfo: "CreateAccountAdditionalInfo",
   tabNavigation: "TabNavigation",
   homeScreenDoctor: "HomeScreenDoctor",
   clinicScreenDoctor: "ClinicScreenDoctor",

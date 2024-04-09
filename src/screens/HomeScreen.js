@@ -19,7 +19,7 @@ import ScheduleAppointmentDialog from './patient/widgets/dialogs/ScheduleAppoint
 import { PatientRepository } from '../repositories/PatientRepository'
 import { DoctorRepository } from '../repositories/DoctorRepository'
 import { AppToast } from '../components/AppToast'
-import { TextMedium} from '../settings/AppFonts'
+import { TextMedium } from '../settings/AppFonts'
 import { useRoute } from '@react-navigation/native'
 import { UserRepository } from '../repositories/UserRepository'
 
@@ -46,7 +46,7 @@ export default function HomeScreen({ navigation }) {
     const [listIsLoading, setListIsLoading] = useState(false)
     const [date, setDate] = useState()
 
-    const {params} = useRoute()
+    const { params } = useRoute()
 
 
     const handleTabSelected = async (value) => {
@@ -68,10 +68,10 @@ export default function HomeScreen({ navigation }) {
 
         if (appointment.receitaId) {
             AppNavigation.push(navigation, RouteKeys.medicalRecordScreen, { appointment: appointment })
-        } else{
+        } else {
             AppToast.showInfoToast("Prontuário não cadastrado pelo médico")
         }
-        
+
     }
 
     const handleInsertMedicalRecord = (appointment) => {
@@ -117,20 +117,20 @@ export default function HomeScreen({ navigation }) {
                 <Spacing height={20} />
 
 
-                {listIsLoading ? 
-                <ActivityIndicator color={AppColors.primary}/> : 
-                filteredList.length == 0 ? <TextMedium textAlign={TextAlign.center}>{`Nenhuma consulta ${selectedTab} cadastrada na data atual`}</TextMedium> 
-                : params.userData.role == "paciente" ? (
-                    <AppointmentPatientList
-                        DATA={filteredList}
-                        tapAction={selectedTab == "agendada" ? handleCancelAppointment : handleSeeMedicalRecord}
-                        cardTapAction={selectedTab == "agendada" ? handleSeeAppointmentLocal : null}
-                    />
-                ) : (
-                    <AppointmentList
-                        DATA={filteredList}
-                        tapAction={selectedTab == "agendada" ? handleCancelAppointment : handleInsertMedicalRecord} />
-                )
+                {listIsLoading ?
+                    <ActivityIndicator color={AppColors.primary} /> :
+                    filteredList.length == 0 ? <TextMedium textAlign={TextAlign.center}>{`Nenhuma consulta ${selectedTab} cadastrada na data atual`}</TextMedium>
+                        : params.userData.role == "paciente" ? (
+                            <AppointmentPatientList
+                                DATA={filteredList}
+                                tapAction={selectedTab == "agendada" ? handleCancelAppointment : handleSeeMedicalRecord}
+                                cardTapAction={selectedTab == "agendada" ? handleSeeAppointmentLocal : null}
+                            />
+                        ) : (
+                            <AppointmentList
+                                DATA={filteredList}
+                                tapAction={selectedTab == "agendada" ? handleCancelAppointment : handleInsertMedicalRecord} />
+                        )
                 }
 
                 {params.userData.role == "paciente" ? (
@@ -139,7 +139,7 @@ export default function HomeScreen({ navigation }) {
                     </FixedButton>) : null}
 
 
-                {!appointment ? null : (
+                {appointment.paciente || appointment.medicoClinica ? (
                     <>
                         <CancelExamDialog
                             visible={cancelModalIsVisible}
@@ -160,7 +160,7 @@ export default function HomeScreen({ navigation }) {
                             navigation={navigation}
                         />
                     </>
-                )}
+                ) : null}
 
                 <ScheduleAppointmentDialog
                     visible={scheduleAppointmentModalIsVisible}

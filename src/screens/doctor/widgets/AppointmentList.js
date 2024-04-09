@@ -22,7 +22,7 @@ export default function AppointmentList({ DATA, tapAction }) {
         renderItem={({ item }) =>
         (
           <PatientCard
-            imagePath={item.imagePath}
+            imagePath={item.paciente.idNavigation.foto}
             name={item.paciente.idNavigation.nome}
             age={moment(moment()).diff(item.paciente.dataNascimento, 'years')}
             examType={decodePriority(item.prioridade.prioridade)}

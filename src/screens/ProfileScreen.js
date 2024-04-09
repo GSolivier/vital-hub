@@ -20,6 +20,8 @@ import { DoctorRepository } from '../repositories/DoctorRepository'
 import { UserRepository } from '../repositories/UserRepository'
 import { useRoute } from '@react-navigation/native'
 import { AppAssets } from '../assets/AppAssets'
+import { DoctorRepository } from '../repositories/DoctorRepository'
+import { ActivityIndicator } from 'react-native-paper'
 
 const HeaderImage = styled.Image`
     width: 100%;
@@ -49,7 +51,7 @@ export default function ProfileScreen({ user, navigation }) {
     const [open, setOpen] = useState(false)
     const [isEditable, setIsEditable] = useState(false)
     const [userData, setUserData] = useState({})
-    const [dataUser, setDataUser] = useState({})
+    const [dataUser, setDataUser] = useState()
 
     const { params } = useRoute()
 
@@ -59,6 +61,7 @@ export default function ProfileScreen({ user, navigation }) {
     }, [userData])
 
 
+<<<<<<< HEAD
     async function getUserData() {
         const data = await AppStorage.read(AppStorageKeys.userData)
         console.log(data);
@@ -83,6 +86,13 @@ export default function ProfileScreen({ user, navigation }) {
         
     /* async function getDataUser() {
         const dataUser = await PatientRepository.getPatient(params.userData.id)
+=======
+    async function getDataUser() {
+        const dataUser = params.userData.role == "paciente" ? await PatientRepository.getPatient(params.userData.id) : await DoctorRepository.getDoctorById(params.userData.id)
+        console.log('====================================');
+        console.log(dataUser.data);
+        console.log('====================================');
+>>>>>>> guilherme
         setDataUser(dataUser.data)
     } */
 
@@ -127,7 +137,7 @@ export default function ProfileScreen({ user, navigation }) {
     const aceEditorRef = useRef();
 
     return (
-        <>
+    dataUser ?  <>
             <HeaderImage source={{ uri: params.userData.foto }} />
             <InfoBox>
                 <TitleSemiBold textAlign={TextAlign.center} size={16}>{params.userData.name}</TitleSemiBold>
@@ -138,6 +148,8 @@ export default function ProfileScreen({ user, navigation }) {
                 <Container justifyContent={Flex.flexStart}>
                     <Spacing height={80} />
 
+                    {
+                    params.userData.role == "paciente" ? 
                     <Pressable style={{ width: '100%' }} onPress={isEditable ? toggleDatePicker : null}>
                         <View style={{ width: '100%' }} pointerEvents='none'>
                             <AppInput
@@ -149,11 +161,28 @@ export default function ProfileScreen({ user, navigation }) {
                             />
                         </View>
                     </Pressable>
+                    :
+                    <AppInput 
+                    isEditable={isEditable} 
+                    label={"Especialidade"}
+                    textValue={dataUser.especialidade.especialidade1}    
+                    />
+                    }
                     <Spacing height={24} />
+                    {
+                        
+                    params.userData.role == "paciente" ? 
                     <AppInput
                         isEditable={isEditable}
                         label={t(AppLocalizations.cpf)}
                         textValue={formatCPF(dataUser.cpf)} />
+                    :
+                    <AppInput
+                    isEditable={isEditable}
+                    label={"CRM"}
+                    textValue={`SP-${dataUser.crm}`}
+                    />
+                    }
                     <Spacing height={20} />
                     <AppInput
                         isEditable={isEditable}
@@ -185,6 +214,10 @@ export default function ProfileScreen({ user, navigation }) {
 
             /> : <Spacing />}
 
+        </>
+        :
+        <>
+            <ActivityIndicator/>
         </>
     )
 }}
