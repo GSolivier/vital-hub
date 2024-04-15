@@ -10,12 +10,12 @@ import AppInput from '../../components/AppInput'
 import AppButton, { LinkButton } from '../../components/AppButton'
 import { TextAlign } from '../../settings/AppEnums'
 import { AppNavigation, RouteKeys } from '../../settings/routes/RouteActions'
-import { validateEmail } from '../../settings/AppUtils'
+import { validateEmail, validatePassword } from '../../settings/AppUtils'
 
 export default function CreateAccount({ navigation }) {
-  const [email, setEmail] = useState()
-  const [password, setPassword] = useState()
-  const [confirmPassword, setConfirmPassword] = useState()
+  const [email, setEmail] = useState('guilhermesousa1110@gmail.com')
+  const [password, setPassword] = useState('gui')
+  const [confirmPassword, setConfirmPassword] = useState('gui')
 
   useEffect
   return (
@@ -35,19 +35,31 @@ export default function CreateAccount({ navigation }) {
       />
       <Spacing height={15} />
 
-      <AppInput isObscure hint={t(AppLocalizations.passwordPlaceholder)} />
+      <AppInput
+
+        isObscure
+        hint={t(AppLocalizations.passwordPlaceholder)}
+        onChangeText={(value) => setPassword(value)}
+        textValue={password}
+      />
 
       <Spacing height={15} />
 
-      <AppInput isValid isObscure hint={t(AppLocalizations.confirmPassword)} />
+      <AppInput
+        isValid={confirmPassword ? validatePassword(password, confirmPassword) : true}
+        errorMessage={'As senhas não coincidem'}
+        isObscure
+        onChangeText={(value) => setConfirmPassword(value)}
+        hint={t(AppLocalizations.confirmPassword)}
+        textValue={confirmPassword} />
 
       <Spacing height={30} />
 
       <AppButton
         textButton={t(AppLocalizations.continueButton).toUpperCase()}
         onTap={() => {
-          if (validateEmail(email)) {
-            AppNavigation.push(navigation, RouteKeys.createAccountAdditionalInfo)
+          if (validateEmail(email) && validatePassword(password, confirmPassword) && email && password && confirmPassword) {
+            AppNavigation.push(navigation, RouteKeys.createAccountAdditionalInfo, { email: email, password: password })
           }
 
         }
