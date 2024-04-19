@@ -42,13 +42,13 @@ export default function SeeAppointmentLocalDialog({ visible, onClose, appointmen
       flex={0.6}
     >
       <ImageModal source={{
-        uri: appointment.medicoClinica && appointment.medicoClinica.medico.idNavigation
+        uri: appointment.medicoClinica && appointment.medicoClinica.medico
           ? appointment.medicoClinica.medico.idNavigation.foto
           : ""
       }} />
       <Spacing height={20} />
       <TitleSemiBold textAlign={TextAlign.center} size={20}>
-        {appointment.medicoClinica && appointment.medicoClinica.medico.idNavigation
+        {appointment.medicoClinica && appointment.medicoClinica.medico
           ? appointment.medicoClinica.medico.idNavigation.nome
           : ""
         }
@@ -57,7 +57,7 @@ export default function SeeAppointmentLocalDialog({ visible, onClose, appointmen
       <Row >
 
         <TextMedium size={14} textAlign={TextAlign.center}>
-          {appointment.medicoClinica && appointment.medicoClinica.medico.especialidade
+          {appointment.medicoClinica && appointment.medicoClinica.medico
             ? appointment.medicoClinica.medico.especialidade.especialidade1
             : ""
           }

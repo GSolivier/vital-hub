@@ -58,6 +58,9 @@ export default function ProfileScreen({ user, navigation }) {
     async function getDataUser() {
         const dataUser = params.userData.role == "paciente" ? await PatientRepository.getPatient(params.userData.id) : await DoctorRepository.getDoctorById(params.userData.id)
         setDataUser(dataUser.data)
+        console.log('================hhhh====================');
+        console.log(dataUser.data);
+        console.log('====================================');
         setDate(dataUser.data.dataNascimento)
     }
 
@@ -130,7 +133,7 @@ export default function ProfileScreen({ user, navigation }) {
                     <AppInput 
                     isEditable={isEditable} 
                     label={"Especialidade"}
-                    textValue={dataUser.especialidade.especialidade1}    
+                    textValue={dataUser.especialidade ? dataUser.especialidade.especialidade1 : ""}    
                     />
                     }
                     <Spacing height={24} />
