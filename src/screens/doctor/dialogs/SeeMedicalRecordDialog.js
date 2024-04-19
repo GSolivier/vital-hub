@@ -31,7 +31,7 @@ export default function SeeMedicalRecordDialog({ visible, onClose, appointment, 
             visible={visible}
             flex={0.6}
         >
-            <ImageModal source={{ uri: appointment.paciente.idNavigation.foto }} />
+            <ImageModal source={{ uri: appointment.paciente && appointment.paciente.idNavigation ? appointment.paciente.idNavigation.foto : "" }} />
             <Spacing height={20} />
             <TextSemiBold textAlign={TextAlign.center} size={20}>
                 {appointment.paciente && appointment.paciente.idNavigation

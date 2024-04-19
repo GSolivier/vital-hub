@@ -356,8 +356,8 @@ export const validateEmail = (email) => {
         ) : true
 };
 
-export function isSamePassword(pass1, pass2) {
-    return pass1 === pass2
+export function validatePassword(pass1, pass2) {
+    return pass1 == pass2
 }
 
 

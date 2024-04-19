@@ -83,6 +83,9 @@ export default function HomeScreen({ navigation }) {
         setListIsLoading(true)
         const data = params.userData.role == "paciente" ? await PatientRepository.getPatientAppointments(params.userData.id, date ? date : new Date()) : await DoctorRepository.getDoctorAppointments(params.userData.id, date ? date : new Date())
         setRawList(data.data)
+        console.log('====================================');
+        console.log(data.data);
+        console.log('====================================');
         setListIsLoading(false)
     }
 

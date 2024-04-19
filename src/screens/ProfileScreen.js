@@ -1,25 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Container, Row, Spacing } from '../components/Container'
 import styled from 'styled-components/native'
-import { USER_LOGGED } from '../settings/AppUtils'
 import { TextMedium, TitleSemiBold } from '../settings/AppFonts'
 import { AppColors } from '../settings/AppColors'
 import AppInput from '../components/AppInput'
-import { Flex, JustifyContent, TextAlign } from '../settings/AppEnums'
-import t, { changeLanguage } from '../locale'
+import { Flex, TextAlign } from '../settings/AppEnums'
+import t from '../locale'
 import AppLocalizations from '../settings/AppLocalizations'
 import { Platform, Pressable, ScrollView, View } from 'react-native'
 import AppButton from '../components/AppButton'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import SvgIcon, { Icon } from '../assets/icons/Icons'
-import { AuthRepository, Logout } from '../repositories/AuthRepository'
-import { isLoading } from 'expo-font'
-import { AppStorage, AppStorageKeys } from '../settings/AppStorage'
-import { PatientRepository, getPatient } from "../repositories/PatientRepository";
-import { DoctorRepository } from '../repositories/DoctorRepository'
-import { UserRepository } from '../repositories/UserRepository'
+import { AuthRepository } from '../repositories/AuthRepository'
+import { PatientRepository } from "../repositories/PatientRepository";
 import { useRoute } from '@react-navigation/native'
-import { AppAssets } from '../assets/AppAssets'
+import { DoctorRepository } from '../repositories/DoctorRepository'
 import { ActivityIndicator } from 'react-native-paper'
 
 const HeaderImage = styled.Image`
@@ -62,11 +57,11 @@ export default function ProfileScreen({ user, navigation }) {
 
     async function getDataUser() {
         const dataUser = params.userData.role == "paciente" ? await PatientRepository.getPatient(params.userData.id) : await DoctorRepository.getDoctorById(params.userData.id)
-        console.log('====================================');
-        console.log(dataUser.data);
-        console.log('====================================');
         setDataUser(dataUser.data)
-    } 
+    
+        
+        setDate(dataUser.data.dataNascimento)
+    }
 
     const formatCPF = (cpf) => {
         if (!cpf) return '';
@@ -127,7 +122,7 @@ export default function ProfileScreen({ user, navigation }) {
                             <AppInput
                                 isEditable={isEditable}
                                 label={t(AppLocalizations.dateOfBirth)}
-                                textValue={formatDate(dataUser.dataNascimento)}
+                                textValue={formatDate(date)}
                                 showSoftInputOnFocus={false}
                                 Icon={<SvgIcon name={Icon.calendar} color={isEditable ? AppColors.primary : AppColors.gray} />}
                             />
@@ -137,7 +132,7 @@ export default function ProfileScreen({ user, navigation }) {
                     <AppInput 
                     isEditable={isEditable} 
                     label={"Especialidade"}
-                    textValue={dataUser.especialidade.especialidade1}    
+                    textValue={dataUser.especialidade ? dataUser.especialidade.especialidade1 : ""}    
                     />
                     }
                     <Spacing height={24} />
@@ -182,7 +177,7 @@ export default function ProfileScreen({ user, navigation }) {
             {open ? <DateTimePicker
                 display='calendar'
                 onChange={onChange}
-                value={date}
+                value={new Date()}
 
             /> : <Spacing />}
 
