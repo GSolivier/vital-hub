@@ -18,6 +18,7 @@ import { Flex } from '../AppEnums';
 import { FontFamily } from '../AppFonts';
 import TabNavigation from './TabNavigation';
 import CreateAccountAdditionalInfo from '../../screens/auth/CreateAccountAdditionalInfo';
+import CreateAccountTakePic from '../../screens/auth/CreateAccountTakePic';
 
 const Stack = createNativeStackNavigator();
 
@@ -92,6 +93,9 @@ export default function AppRoutes() {
                 <Stack.Screen
                     name={RouteKeys.insertMedicalRecordScreen}
                     component={InsertMedicalRecord} />
+                <Stack.Screen
+                    name={RouteKeys.createAccountTakePicScreen}
+                    component={CreateAccountTakePic} />
 
             </Stack.Navigator>
         </NavigationContainer>

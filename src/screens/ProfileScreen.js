@@ -58,9 +58,6 @@ export default function ProfileScreen({ user, navigation }) {
     async function getDataUser() {
         const dataUser = params.userData.role == "paciente" ? await PatientRepository.getPatient(params.userData.id) : await DoctorRepository.getDoctorById(params.userData.id)
         setDataUser(dataUser.data)
-        console.log('================hhhh====================');
-        console.log(dataUser.data);
-        console.log('====================================');
         setDate(dataUser.data.dataNascimento)
     }
 
