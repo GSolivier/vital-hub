@@ -73,6 +73,9 @@ export default function AppInput({
         onChangeText === null ? null : onChangeText(value);
     };
 
+    const handleInputChangeMasked = (masked, unmasked) => {
+        onChangeText === null ? null : onChangeText(masked, unmasked);
+    }
 
 
     return (

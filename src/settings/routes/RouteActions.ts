@@ -25,6 +25,7 @@ export const RouteKeys = {
   seeAppointmentLocalScreen: "seeAppointmentLocalScreen",
   medicalRecordScreen: "medicalRecordScreen",
   scanExamsScreen: "ScanExamsScreen",
+  createAccountTakePicScreen: "createAccountTakePicScreen"
 };
 
 
