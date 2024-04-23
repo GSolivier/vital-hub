@@ -11,10 +11,24 @@ import AppButton from '../../components/AppButton';
 import { TextAlign } from '../../settings/AppEnums';
 import { AppNavigation, RouteKeys } from '../../settings/routes/RouteActions';
 import { AppColors } from '../../settings/AppColors';
+import api from '../../settings/AppApi';
+import AppRoutes from '../../settings/routes/AppRoutes';
+import { AppToast } from '../../components/AppToast';
 
 export default function ForgotPassword({ navigation }) {
 
-    const [email, setEmail] = useState('')
+    const [email, setEmail] = useState('evertonaraujosenai@gmail.com')
+
+    async function EnviarEmail() {
+
+        await api.post(`/RecuperarSenha?email=${email}`)
+
+        .then(() => {
+            AppNavigation.push(navigation, RouteKeys.emailVerify, {email : email} )
+        }).catch(error => {
+            AppToast.showErrorToast(error.response.data)
+        })
+    }
 
     return (
         <AuthContainer hasLeading={true} onTap={() => { AppNavigation.pop(navigation) }}>
@@ -31,7 +45,7 @@ export default function ForgotPassword({ navigation }) {
             <Spacing height={30} />
             <AppButton
                 textButton={t(AppLocalizations.continueButton).toUpperCase()}
-                onTap={() => { AppNavigation.push(navigation, RouteKeys.emailVerify, { email: email }) }}
+                onTap={() => {EnviarEmail() }}
             />
 
         </AuthContainer>

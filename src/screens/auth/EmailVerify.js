@@ -9,14 +9,31 @@ import AppLocalizations from "../../settings/AppLocalizations";
 import { AppColors } from "../../settings/AppColors";
 import AppButton, { LinkButton } from "../../components/AppButton";
 import { AppCodeInput } from "../../components/AppInput";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TextAlign } from "../../settings/AppEnums";
 import { AppNavigation, RouteKeys } from "../../settings/routes/RouteActions";
+import api from "../../settings/AppApi";
+import { AppToast } from "../../components/AppToast";
 
 export default function EmailVerify({ navigation }) {
     const [codeValue, setCodeValue] = useState('');
 
     const { params } = useRoute();
+
+    useEffect(()=> {
+        console.log(codeValue);
+    },[codeValue])
+
+    async function ValidarCodigo() {
+        console.log(codeValue);
+
+        await api.post(`/RecuperarSenha/ValidarCodigoRecuperacaoSenha?email=${params.email}&codigo=${codeValue}`)
+        .then( ()=> {
+            AppNavigation.push(navigation,RouteKeys.redefinePassword, {email: params.email});
+        }).catch(error => {
+            AppToast.showErrorToast(error.response.data)
+        })
+    }
 
     return (
         <AuthContainer hasLeading={true} isClosable={true} onTap={() => { AppNavigation.pop(navigation) }}>
@@ -28,7 +45,7 @@ export default function EmailVerify({ navigation }) {
             <Spacing height={20}/>
             <AppCodeInput onValueChange={setCodeValue}/>
             <Spacing height={30}/>
-            <AppButton textButton={t(AppLocalizations.enterButton).toUpperCase()} onTap={() => {AppNavigation.push(navigation, RouteKeys.redefinePassword)}}/>
+            <AppButton textButton={t(AppLocalizations.enterButton).toUpperCase()} onTap={() => {ValidarCodigo()}}/>
             <Spacing height={30}/>
             <LinkButton text={t(AppLocalizations.resentCode)} color={AppColors.secondaryV1} />
         </AuthContainer>

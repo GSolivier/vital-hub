@@ -1,5 +1,5 @@
 import { Image } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import AuthContainer from './widgets/AuthContainer'
 import { AppAssets } from '../../assets/AppAssets';
 import { Spacing } from '../../components/Container';
@@ -8,9 +8,33 @@ import AppLocalizations from '../../settings/AppLocalizations';
 import t from '../../locale';
 import AppInput from '../../components/AppInput';
 import AppButton from '../../components/AppButton';
-import { AppNavigation } from '../../settings/routes/RouteActions';
+import { AppNavigation, RouteKeys } from '../../settings/routes/RouteActions';
+import api from '../../settings/AppApi';
+import { AppToast } from '../../components/AppToast';
+import { useRoute } from '@react-navigation/native';
 
 export default function RedefinePassword({ navigation }) {
+
+    const [novaSenha, setNovaSenha] = useState('')
+    const [confirmaSenha, setConfirmaSenha] = useState('')
+
+    const { params } = useRoute();
+
+    async function ValidarSenha() {
+
+        if (novaSenha == confirmaSenha) {
+            
+            await api.put(`/Usuario/AlterarSenha?email=${params.email}`, {senhaNova: novaSenha})
+            .then(response => {
+                AppNavigation.push(navigation, RouteKeys.loginScreen, {email: params.email}, true)
+            })
+        } else {
+            AppToast.showErrorToast("As senhas não são iguais.")
+        }
+        
+    }
+    
+
     return (
         <AuthContainer hasLeading={true} isClosable={true} onTap={() => { AppNavigation.pop(navigation) }}>
             <Image source={AppAssets.appLogoDark} />
@@ -19,11 +43,19 @@ export default function RedefinePassword({ navigation }) {
             <Spacing height={15} />
             <TextMedium>{t(AppLocalizations.redefinePasswordHint)}</TextMedium>
             <Spacing height={20} />
-            <AppInput isObscure hint={t(AppLocalizations.newPasswordPlaceHolder)}/>
+            <AppInput isObscure hint={t(AppLocalizations.newPasswordPlaceHolder)}
+            textValue={novaSenha}
+            onChangeText={(value)=>setNovaSenha(value)}
+            />
             <Spacing height={15} />
-            <AppInput isObscure hint={t(AppLocalizations.confirmNewPasswordPlaceHolder)}/>
+            <AppInput isObscure hint={t(AppLocalizations.confirmNewPasswordPlaceHolder)}
+            textValue={confirmaSenha}
+            onChangeText={(value)=>setConfirmaSenha(value)}
+            />
             <Spacing height={30} />
-            <AppButton textButton={t(AppLocalizations.confirmNewPasswordPlaceHolder).toUpperCase()}/>
+            <AppButton textButton={t(AppLocalizations.confirmNewPasswordPlaceHolder).toUpperCase()}
+            onTap={() =>{ValidarSenha()}}
+            />
         </AuthContainer>
     )
 }

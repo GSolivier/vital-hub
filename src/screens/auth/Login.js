@@ -15,6 +15,8 @@ import { AppNavigation, RouteKeys } from '../../settings/routes/RouteActions'
 import * as Auth from 'expo-local-authentication'
 import { AppStorage, AppStorageKeys } from '../../settings/AppStorage'
 import { AuthRepository } from '../../repositories/AuthRepository'
+import { AppToast } from '../../components/AppToast'
+import { useRoute } from '@react-navigation/native'
 
 
 
@@ -30,10 +32,12 @@ export default function Login({ navigation }) {
   const [senha, setSenha] = useState('senai123')
   //const [email, setEmail] = useState('ian@email.com')
   const [email, setEmail] = useState('filipe@email.com')
+  //const [email, setEmail] = useState('luizaeliane@email.com')
+  //const [email, setEmail] = useState('evertonaraujosenai@gmail.com')
 
 
 
-
+  const { params } = useRoute();
   const [isValidated, setIsValidated] = useState(true)
   const [userType, setUserType] = useState('patient')
   const [hasBio, setHasBio] = useState(false)
@@ -71,6 +75,9 @@ export default function Login({ navigation }) {
   useEffect(() => {
     // CheckAuth()
     // handleAuth()
+    if (params) {
+      setEmail(params.email)
+    }
   }, [])
 
 
@@ -127,8 +134,9 @@ export default function Login({ navigation }) {
 
             setIsLoading(false)
           } catch (e) {
-            console.log(e);
-            console.log(e.message);
+            /* console.log(e);
+            console.log(e.message); */
+            AppToast.showErrorToast(e.response)
             setIsLoading(false)
           }
         }} />
