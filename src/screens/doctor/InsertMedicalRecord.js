@@ -24,10 +24,11 @@ export default function InsertMedicalRecord({ navigation }) {
 
     const [descricao, setDescricao] = useState(params.appointment.descricao ? params.appointment.descricao : "NA" )
     const [diagnostico, setDiagnostico] = useState(params.appointment.diagnostico ? params.appointment.diagnostico : "NA")
-    const [receita, setReceita] = useState(params.appointment.receita ? `Medicamento: ${params.appointment.receita.medicamento}\n${params.appointment.receita.observacoes}` : "NA")
+    const [medicamento, setMedicamento] = useState(params.appointment.medicamento ? `Medicamento: ${params.appointment.medicamento}\n${params.appointment.medicamento}` : "NA")
     
+
     useEffect( ()=>{
-        console.log(params.appointment.receita);
+        console.log(params.appointment.medicamento);
         console.log(params.appointment.paciente);
     }, [])
     return (
@@ -47,7 +48,7 @@ export default function InsertMedicalRecord({ navigation }) {
                     <Spacing height={20} />
                     <AppInput  label={t(AppLocalizations.patientDiagnosisLabel)} textValue={diagnostico} onChangeText={(value) => { setDiagnostico(value) }} />
                     <Spacing height={20} />
-                    <AppInput  label={t(AppLocalizations.doctorPrescriptionLabel)} textValue={receita} isTextArea={true} onChangeText={(value) => { setReceita(value) }} />
+                    <AppInput  label={t(AppLocalizations.doctorPrescriptionLabel)} textValue={medicamento} isTextArea={true} onChangeText={(value) => { setMedicamento(value) }} />
                     <Spacing height={30} />
                     <AppButton textButton={t(AppLocalizations.saveButton).toUpperCase()} 
                     />
