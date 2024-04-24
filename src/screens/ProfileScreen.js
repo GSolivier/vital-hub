@@ -17,6 +17,8 @@ import { useRoute } from '@react-navigation/native'
 import { DoctorRepository } from '../repositories/DoctorRepository'
 import { ActivityIndicator } from 'react-native-paper'
 import { AppNavigation, RouteKeys } from '../settings/routes/RouteActions'
+import api from '../settings/AppApi'
+import { AppToast } from '../components/AppToast'
 
 const HeaderImage = styled.Image`
     width: 100%;
@@ -64,11 +66,42 @@ export default function ProfileScreen({ user, navigation }) {
 
 
     useEffect(() => {
+
+        console.log(params);
+
         if (params.image) {
             setImage(params.image)
+            console.log(params.image)
+
+
+            AlterarFotoPerfil()
+            
         }
         getDataUser()
     }, [userData, params])
+
+    async function AlterarFotoPerfil() {
+
+        const formData = new FormData();
+        formData.append("Arquivo", {
+            uri: params.image,
+            name: `image.${params.image.split(".")[1]}`,
+            type: `image/${params.image.split(".")[1]}`
+
+        })
+        
+        await api.put(`/Usuario/AlterarFotoPerfil?id=${params.userData.id}`, formData, {
+            headers : {
+                "Content-Type" : "multipart/form-data"
+            }
+        }).then( response => {
+
+            
+           console.log(response);
+        }).catch( error => {
+            console.log(error.request);
+        })
+    }
 
 
     async function getDataUser() {

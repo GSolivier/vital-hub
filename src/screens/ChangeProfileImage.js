@@ -8,6 +8,7 @@ import { Container, Spacing } from "../components/Container"
 import SvgIcon, { Icon } from "../assets/icons/Icons"
 import { Flex } from "../settings/AppEnums"
 import * as MediaLibrary from 'expo-media-library'
+import * as ImagePicker from 'expo-image-picker'
 
 const AppCamera = styled(Camera)`
     flex: 1;
@@ -55,8 +56,9 @@ const RenderedImage = styled.ImageBackground`
     justify-content: flex-end;
 `
 const LastPhoto = styled.Image`
-    width: 50px;
-    height: 50px;
+    width: 63px;
+    height: 63px;
+    border-radius: 5px;
 `
 
 
@@ -80,9 +82,22 @@ export default function ChangeProfileImage({ navigation , getMediaLibrary = true
         }
     }, []);
 
+    async function SelectImageGallery() {
+
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            quality: 1
+        });
+    
+        if (!result.canceled) {
+            setImage( result.assets[0].uri)
+        }
+        
+    }
+
     async function GetLastPhoto() {
-        const assets = await MediaLibrary.getAssetsAsync({sortBy : [[MediaLibrary.SortBy.creationTime, false]], first: 1 })
-        setGaleryImage(assets.assets)
+        const {assets} = await MediaLibrary.getAssetsAsync({sortBy : [[MediaLibrary.SortBy.creationTime, false]], first: 1 })
+        setGaleryImage(assets)
         console.log(assets);
     }
 
@@ -114,13 +129,16 @@ export default function ChangeProfileImage({ navigation , getMediaLibrary = true
                     <CameraBox>
 
                         <ButtonBox>
-                           {galeryImage && galeryImage.map ((assets) => ( <LastPhoto
+                           {galeryImage && galeryImage.map ((assets) => ( <TouchableOpacity onPress= {() => (SelectImageGallery())}><LastPhoto
                                 source ={{uri: assets.uri}}
-                            />))}
+                               
+                            /></TouchableOpacity>))}
+
                             <ButtonCamera activeOpacity={0.5} onPress={() => takePicture()}>
                                 <SvgIcon name={Icon.camera} color={AppColors.primary} size={30} />
                             </ButtonCamera>
-                        
+                        <Spacing/>
+                        <Spacing/>
                         </ButtonBox>
 
                     </CameraBox>
