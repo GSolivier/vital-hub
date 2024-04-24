@@ -16,6 +16,9 @@ import { PatientRepository } from "../repositories/PatientRepository";
 import { useRoute } from '@react-navigation/native'
 import { DoctorRepository } from '../repositories/DoctorRepository'
 import { ActivityIndicator } from 'react-native-paper'
+import { AppNavigation, RouteKeys } from '../settings/routes/RouteActions'
+import api from '../settings/AppApi'
+import { AppToast } from '../components/AppToast'
 
 const HeaderImage = styled.Image`
     width: 100%;
@@ -38,6 +41,18 @@ const InfoBox = styled.View`
 const InputContainer = styled.View`
     flex: 0.5;
 `
+const CameraIconBox = styled.TouchableOpacity`
+    position: absolute;
+    background-color: ${AppColors.secondary};
+    padding: 12px;
+    border-radius: 5px;
+    border-color: ${AppColors.white};
+    border-width: 1px;
+    top: 32%;
+    left: 83%;
+    z-index: 10000;
+
+`
 
 export default function ProfileScreen({ user, navigation }) {
 
@@ -46,13 +61,47 @@ export default function ProfileScreen({ user, navigation }) {
     const [isEditable, setIsEditable] = useState(false)
     const [userData, setUserData] = useState({})
     const [dataUser, setDataUser] = useState()
-
+    const [image, setImage] = useState()
     const { params } = useRoute()
 
 
     useEffect(() => {
+
+        console.log(params);
+
+        if (params.image) {
+            setImage(params.image)
+            console.log(params.image)
+
+
+            AlterarFotoPerfil()
+            
+        }
         getDataUser()
-    }, [userData])
+    }, [userData, params])
+
+    async function AlterarFotoPerfil() {
+
+        const formData = new FormData();
+        formData.append("Arquivo", {
+            uri: params.image,
+            name: `image.${params.image.split(".")[1]}`,
+            type: `image/${params.image.split(".")[1]}`
+
+        })
+        
+        await api.put(`/Usuario/AlterarFotoPerfil?id=${params.userData.id}`, formData, {
+            headers : {
+                "Content-Type" : "multipart/form-data"
+            }
+        }).then( response => {
+
+            
+           console.log(response);
+        }).catch( error => {
+            console.log(error.request);
+        })
+    }
 
 
     async function getDataUser() {
@@ -103,7 +152,15 @@ export default function ProfileScreen({ user, navigation }) {
 
     return (
     dataUser ?  <>
-            <HeaderImage source={{ uri: params.userData.foto }} />
+            <HeaderImage source={{ uri: image? image : params.userData.foto }} />
+            <CameraIconBox
+                onPress={() => {
+                    AppNavigation.push(navigation, RouteKeys.changeProfileImage)
+                }}
+            >
+                <SvgIcon name={Icon.cameraPlus} color={AppColors.white} />
+            </CameraIconBox>
+
             <InfoBox>
                 <TitleSemiBold textAlign={TextAlign.center} size={16}>{params.userData.name}</TitleSemiBold>
                 <Spacing height={10} />

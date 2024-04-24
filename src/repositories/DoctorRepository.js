@@ -53,21 +53,19 @@ async function getDoctorAppointments(id, data) {
   }
 }
 
-async function PutAppointmentMedicalRecord(id, descricao, diagnostico, receita){
+async function PutAppointmentMedicalRecord(descricao, diagnostico, medicamento){
   console.log({
-    id:id,
     descricao: descricao,
     diagnostico: diagnostico,
-    receita: receita
+    medicamento: medicamento
   });
   
   try {
     const response = await api.put(PutAppointment, {
       params: {
-        id:id,
         descricao: descricao,
         diagnostico: diagnostico,
-        receita: receita
+        medicamento: medicamento
       }
     })
 

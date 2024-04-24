@@ -12,7 +12,6 @@ import { TextAlign } from '../../settings/AppEnums';
 import { AppNavigation, RouteKeys } from '../../settings/routes/RouteActions';
 import { AppColors } from '../../settings/AppColors';
 import api from '../../settings/AppApi';
-import AppRoutes from '../../settings/routes/AppRoutes';
 import { AppToast } from '../../components/AppToast';
 
 export default function ForgotPassword({ navigation }) {
