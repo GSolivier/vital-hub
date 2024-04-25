@@ -115,7 +115,10 @@ export default function CreateAccountAdditionalInfo({ navigation }) {
         form.append("Logradouro", street)
         form.append("Numero", number)
         form.append("Cidade", city)
-        form.append("IdTipoUsuario", "1990EBA5-E406-4594-AF63-3B1DFE478CF1")
+        // v    WVBHNJKL
+        4
+        UYTFform.append("IdTipoUsuario", "1990EBA5-E406-4594-AF63-3B1DFE478CF1")//Gui
+        form.append("IdTipoUsuario", "E3881E56-B13E-4916-9382-C2582FB96EE1")//Everton
 
         await api.post("/Pacientes", form, {
             headers: {

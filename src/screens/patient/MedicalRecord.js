@@ -13,6 +13,7 @@ import { AppColors } from '../../settings/AppColors'
 import { AppNavigation, RouteKeys } from '../../settings/routes/RouteActions'
 import PhotoSelector from './widgets/PhotoSelector'
 import SeeImageModal from './widgets/dialogs/SeeImageModal'
+import api from '../../settings/AppApi'
 
 const HeaderImage = styled.Image`
     width: 100%;
@@ -36,8 +37,10 @@ export default function MedicalRecord({ navigation, navigation: { setParams } })
     const [photoList, setPhotoList] = useState([])
     const [selectedImage, setSelectedImage] = useState()
     const [imageModalIsVisible, setImageModalIsVisible] = useState(false)
+    const [descricaoExame, setDescricaoExame] = useState('')
 
     useEffect(() => {
+        
         if (params.image) {
             setPhotoList([...photoList, params.image])
             setParams({ image: undefined })
@@ -55,6 +58,33 @@ export default function MedicalRecord({ navigation, navigation: { setParams } })
             photoList.splice(index, 1)
         }
         setImageModalIsVisible(false)
+    }
+
+    async function InserirExame() {
+        const formData = new FormData();
+
+        formData.append("ConsultaId", params.appointment.id)
+
+        console.log(photoList[0]);
+
+        formData.append("Imagem", {
+            uri: photoList[0],
+            name: `image.${photoList[0].split('.').pop()}`,
+            type: `image/${photoList[0].split('.').pop()}`
+        })
+
+        await api.post(`/Exame/Cadastrar`, formData, {
+            headers: {
+                "Content-Type" : "multipart/form-data"
+            }
+        }).then(response => {
+            setDescricaoExame( descricaoExame + "/n" + response.data.descricao)
+
+            console.log(response);
+        }).catch(e => {
+            console.log(e.request);
+        })
+
     }
 
     return (
@@ -85,7 +115,7 @@ export default function MedicalRecord({ navigation, navigation: { setParams } })
                         isEditable={false}
                         label={t(AppLocalizations.doctorPrescriptionLabel)}
                         isTextArea={true}
-                        textValue={params.appointment.receita.medicamento ? `${params.appointment.receita.medicamento}\n${params.appointment.receita.observacoes}` : "Nada cadastrado"} />
+                        textValue={params.appointment.receita ? `${params.appointment.receita.medicamento}\n${params.appointment.receita.observacoes}` : "Nada cadastrado"} />
                     <Spacing height={20} />
                     <PhotoSelector
                         label={t(AppLocalizations.medicalExams)}
@@ -100,6 +130,8 @@ export default function MedicalRecord({ navigation, navigation: { setParams } })
                                 isDisabled={photoList.length == 0}
                                 mainColor={AppColors.primary}
                                 // SvgIcon={<SvgIcon name={Icon.cameraPlus} color={AppColors.white} />}
+                                onTap={()=> {InserirExame()}}
+
 
                             />
                         </ButtonContainer>

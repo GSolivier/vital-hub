@@ -28,8 +28,9 @@ export default function InsertMedicalRecord({ navigation }) {
     
 
     useEffect( ()=>{
-        console.log(params.appointment.medicamento);
-        console.log(params.appointment.paciente);
+        console.log(params.appointment);
+        console.log(params.appointment.receitaId);
+        
     }, [])
     return (
         <>
@@ -60,11 +61,10 @@ export default function InsertMedicalRecord({ navigation }) {
                         try {
                           setIsLoading(true)
               
-                          await DoctorRepository.PutAppointmentMedicalRecord()  
+                          await DoctorRepository.PutAppointmentMedicalRecord(params.appointment.id, descricao, diagnostico, medicamento)  
               
                           setIsLoading(false)
                         } catch (e) {
-                          console.log(e);
                           console.log(e.message);
                           setIsLoading(false)
                         }
