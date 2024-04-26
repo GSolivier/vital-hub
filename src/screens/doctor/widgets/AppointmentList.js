@@ -12,7 +12,7 @@ export const List = styled.View`
     width: 100%;
 `
 
-export default function AppointmentList({ DATA, tapAction }) {
+export default function AppointmentList({ DATA, tapAction, cardTapAction }) {
 
   return (
     <List>
@@ -27,8 +27,10 @@ export default function AppointmentList({ DATA, tapAction }) {
             age={moment(moment()).diff(item.paciente.dataNascimento, 'years')}
             examType={decodePriority(item.prioridade.prioridade)}
             actionType={item.situacao.situacao}
+            isTappable={item.situacao.situacao == "agendada" ? true : false}
             schedule={moment(item.dataConsulta).format('HH:mm')}
             actionTap={() => tapAction(item)}
+            cardTap={() => cardTapAction(item)}
 
           />
         )

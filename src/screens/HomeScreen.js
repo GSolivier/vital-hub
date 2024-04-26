@@ -124,12 +124,16 @@ export default function HomeScreen({ navigation }) {
                             <AppointmentPatientList
                                 DATA={filteredList}
                                 tapAction={selectedTab == "agendada" ? handleCancelAppointment : handleSeeMedicalRecord}
-                                cardTapAction={selectedTab == "agendada" ? handleSeeAppointmentLocal : null}
+                                cardTapAction={selectedTab == "agendada" ? handleSeeAppointmentLocal : undefined}
+
                             />
                         ) : (
                             <AppointmentList
                                 DATA={filteredList}
-                                tapAction={selectedTab == "agendada" ? handleCancelAppointment : handleInsertMedicalRecord} />
+                                tapAction={selectedTab == "agendada" ? handleCancelAppointment : handleInsertMedicalRecord} 
+                                cardTapAction={selectedTab == "agendada" ? handleInsertMedicalRecord : null}
+                                
+                            />
                         )
                 }
 

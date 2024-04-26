@@ -67,13 +67,9 @@ export default function ProfileScreen({ user, navigation }) {
 
     useEffect(() => {
 
-        console.log(params);
-
         if (params.image) {
             setImage(params.image)
-            console.log(params.image)
-
-
+           
             AlterarFotoPerfil()
             
         }
@@ -96,8 +92,8 @@ export default function ProfileScreen({ user, navigation }) {
             }
         }).then( response => {
 
-            
-           console.log(response);
+            AppToast.showSucessToast("Foto alterada com sucesso!")
+           
         }).catch( error => {
             console.log(error.request);
         })
