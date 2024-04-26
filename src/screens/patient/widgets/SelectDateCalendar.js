@@ -63,7 +63,7 @@ LocaleConfig.locales['locale'] = {
 
 LocaleConfig.defaultLocale = 'locale';
 
-export default function SelectDateCalendar() {
+export default function SelectDateCalendar({setDate}) {
 
     const [day, setDay] = useState();
 
@@ -75,6 +75,7 @@ export default function SelectDateCalendar() {
                 }}
                 onDayPress={day => {
                     setDay(day.dateString)
+                    setDate(day.dateString)
                 }}
                 theme={{
                     textSectionTitleColor: AppColors.grayV3,

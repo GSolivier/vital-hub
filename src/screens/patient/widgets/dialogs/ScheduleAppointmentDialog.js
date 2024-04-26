@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import AppDialog from '../../../../components/AppDialog'
-import {TitleSemiBold } from '../../../../settings/AppFonts'
-import { AppointmentLevelsButtons, Flex} from '../../../../settings/AppEnums'
+import { TitleSemiBold } from '../../../../settings/AppFonts'
+import { AppointmentLevelsButtons, Flex } from '../../../../settings/AppEnums'
 import AppButton, { LinkButton } from '../../../../components/AppButton'
 import { Spacing } from '../../../../components/Container'
 import AppInput from '../../../../components/AppInput'
@@ -12,26 +12,18 @@ import { AppColors } from '../../../../settings/AppColors'
 import ButtonSelecter from '../../../widgets/ButtonSelecter'
 import { AppNavigation, RouteKeys } from '../../../../settings/routes/RouteActions'
 
-export default function ScheduleAppointmentDialog({ visible, onClose, navigation }) {
-  const [selectedAppointmentType, setSelectedAppointmentType] = useState('');`
-  `
-  const datas = [
-    { key: '1', value: 'Check-up' },
-    { key: '2', value: 'Retorno' },
-  ]
-
-  useEffect(() => {
-    if (visible) {
-      setSelectedAppointmentType('');
-    }
-  }, [visible]);
+export default function ScheduleAppointmentDialog({ visible, onClose, navigation, userId }) {
+  const [selectedAppointmentType, setSelectedAppointmentType] = useState();
+  const [local, setLocal] = useState('São Caetano do Sul')
 
   const handleTabSelected = (value) => {
     setSelectedAppointmentType(value);
   };
 
   const handleInsertMedicalRecord = () => {
-    AppNavigation.push(navigation, RouteKeys.selectClinicScreen);
+    AppNavigation.push(navigation, RouteKeys.selectClinicScreen, { prioridadeTipo: selectedAppointmentType, cidade: local, pacienteId: userId});
+    setSelectedAppointmentType()
+    setLocal()
     onClose();
   };
   return (
@@ -45,13 +37,13 @@ export default function ScheduleAppointmentDialog({ visible, onClose, navigation
 
     >
       <TitleSemiBold alignSelf={Flex.center}>{t(AppLocalizations.scheduleAppointment)}</TitleSemiBold>
-      <Spacing height={30} />
-      <AppDropdown
+      <Spacing height={5} />
+      {/* <AppDropdown
         data={datas}
         label={t(AppLocalizations.typeofAppointmentLabel)}
         placeholder={t(AppLocalizations.typeofAppointmentHint)}
         handleValueSelected={handleTabSelected}
-      />
+      /> */}
       <Spacing height={20} />
       <ButtonSelecter
         selected={selectedAppointmentType}
@@ -64,14 +56,19 @@ export default function ScheduleAppointmentDialog({ visible, onClose, navigation
       />
       <Spacing height={20} />
 
-      <AppInput 
-      label={t(AppLocalizations.desiredLocationLabel)} 
-      hint={t(AppLocalizations.desiredLocationHint)} 
-      onChangeText={() => { }} />
+      <AppInput
+        textValue={local}
+        label={t(AppLocalizations.desiredLocationLabel)}
+        hint={t(AppLocalizations.desiredLocationHint)}
+        onChangeText={(value) => { setLocal(value) }} />
       <Spacing height={30} />
-      <AppButton textButton={t(AppLocalizations.continueButton).toUpperCase()} onTap={handleInsertMedicalRecord} />
+      <AppButton textButton={t(AppLocalizations.continueButton).toUpperCase()} onTap={handleInsertMedicalRecord} isDisabled={!selectedAppointmentType || !local} />
       <Spacing height={30} />
-      <LinkButton text={t(AppLocalizations.cancel)} onTap={onClose} />
+      <LinkButton text={t(AppLocalizations.cancel)} onTap={() => {
+        setSelectedAppointmentType()
+        onClose()
+        setLocal()
+      }} />
     </AppDialog>
   )
 }

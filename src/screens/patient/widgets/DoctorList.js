@@ -17,7 +17,10 @@ export default function DoctorList({DATA, tapAction, selected}) {
         renderItem={({item}) =>(
             <DoctorCard
                 item={item}
-                onTap={() => tapAction(item)}
+                onTap={() => {
+                  tapAction(item)
+                  console.log(item)
+                  }}
                 selected={selected}
             />
         )}

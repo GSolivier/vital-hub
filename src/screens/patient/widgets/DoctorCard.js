@@ -35,11 +35,11 @@ export default function DoctorCard({ selected, item, onTap }) {
             onPress={onTap}
             activeOpacity={0.9}
         >
-            <DoctorImage source={AppAssets.placeholder} />
+            <DoctorImage source={{uri: item.idNavigation.foto}} />
             <Spacing width={10} />
 
 
-            <Column width={'80%'} justifyContent={Flex.center}>
+            <Column width={'70%'} justifyContent={Flex.center}>
 
                 <TitleSemiBold size={16}>{item.idNavigation.nome}</TitleSemiBold>
                 <Spacing height={10} />
