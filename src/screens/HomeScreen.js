@@ -55,7 +55,7 @@ export default function HomeScreen({ navigation }) {
 
     const handleSeeAppointmentLocal = (appointment) => {
         setSelectedAppointment(appointment);
-        setSeeMedicalRecordIsVisible(true);
+        setSeeAppointmentLocal(true);
     }
 
     const handleCancelAppointment = (appointment) => {
@@ -134,7 +134,7 @@ export default function HomeScreen({ navigation }) {
                             <AppointmentList
                                 DATA={filteredList}
                                 tapAction={selectedTab == "agendada" ? handleCancelAppointment : handleInsertMedicalRecord} 
-                                cardTapAction={selectedTab == "agendada" ? handleSeeAppointmentLocal : null}
+                                cardTapAction={selectedTab == "agendada" ? handleInsertMedicalRecord : null}
                                 
                             />
                         )

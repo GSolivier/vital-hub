@@ -12,6 +12,7 @@ import t from '../../locale';
 import AppLocalizations from '../../settings/AppLocalizations';
 import moment from 'moment';
 import { DoctorRepository } from '../../repositories/DoctorRepository';
+import api from '../../settings/AppApi';
 
 const HeaderImage = styled.Image`
     width: 100%;
@@ -22,16 +23,25 @@ export default function InsertMedicalRecord({ navigation }) {
     const { params } = useRoute();
     const [isLoading, setIsLoading] = useState(false)
 
-    const [descricao, setDescricao] = useState(params.appointment.descricao ? params.appointment.descricao : "NA" )
-    const [diagnostico, setDiagnostico] = useState(params.appointment.diagnostico ? params.appointment.diagnostico : "NA")
-    const [medicamento, setMedicamento] = useState(params.appointment.medicamento ? `Medicamento: ${params.appointment.medicamento}\n${params.appointment.medicamento}` : "NA")
-    
+    const [descricao, setDescricao] = useState( params.appointment.descricao )
+    const [diagnostico, setDiagnostico] = useState(params.appointment.diagnostico)
+    const [medicamento, setMedicamento] = useState(params.appointment.receita.medicamento)
 
     useEffect( ()=>{
         console.log(params.appointment);
-        console.log(params.appointment.receitaId);
+        console.log(params.appointment.receita.medicamento);
         
     }, [])
+
+    async function EditStatus() {
+
+        await api.put(`/Consultas/Status`, {params:{
+            idConsulta: params.appointment.id,
+            status: "realizada"
+        }}).then(response => console.log(response)).catch(error => console.log(error.request))
+        
+    }
+
     return (
         <>
             <HeaderImage source={{ uri: params.appointment.paciente.idNavigation.foto }} />
@@ -45,16 +55,30 @@ export default function InsertMedicalRecord({ navigation }) {
                         <TextMedium size={14} textAlign={TextAlign.center}>{params.appointment.paciente.idNavigation.email}</TextMedium>
                     </Row>
                     <Spacing height={24} />
-                    <AppInput  label={t(AppLocalizations.appointDescriptionLabel)} textValue={descricao} isTextArea={true} onChangeText={(value) => { setDescricao(value) }} />
+                    <AppInput  label={t(AppLocalizations.appointDescriptionLabel)} hint={"Descreva os sintomas do paciente..."}textValue={descricao} isTextArea={true} onChangeText={(value) => { setDescricao(value) }} />
                     <Spacing height={20} />
-                    <AppInput  label={t(AppLocalizations.patientDiagnosisLabel)} textValue={diagnostico} onChangeText={(value) => { setDiagnostico(value) }} />
+                    <AppInput  label={t(AppLocalizations.patientDiagnosisLabel)} hint={"Descreva o diagnóstico do paciente..."}textValue={diagnostico} onChangeText={(value) => { setDiagnostico(value) }} />
                     <Spacing height={20} />
-                    <AppInput  label={t(AppLocalizations.doctorPrescriptionLabel)} textValue={medicamento} isTextArea={true} onChangeText={(value) => { setMedicamento(value) }} />
+                    <AppInput  label={t(AppLocalizations.doctorPrescriptionLabel)} hint={"Descreva o tratamento..."}textValue={medicamento} isTextArea={true} onChangeText={(value) => { setMedicamento(value) }} />
                     <Spacing height={30} />
-                    <AppButton textButton={t(AppLocalizations.saveButton).toUpperCase()} 
-                    />
-                    <Spacing height={30} />
-                    <AppButton textButton={t(AppLocalizations.editButton).toUpperCase()} 
+                    {params.appointment.receita.medicamento == null ? (
+                    <AppButton textButton={t(AppLocalizations.saveButton).toUpperCase()}
+                    isLoading={isLoading} 
+                    onTap={async () => {
+
+                        try {
+                          setIsLoading(true)
+              
+                          await DoctorRepository.PutAppointmentMedicalRecord(params.appointment.id, descricao, diagnostico, medicamento)
+                          await EditStatus()  
+                        
+                          setIsLoading(false)
+                        } catch (e) {
+                          console.log(e.request);
+                          setIsLoading(false)
+                        }
+                      }} 
+                    /> ) : (<AppButton textButton={t(AppLocalizations.editButton).toUpperCase()} 
                     isLoading={isLoading} 
                     onTap={async () => {
 
@@ -62,14 +86,16 @@ export default function InsertMedicalRecord({ navigation }) {
                           setIsLoading(true)
               
                           await DoctorRepository.PutAppointmentMedicalRecord(params.appointment.id, descricao, diagnostico, medicamento)  
-              
+                          await EditStatus()  
                           setIsLoading(false)
                         } catch (e) {
-                          console.log(e.message);
+                          console.log(e.request);
                           setIsLoading(false)
                         }
                       }} 
                     />
+                    )}
+                    
                     <Spacing height={25} />
                     <LinkButton text={t(AppLocalizations.cancel)} onTap={() => AppNavigation.pop(navigation)} />
                 </Container>

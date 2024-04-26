@@ -55,7 +55,7 @@ async function getDoctorAppointments(id, data) {
 
 async function PutAppointmentMedicalRecord(id, descricao, diagnostico, medicamento){
    
-  try {
+ 
     const response = await api.put(PutAppointment, {
       
         consultaId: id,
@@ -63,14 +63,9 @@ async function PutAppointmentMedicalRecord(id, descricao, diagnostico, medicamen
         diagnostico: diagnostico,
         medicamento: medicamento
       
-    })
-    console.log(response);
+    }).then( response => console.log(response)).catch(error => console.log(error.request.data))
+    
 
     return response
-
-  } catch (error) {
-    console.log('====================================');
-    console.log(error.message);
-    console.log('====================================');
-  }
+  
 }
