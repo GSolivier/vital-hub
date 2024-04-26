@@ -17,7 +17,10 @@ export default function ClinicList({DATA, tapAction, selected}) {
 
             <ClinicCard
                 item={item}
-                onTap={() => tapAction(item)}
+                onTap={() => {
+                tapAction(item)
+                console.log(item)
+                }}
                 selected={selected}
             />
         )}

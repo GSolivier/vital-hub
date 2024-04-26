@@ -7,11 +7,14 @@ import AppLocalizations from '../../settings/AppLocalizations'
 import { ClinicListData } from '../../settings/AppUtils'
 import ClinicList from './widgets/ClinicList'
 import { AppNavigation, RouteKeys, pop, push } from '../../settings/routes/RouteActions'
-import api, { GetClinicPath } from '../../settings/AppApi'
+import api, { GetClinicByCityPath, GetClinicPath } from '../../settings/AppApi'
+import { useRoute } from '@react-navigation/native'
 
 export default function SelectClinic({navigation}) {
   const [selected, setSelected] = useState({ id: 0});
   const [clinicList, setClinicList] = useState([]);
+
+  const {params} = useRoute()
 
   const selectClinic = (clinic) => {
     setSelected(clinic)
@@ -19,7 +22,9 @@ export default function SelectClinic({navigation}) {
 
     useEffect(() => {
       (async () => {
-        api.get(GetClinicPath)
+        api.get(GetClinicByCityPath, { params : {
+          cidade: params.cidade
+        }})
         .then( response => {
           setClinicList(response.data)
           
@@ -41,7 +46,14 @@ export default function SelectClinic({navigation}) {
         selected={selected}
       />
       <Spacing height={30}/>
-      <AppButton textButton={t(AppLocalizations.continueButton).toUpperCase()} onTap={() => AppNavigation.push(navigation, RouteKeys.selectDoctorScreen)}/>
+      <AppButton textButton={t(AppLocalizations.continueButton).toUpperCase()} isDisabled={selected.id == 0} onTap={() => 
+      AppNavigation.push(navigation, RouteKeys.selectDoctorScreen, {
+        clinica: selected,
+        prioridadeTipo: params.prioridadeTipo,
+        pacienteId: params.pacienteId
+      }, true)
+      
+      }/>
       <Spacing height={30}/>
       <LinkButton text={t(AppLocalizations.cancel)} onTap={() => AppNavigation.pop(navigation)}/>
     </Container>

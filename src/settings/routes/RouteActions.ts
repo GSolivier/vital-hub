@@ -34,7 +34,8 @@ export const AppNavigation = {
   push: push,
 
   pop: pop, 
-  popWithData: popWithData
+  popWithData: popWithData,
+  popToTop: popToTop
 }
 
 
@@ -74,6 +75,7 @@ async function pop(
   }
 }
 
+
 async function popWithData<RouteName extends keyof ParamListBase>(
   navigation: NavigationProp<ParamListBase>,
   routeKey: any,
@@ -85,6 +87,17 @@ async function popWithData<RouteName extends keyof ParamListBase>(
       params: params,
       merge: true,
     });
+  } catch (error) {
+    console.error("Erro ao fazer pop na rota:", error);
+  }
+}
+
+async function popToTop(
+  navigation: NavigationProp<ParamListBase>,
+): Promise<void> {
+  try {
+    const popAction = StackActions.popToTop()
+    navigation.dispatch(popAction);
   } catch (error) {
     console.error("Erro ao fazer pop na rota:", error);
   }

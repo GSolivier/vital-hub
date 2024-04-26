@@ -3,7 +3,7 @@ import { AppStorage, AppStorageKeys } from './AppStorage';
 
 const apiPort = '4466';
 
-const ip = '192.168.19.137';
+const ip = '172.16.39.113';
 
 //const ip = '192.168.0.4';
 
@@ -11,14 +11,17 @@ const BASE_URL_LOCAL = `http://${ip}:${apiPort}/api`;
 
 export const LoginPath = '/Login'
 export const MedicoPath = '/Medicos'
+export const GetMedicoByIdClinicPath = '/Medicos/BuscarPorIdClinica'
 export const GetMedicoAppointmentPath = `${MedicoPath}/BuscarPorData`
 export const GetMedicoByIdPath = `${MedicoPath}/BuscarPorId`
 export const GetClinicPath = '/Clinica/ListarTodas'
+export const GetClinicByCityPath = '/Clinica/BuscarPorCidade'
 
 export const PatientPath = '/Pacientes'
 export const GetPatientByIdPath = `${PatientPath}/BuscarPorId`
 export const AppointmentPath = '/Consultas'
 export const PutAppointment = '/Consultas/Prontuario'
+export const AppointmentInsertPath = '/Consultas/Cadastrar'
 export const GetPatientAppointmentPath = `${PatientPath}/BuscarPorData`
 export const PostAppointmentPath = `${AppointmentPath}/Cadastrar`
 

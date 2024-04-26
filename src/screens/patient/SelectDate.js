@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Container, Spacing } from '../../components/Container'
 import AppLocalizations from '../../settings/AppLocalizations'
 import { TitleSemiBold } from '../../settings/AppFonts'
@@ -8,6 +8,7 @@ import { AppNavigation } from '../../settings/routes/RouteActions'
 import AppDropdown from '../../components/AppDropdown'
 import SelectDateCalendar from './widgets/SelectDateCalendar'
 import ConfirmAppointmentDialog from './widgets/dialogs/ConfirmAppointmentDialog'
+import { useRoute } from '@react-navigation/native'
 
 
 export default function SelectDate({ navigation }) {
@@ -23,13 +24,27 @@ export default function SelectDate({ navigation }) {
   ]
 
   const [time, setTime] = useState()
+  const [date, setDate] = useState()
+  const [dateTime, setDateTime] = useState()
   const [confirmDialog,setConfirmDialog] = useState(false)
+
+  const {params} = useRoute()
+
+  useEffect(() => {
+    if (date && time) {
+      formatDateTime()
+    }
+} , [date, time])
+
+function formatDateTime(){
+  setDateTime(`${date}T${time}:00`)
+}
 
   return (
     <Container>
       <TitleSemiBold>{t(AppLocalizations.selectDate)}</TitleSemiBold>
       <Spacing height={35} />
-      <SelectDateCalendar />
+      <SelectDateCalendar setDate={setDate} />
       <Spacing height={30} />
 
       <AppDropdown
@@ -40,10 +55,20 @@ export default function SelectDate({ navigation }) {
       />
 
       <Spacing height={42} />
-      <AppButton textButton={t(AppLocalizations.confirm).toUpperCase()} onTap={() => setConfirmDialog(true)} />
+      <AppButton textButton={t(AppLocalizations.confirm).toUpperCase()}isDisabled={!date || !time} onTap={() => setConfirmDialog(true)} />
       <Spacing height={30} />
       <LinkButton text={t(AppLocalizations.cancel)} onTap={() => AppNavigation.pop(navigation)} />
-      <ConfirmAppointmentDialog visible={confirmDialog}   onClose={() => setConfirmDialog(false)} navigation={navigation}/>
+      <ConfirmAppointmentDialog
+      appointment={{
+        clinica: params.clinica,
+        medico: params.medico,
+        prioridadeTipo: params.prioridadeTipo,
+        pacienteId: params.pacienteId,
+        dataConsulta: dateTime
+      }}
+       visible={confirmDialog} onClose={() => setConfirmDialog(false)} navigation={navigation}
+
+      />
     </Container>
   )
 }

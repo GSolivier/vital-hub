@@ -43,9 +43,9 @@ export const TextAlign = {
 };
 
 export const AppointmentLevelsList = {
-    routine: 'routine',
-    exam: 'exam',
-    urgency: 'urgency'
+    routine: 1,
+    exam: 2,
+    urgency: 3
 }
 
 export const AppointmentLevelsButtons = [
