@@ -13,9 +13,9 @@ import { AppNavigation, RouteKeys } from '../../settings/routes/RouteActions'
 import { validateEmail, validatePassword } from '../../settings/AppUtils'
 
 export default function CreateAccount({ navigation }) {
-  const [email, setEmail] = useState('guilhermesousa1110@gmail.com')
-  const [password, setPassword] = useState('gui')
-  const [confirmPassword, setConfirmPassword] = useState('gui')
+  const [email, setEmail] = useState()
+  const [password, setPassword] = useState()
+  const [confirmPassword, setConfirmPassword] = useState()
 
   useEffect
   return (
@@ -56,14 +56,11 @@ export default function CreateAccount({ navigation }) {
       <Spacing height={30} />
 
       <AppButton
+        isDisabled={!validateEmail(email) || !validatePassword(password, confirmPassword) || !email || !password || !confirmPassword}
         textButton={t(AppLocalizations.continueButton).toUpperCase()}
         onTap={() => {
-          if (validateEmail(email) && validatePassword(password, confirmPassword) && email && password && confirmPassword) {
-            AppNavigation.push(navigation, RouteKeys.createAccountAdditionalInfo, { email: email, password: password })
-          }
-
-        }
-        } />
+          AppNavigation.push(navigation, RouteKeys.createAccountAdditionalInfo, { email: email, password: password })
+        }} />
       <Spacing height={30} />
       <LinkButton text={t(AppLocalizations.cancel)} onTap={() => AppNavigation.pop(navigation)} />
     </AuthContainer>

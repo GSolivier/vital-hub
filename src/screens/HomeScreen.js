@@ -34,7 +34,7 @@ const FixedButton = styled.TouchableOpacity`
   right: 20px;
 `
 
-export default function HomeScreen({ navigation }) {
+export default function HomeScreen({ navigation, navigation: { setParams } }) {
     const [selectedTab, setSelectedTab] = useState("agendada");
     const [rawList, setRawList] = useState([])
     const [filteredList, setFilteredList] = useState([]);
@@ -102,7 +102,12 @@ export default function HomeScreen({ navigation }) {
         filterAppointmentList()
     }, [rawList, selectedTab]);
 
-
+    useEffect(() => {
+        if (params.reload) {
+            getUserData()
+            setParams({ reload: false })
+        }
+    }, [params])
 
     return (
         <>
@@ -143,7 +148,13 @@ export default function HomeScreen({ navigation }) {
                     <>
                         <CancelExamDialog
                             visible={cancelModalIsVisible}
-                            onClose={() => setCancelModalIsVisible(false)}
+                            onClose={async (reload) => {
+                                setCancelModalIsVisible(false)
+                                if(reload){
+                                    await getUserData()
+                                    setSelectedTab("cancelada")
+                                }
+                                }}
                             appointment={appointment} />
 
                         <SeeMedicalRecordDialog

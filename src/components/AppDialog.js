@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components/native'
 import { AppColors } from '../settings/AppColors'
 import { Flex } from '../settings/AppEnums'
+import { KeyboardAvoidingView, Platform } from 'react-native'
 
 export const Dialog = styled.Modal`
 `
@@ -32,15 +33,24 @@ export default function AppDialog({
             transparent={true}
             onRequestClose={() => onClose}
             statusBarTranslucent
+
         >
+
             <DialogContainer
                 padding={padding}
                 justifyContent={justifyContentContainer}
                 isFaded={isFaded}
             >
-                <DialogBox justifyContentBox={justifyContentBox} flex={flex} paddingInside={paddingInside}>
-                    {children}
-                </DialogBox>
+                <KeyboardAvoidingView
+                    
+                    behavior={'padding'}
+                    keyboardVerticalOffset={Platform.OS == 'ios' ? 0 : 0}
+
+                >
+                    <DialogBox justifyContentBox={justifyContentBox} flex={flex} paddingInside={paddingInside}>
+                        {children}
+                    </DialogBox>
+                </KeyboardAvoidingView>
             </DialogContainer>
         </Dialog>
     )
