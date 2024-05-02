@@ -45,16 +45,18 @@ const CameraIconBox = styled.TouchableOpacity`
 export default function CreateAccountAdditionalInfo({ navigation }) {
 
     const [image, setImage] = useState()
-    const [date, setDate] = useState()
+    const [date, setDate] = useState(new Date())
+    const [dateView, setDateView] = useState()
     const [open, setOpen] = useState(false)
     const [nome, setNome] = useState()
     const [rg, setRg] = useState()
-    const [cpf, setCpf] = useState()
+    const [cpf, setCpf] = useState('')
     const [cep, setCep] = useState()
     const [street, setStreet] = useState()
     const [number, setNumber] = useState()
     const [city, setCity] = useState()
     const [endereco, setEndereco] = useState({})
+    const [isLoading, setIsLoading] = useState()
 
     const { params } = useRoute()
 
@@ -87,6 +89,7 @@ export default function CreateAccountAdditionalInfo({ navigation }) {
         if (type == "set") {
             const currentDate = selectedDate;
             setDate(currentDate)
+            setDateView(currentDate)
 
             if (Platform.OS === "android") {
                 setOpen(false)
@@ -100,6 +103,7 @@ export default function CreateAccountAdditionalInfo({ navigation }) {
     }
 
     const submitForm = async () => {
+        setIsLoading(true)
         const form = new FormData()
         var datestr = (new Date(date)).toUTCString();
         form.append("Arquivo", {
@@ -128,10 +132,10 @@ export default function CreateAccountAdditionalInfo({ navigation }) {
             .then(response => {
                 AppNavigation.push(navigation, RouteKeys.loginScreen, true)
             }).catch(error => {
-                console.log('====================================');
                 console.log(error.request);
-                console.log('====================================');
             })
+
+        setIsLoading(false)
     }
 
     const aceEditorRef = useRef();
@@ -167,7 +171,7 @@ export default function CreateAccountAdditionalInfo({ navigation }) {
                             setCpf(masked);
                         }} />
                     <Spacing height={15} />
-                    <AppDatePicker textValue={date} toggleDatePicker={() => toggleDatePicker()} hasLabel={false} />
+                    <AppDatePicker textValue={dateView} toggleDatePicker={() => toggleDatePicker()} hasLabel={false} />
                     <Spacing height={15} />
                     <AppInput
                         keyboardType='numeric'
@@ -191,7 +195,10 @@ export default function CreateAccountAdditionalInfo({ navigation }) {
                         </InputContainer>
                     </Row>
                     <Spacing height={30} />
-                    <AppButton textButton={t(AppLocalizations.signUp).toUpperCase()}
+                    <AppButton
+                    isLoading={isLoading}
+                    isDisabled={!nome || !rg || !ValidarCPF(cpf) || !date || !cep || !street || !city || !number}
+                    textButton={t(AppLocalizations.signUp).toUpperCase()}
                         onTap={() => {
                             if (nome && rg && ValidarCPF(cpf) && date && cep && street && city && number) {
                                 submitForm()
