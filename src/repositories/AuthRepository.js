@@ -73,22 +73,22 @@ export async function login(email, senha, navigation) {
             AppToast.showSucessToast("Login efetuado com sucesso!")
         })
         .catch(function (error) {
-            console.log(error.request);
+            console.log(error.request.response)
             if (error.request) {
-                ToastAndroid.showWithGravity(
-                    "Houve um problema desconhecido. Tente novamente mais tarde",
+                AppToast.showErrorToast(
+                    error.request.response,
                     ToastAndroid.SHORT,
                     ToastAndroid.BOTTOM,
                 );
             } else if (error.response) {
 
-                ToastAndroid.showWithGravity(
+                AppToast.showErrorToast(
                     error.response.data.message,
                     ToastAndroid.SHORT,
                     ToastAndroid.BOTTOM,
                 );
             } else {
-                ToastAndroid.showWithGravity(
+                AppToast.showErrorToast(
                     "Ocorreu um erro desconhecido",
                     ToastAndroid.SHORT,
                     ToastAndroid.BOTTOM,

@@ -74,6 +74,7 @@ export default function TabNavigation() {
                 <Tab.Screen 
                 name={RouteKeys.homeScreen} 
                 component={HomeScreen} 
+                
                 initialParams={{userData : params.userData}}
                 
                 />

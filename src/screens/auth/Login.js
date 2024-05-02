@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Row, Spacing } from '../../components/Container'
 import AppInput from '../../components/AppInput'
-import { AppState, Image, Text } from 'react-native'
+import {Image} from 'react-native'
 import { AppAssets } from '../../assets/AppAssets'
 import { TitleSemiBold } from '../../settings/AppFonts'
 import AppButton, { LinkButton } from '../../components/AppButton'
@@ -13,10 +13,10 @@ import { Flex } from '../../settings/AppEnums'
 import SvgIcon, { Icon } from '../../assets/icons/Icons'
 import { AppNavigation, RouteKeys } from '../../settings/routes/RouteActions'
 import * as Auth from 'expo-local-authentication'
-import { AppStorage, AppStorageKeys } from '../../settings/AppStorage'
 import { AuthRepository } from '../../repositories/AuthRepository'
 import { AppToast } from '../../components/AppToast'
 import { useRoute } from '@react-navigation/native'
+import { validateEmail } from '../../settings/AppUtils'
 
 
 
@@ -25,10 +25,12 @@ export default function Login({ navigation }) {
 
   //const [email, setEmail] = useState('carol@email')
 
-  //const [email, setEmail] = useState('ian@email.com')
+  //const [email, setEmail] = useState('carol.josefa@gmail.com')
+  //const [senha, setSenha] = useState('123')
+
+
   //const [email, setEmail] = useState('samuel@email.com')
   //const [email, setEmail] = useState('nelson@email.com')
-  //const [email, setEmail] = useState('filipe@email.com')
   //const [email, setEmail] = useState('ian@email.com')
   const [email, setEmail] = useState('luizaeliane@email.com')
   //const [email, setEmail] = useState('evertonaraujosenai@gmail.com')
@@ -36,11 +38,10 @@ export default function Login({ navigation }) {
 
   
   //const [senha, setSenha] = useState('123')
-  const [senha, setSenha] = useState('senai123')
+  // const [senha, setSenha] = useState('senai123')
 
 
   const { params } = useRoute();
-  const [isValidated, setIsValidated] = useState(true)
   const [userType, setUserType] = useState('patient')
   const [hasBio, setHasBio] = useState(false)
   const [isAuth, setIsAuth] = useState(false)
@@ -96,7 +97,7 @@ export default function Login({ navigation }) {
 
       <AppInput hint={t(AppLocalizations.emailPlacehoder)}
         /* onChangeText={handleEmailChange} */
-        isValid={isValidated}
+        isValid={validateEmail(email)}
         textValue={email}
         onChangeText={(value) => setEmail(value)}
       />
@@ -126,6 +127,7 @@ export default function Login({ navigation }) {
 
       <AppButton
         textButton={t(AppLocalizations.enterButton).toUpperCase()}
+        isDisabled={!validateEmail(email) || !senha || !email}
         isLoading={isLoading}
         onTap={async () => {
 

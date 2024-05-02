@@ -17,12 +17,15 @@ import { AppToast } from "../../components/AppToast";
 
 export default function EmailVerify({ navigation }) {
     const [codeValue, setCodeValue] = useState('');
-
+    const [isLoading, setIsLoading] = useState(false)
     const { params } = useRoute();
 
+    useEffect(()=> {
+        console.log(codeValue);
+    },[codeValue])
 
     async function ValidarCodigo() {
-
+        console.log(codeValue);
 
         await api.post(`/RecuperarSenha/ValidarCodigoRecuperacaoSenha?email=${params.email}&codigo=${codeValue}`)
         .then( ()=> {
@@ -42,7 +45,9 @@ export default function EmailVerify({ navigation }) {
             <Spacing height={20}/>
             <AppCodeInput onValueChange={setCodeValue}/>
             <Spacing height={30}/>
-            <AppButton textButton={t(AppLocalizations.enterButton).toUpperCase()} onTap={() => {ValidarCodigo()}}/>
+            <AppButton
+            isDisabled={codeValue.length < 4}
+             isLoading={isLoading} textButton={t(AppLocalizations.confirm).toUpperCase()} onTap={() => { ValidarCodigo()}}/>
             <Spacing height={30}/>
             <LinkButton text={t(AppLocalizations.resentCode)} color={AppColors.secondaryV1} />
         </AuthContainer>

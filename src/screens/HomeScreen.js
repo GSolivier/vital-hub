@@ -110,14 +110,6 @@ export default function HomeScreen({ navigation, navigation: { setParams } }) {
         filterAppointmentList()
     }, [rawList, selectedTab]);
 
-    useEffect(() => {
-       
-        if (params.reload) {
-            getUserData()
-            setParams( { reload: false})
-        }
-    }, [params.reload])
-
 
 
     return (
@@ -163,7 +155,13 @@ export default function HomeScreen({ navigation, navigation: { setParams } }) {
                     <>
                         <CancelExamDialog
                             visible={cancelModalIsVisible}
-                            onClose={() => setCancelModalIsVisible(false)}
+                            onClose={async (reload) => {
+                                setCancelModalIsVisible(false)
+                                if(reload){
+                                    await getUserData()
+                                    setSelectedTab("cancelada")
+                                }
+                                }}
                             appointment={appointment} />
 
                         <SeeMedicalRecordDialog

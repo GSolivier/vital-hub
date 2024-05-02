@@ -17,13 +17,14 @@ export default function RedefinePassword({ navigation }) {
 
     const [novaSenha, setNovaSenha] = useState('')
     const [confirmaSenha, setConfirmaSenha] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
 
     const { params } = useRoute();
 
     async function ValidarSenha() {
 
         if (novaSenha == confirmaSenha) {
-            
+            setIsLoading(true)
             await api.put(`/Usuario/AlterarSenha?email=${params.email}`, {senhaNova: novaSenha})
             .then(response => {
                 AppNavigation.push(navigation, RouteKeys.loginScreen, {email: params.email}, true)
@@ -31,7 +32,7 @@ export default function RedefinePassword({ navigation }) {
         } else {
             AppToast.showErrorToast("As senhas não são iguais.")
         }
-        
+        setIsLoading(false)
     }
     
 
@@ -53,7 +54,7 @@ export default function RedefinePassword({ navigation }) {
             onChangeText={(value)=>setConfirmaSenha(value)}
             />
             <Spacing height={30} />
-            <AppButton textButton={t(AppLocalizations.confirmNewPasswordPlaceHolder).toUpperCase()}
+            <AppButton isDisabled={(!confirmaSenha && !novaSenha) && confirmaSenha != novaSenha} isLoading={isLoading} textButton={t(AppLocalizations.confirmNewPasswordPlaceHolder).toUpperCase()}
             onTap={() =>{ValidarSenha()}}
             />
         </AuthContainer>
