@@ -4,7 +4,8 @@ export const DoctorRepository = {
   getDoctorById: getDoctorById,
   getDoctors: getDoctors,
   getDoctorAppointments: getDoctorAppointments,
-  PutAppointmentMedicalRecord: PutAppointmentMedicalRecord
+  PutAppointmentMedicalRecord: PutAppointmentMedicalRecord,
+  putProfileDoctor:putProfileDoctor,
 }
 
 async function getDoctors() {
@@ -69,3 +70,18 @@ async function PutAppointmentMedicalRecord(id, descricao, diagnostico, medicamen
     return response
   
 }
+async function putProfileDoctor(dataNascimento, logradouro, numero, cep, cidade,especialidade) {
+
+  
+  const response = await api.put(MedicoPath, {
+      especialidade1: especialidade,
+      dataNascimento: dataNascimento,
+      logradouro: logradouro,
+      numero: numero,
+      cep: cep,
+      cidade: cidade,
+      
+  }).then( response => console.log(response)).catch(error => console.log(error.request))
+
+  return response
+} 

@@ -19,7 +19,7 @@ export default function DoctorList({DATA, tapAction, selected}) {
                 item={item}
                 onTap={() => {
                   tapAction(item)
-                  console.log(item)
+            
                   }}
                 selected={selected}
             />

@@ -15,15 +15,7 @@ import { AppToast } from '../../../../components/AppToast'
 export default function ConfirmAppointmentDialog({ visible, onClose, navigation, appointment }) {
 
   const handleConfirm = async () =>  {
-    console.log('====================================');
-    console.log({
-      pacienteId: appointment.pacienteId,
-      clinicaId: appointment.clinica.id,
-      medicoId: appointment.medico.idNavigation.id,
-      prioridadeTipo: appointment.prioridadeTipo,
-      dataConsulta: appointment.dataConsulta
-    });
-    console.log('====================================');
+
     await api.post(AppointmentInsertPath, {
       pacienteId: appointment.pacienteId,
       clinicaId: appointment.clinica.id,
@@ -35,17 +27,12 @@ export default function ConfirmAppointmentDialog({ visible, onClose, navigation,
       AppToast.showSucessToast("Consulta agendada com sucesso")
       onClose()
     }).catch(error => {
-      console.log('====================================');
+
       console.log(error.request);
-      console.log('====================================');
+
     })
   }
 
-  useEffect(() => {
-    console.log('====================================');
-    console.log(appointment);
-    console.log('====================================');
-  }, [appointment])
 
   return (
     <AppDialog

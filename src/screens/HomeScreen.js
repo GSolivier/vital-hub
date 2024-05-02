@@ -34,7 +34,7 @@ const FixedButton = styled.TouchableOpacity`
   right: 20px;
 `
 
-export default function HomeScreen({ navigation }) {
+export default function HomeScreen({ navigation, navigation: { setParams } }) {
     const [selectedTab, setSelectedTab] = useState("agendada");
     const [rawList, setRawList] = useState([])
     const [filteredList, setFilteredList] = useState([]);
@@ -75,8 +75,15 @@ export default function HomeScreen({ navigation }) {
     }
 
     const handleInsertMedicalRecord = (appointment) => {
-        setSelectedAppointment(appointment);
-        setSeeMedicalRecordIsVisible(true);
+
+        {appointment.situacao == "agendada" ? (
+            setSelectedAppointment(appointment),
+            setSeeMedicalRecordIsVisible(true)
+        ):(
+            setSelectedAppointment(appointment),
+            AppNavigation.push(navigation, RouteKeys.insertMedicalRecordScreen, { appointment: appointment })
+          )}
+        
     }
 
     async function getAppointmentList() {
@@ -96,11 +103,20 @@ export default function HomeScreen({ navigation }) {
 
     useEffect(() => {
         getUserData()
+
     }, [date]);
 
     useEffect(() => {
         filterAppointmentList()
     }, [rawList, selectedTab]);
+
+    useEffect(() => {
+       
+        if (params.reload) {
+            getUserData()
+            setParams( { reload: false})
+        }
+    }, [params.reload])
 
 
 

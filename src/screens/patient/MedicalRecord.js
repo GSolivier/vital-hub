@@ -65,7 +65,7 @@ export default function MedicalRecord({ navigation, navigation: { setParams } })
 
         formData.append("ConsultaId", params.appointment.id)
 
-        console.log(photoList[0]);
+
 
         formData.append("Imagem", {
             uri: photoList[0],
@@ -146,12 +146,12 @@ export default function MedicalRecord({ navigation, navigation: { setParams } })
                     <Spacing height={20} />
                     <Line />
                     <Spacing height={20} />
-                    <AppInput
+                    {/* <AppInput
                         isEditable={false}
                         label={t(AppLocalizations.appointDescriptionLabel)}
                         isTextArea={true}
                         textValue={'Resultado do exame de sangue: tudo normal'} />
-                    <Spacing height={30} />
+                    <Spacing height={30} /> */}
                     <LinkButton text={t(AppLocalizations.back)} onTap={() => AppNavigation.pop(navigation)} />
                     <SeeImageModal
                         visible={imageModalIsVisible}

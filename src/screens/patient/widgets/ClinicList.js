@@ -19,7 +19,6 @@ export default function ClinicList({DATA, tapAction, selected}) {
                 item={item}
                 onTap={() => {
                 tapAction(item)
-                console.log(item)
                 }}
                 selected={selected}
             />

@@ -18,7 +18,7 @@ const ImageModal = styled.Image`
 `
 
 export default function SeeMedicalRecordDialog({ visible, onClose, appointment, navigation }) {
-    console.log(appointment);
+    
     if (!appointment) {
         return null
     }

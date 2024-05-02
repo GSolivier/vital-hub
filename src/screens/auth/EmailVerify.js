@@ -20,12 +20,9 @@ export default function EmailVerify({ navigation }) {
 
     const { params } = useRoute();
 
-    useEffect(()=> {
-        console.log(codeValue);
-    },[codeValue])
 
     async function ValidarCodigo() {
-        console.log(codeValue);
+
 
         await api.post(`/RecuperarSenha/ValidarCodigoRecuperacaoSenha?email=${params.email}&codigo=${codeValue}`)
         .then( ()=> {

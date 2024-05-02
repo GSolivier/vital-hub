@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components/native'
 import { AppColors } from '../AppColors'
 import { TextMedium } from '../AppFonts'
@@ -28,6 +28,9 @@ export const IconButton = styled.View`
 
 export default function TabNavigation() {
     const { params } = useRoute();
+
+    
+
     return (
             <Tab.Navigator
                 initialRouteName={RouteKeys.homeScreen}
@@ -72,6 +75,7 @@ export default function TabNavigation() {
                 name={RouteKeys.homeScreen} 
                 component={HomeScreen} 
                 initialParams={{userData : params.userData}}
+                
                 />
 
                 {/* <Tab.Screen 

@@ -128,9 +128,8 @@ export default function CreateAccountAdditionalInfo({ navigation }) {
             .then(response => {
                 AppNavigation.push(navigation, RouteKeys.loginScreen, true)
             }).catch(error => {
-                console.log('====================================');
                 console.log(error.request);
-                console.log('====================================');
+
             })
     }
 

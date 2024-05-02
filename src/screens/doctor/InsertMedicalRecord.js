@@ -7,19 +7,20 @@ import { Flex, TextAlign } from '../../settings/AppEnums';
 import AppInput from '../../components/AppInput';
 import { ScrollView } from 'react-native';
 import AppButton, { LinkButton } from '../../components/AppButton';
-import { AppNavigation } from '../../settings/routes/RouteActions';
+import { AppNavigation, RouteKeys } from '../../settings/routes/RouteActions';
 import t from '../../locale';
 import AppLocalizations from '../../settings/AppLocalizations';
 import moment from 'moment';
 import { DoctorRepository } from '../../repositories/DoctorRepository';
 import api from '../../settings/AppApi';
+import TabNavigation from '../../settings/routes/TabNavigation';
 
 const HeaderImage = styled.Image`
     width: 100%;
     height: 30%;
 `
 
-export default function InsertMedicalRecord({ navigation }) {
+export default function InsertMedicalRecord({ navigation, navigation: { setParams } } ) {
     const { params } = useRoute();
     const [isLoading, setIsLoading] = useState(false)
 
@@ -27,18 +28,20 @@ export default function InsertMedicalRecord({ navigation }) {
     const [diagnostico, setDiagnostico] = useState(params.appointment.diagnostico)
     const [medicamento, setMedicamento] = useState(params.appointment.receita.medicamento)
 
-    useEffect( ()=>{
-        console.log(params.appointment);
-        console.log(params.appointment.receita.medicamento);
-        
-    }, [])
 
     async function EditStatus() {
 
-        await api.put(`/Consultas/Status`, {params:{
+        await api.put(`/Consultas/Status`,{}, {params:{
             idConsulta: params.appointment.id,
             status: "realizada"
-        }}).then(response => console.log(response)).catch(error => console.log(error.request))
+        }}).then(
+          response => {
+            AppNavigation.popWithData(navigation, RouteKeys.homeScreen            , {reload:true})
+
+          }
+
+        
+        ).catch(error => console.log(error.request.data))
         
     }
 
@@ -61,7 +64,7 @@ export default function InsertMedicalRecord({ navigation }) {
                     <Spacing height={20} />
                     <AppInput  label={t(AppLocalizations.doctorPrescriptionLabel)} hint={"Descreva o tratamento..."}textValue={medicamento} isTextArea={true} onChangeText={(value) => { setMedicamento(value) }} />
                     <Spacing height={30} />
-                    {params.appointment.receita.medicamento == null ? (
+                    {params.appointment.situacao.situacao == "agendada" ? (
                     <AppButton textButton={t(AppLocalizations.saveButton).toUpperCase()}
                     isLoading={isLoading} 
                     onTap={async () => {
@@ -86,8 +89,10 @@ export default function InsertMedicalRecord({ navigation }) {
                           setIsLoading(true)
               
                           await DoctorRepository.PutAppointmentMedicalRecord(params.appointment.id, descricao, diagnostico, medicamento)  
-                          await EditStatus()  
+                          AppNavigation.popWithData(navigation, RouteKeys.homeScreen, {reload:true})
                           setIsLoading(false)
+                          
+
                         } catch (e) {
                           console.log(e.request);
                           setIsLoading(false)

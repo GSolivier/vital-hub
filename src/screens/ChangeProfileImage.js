@@ -98,7 +98,7 @@ export default function ChangeProfileImage({ navigation , getMediaLibrary = true
     async function GetLastPhoto() {
         const {assets} = await MediaLibrary.getAssetsAsync({sortBy : [[MediaLibrary.SortBy.creationTime, false]], first: 1 })
         setGaleryImage(assets)
-        console.log(assets);
+
     }
 
     const takePicture = async () => {
