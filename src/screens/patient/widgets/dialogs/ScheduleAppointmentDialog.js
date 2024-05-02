@@ -35,6 +35,7 @@ export default function ScheduleAppointmentDialog({ visible, onClose, navigation
       isFaded={true}
       justifyContentBox={Flex.flexStart}
       onClose={onClose}
+      isAvoiding={true}
 
     >
 

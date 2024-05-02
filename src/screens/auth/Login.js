@@ -30,15 +30,17 @@ export default function Login({ navigation }) {
 
 
   //const [email, setEmail] = useState('samuel@email.com')
+  //const [email, setEmail] = useState('filipe@email.com')
+
   //const [email, setEmail] = useState('nelson@email.com')
-  //const [email, setEmail] = useState('ian@email.com')
-  const [email, setEmail] = useState('luizaeliane@email.com')
+  const [email, setEmail] = useState('ian@email.com')
+  //const [email, setEmail] = useState('luizaeliane@email.com')
   //const [email, setEmail] = useState('evertonaraujosenai@gmail.com')
   
 
   
   //const [senha, setSenha] = useState('123')
-  // const [senha, setSenha] = useState('senai123')
+   const [senha, setSenha] = useState('senai123')
 
 
   const { params } = useRoute();

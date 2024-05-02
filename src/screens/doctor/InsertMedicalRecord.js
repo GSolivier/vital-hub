@@ -73,8 +73,8 @@ export default function InsertMedicalRecord({ navigation, navigation: { setParam
                           setIsLoading(true)
               
                           await DoctorRepository.PutAppointmentMedicalRecord(params.appointment.id, descricao, diagnostico, medicamento)
-                          await EditStatus()  
-                        
+                       
+                          await EditStatus()
                           setIsLoading(false)
                         } catch (e) {
                           console.log(e.request);
