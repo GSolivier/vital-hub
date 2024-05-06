@@ -36,7 +36,6 @@ export default function ScheduleAppointmentDialog({ visible, onClose, navigation
       justifyContentBox={Flex.flexStart}
       onClose={onClose}
       isAvoiding={true}
-
     >
 
         <TitleSemiBold alignSelf={Flex.center}>{t(AppLocalizations.scheduleAppointment)}</TitleSemiBold>

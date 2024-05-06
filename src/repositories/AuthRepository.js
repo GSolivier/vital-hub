@@ -73,7 +73,6 @@ export async function login(email, senha, navigation) {
             AppToast.showSucessToast("Login efetuado com sucesso!")
         })
         .catch(function (error) {
-            console.log(error.request.response)
             if (error.request) {
                 AppToast.showErrorToast(
                     error.request.response,

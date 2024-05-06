@@ -67,6 +67,7 @@ export default function AppInput({
     keyboardType = 'default',
     maxLength = null,
     onEndEditing = null,
+    numberOfLines = 5,
     ...rest
 }) {
     const handleInputChange = (value) => {
@@ -89,7 +90,7 @@ export default function AppInput({
                         color={isValid ? textColor : AppColors.red}
                         secureTextEntry={isObscure}
                         multiline={isTextArea}
-                        numberOfLines={isTextArea ? 5 : 1}
+                        numberOfLines={isTextArea ? numberOfLines : 1}
                         isTextArea={isTextArea}
                         textAlignVertical={isTextArea ? 'top' : 'center'}
                         value={textValue}

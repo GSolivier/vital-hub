@@ -117,8 +117,6 @@ export default function HomeScreen({ navigation, navigation: { setParams } }) {
         }
     } , [params])
 
-
-
     return (
         <>
             <HomeContainer name={params.userData.name} imagePath={params.userData.foto}>

@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import styled from 'styled-components/native'
 import { AppColors } from '../settings/AppColors'
 import { Flex } from '../settings/AppEnums'
-import { KeyboardAvoidingView, Platform } from 'react-native'
+import { KeyboardAvoidingView, Platform, View } from 'react-native'
 
 export const Dialog = styled.Modal`
 `
@@ -24,7 +24,7 @@ export const DialogBox = styled.View`
 `
 
 export default function AppDialog({
-    visible, onClose, children, animationType = "fade", justifyContentContainer, justifyContentBox, flex, padding, isFaded, paddingInside, isAvoiding = false
+    visible, onClose, children, animationType = "fade", justifyContentContainer, justifyContentBox, flex, padding, isFaded, paddingInside, isAvoiding = false,
 }) {
 
     return (
@@ -32,7 +32,7 @@ export default function AppDialog({
             visible={visible}
             animationType={animationType}
             transparent={true}
-            onRequestClose={onClose} // Correção: Trocar de `() => onClose` para `onClose`
+            onRequestClose={onClose}
             statusBarTranslucent
         >
             <DialogContainer

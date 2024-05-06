@@ -36,7 +36,7 @@ export default function InsertMedicalRecord({ navigation, navigation: { setParam
             status: "realizada"
         }}).then(
           response => {
-            AppNavigation.popWithData(navigation, RouteKeys.homeScreen            , {reload:true})
+            AppNavigation.popWithData(navigation, RouteKeys.homeScreen, {reload:true})
 
           }
 
