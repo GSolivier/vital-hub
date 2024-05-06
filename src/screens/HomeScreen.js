@@ -110,7 +110,12 @@ export default function HomeScreen({ navigation, navigation: { setParams } }) {
         filterAppointmentList()
     }, [rawList, selectedTab]);
 
-
+    useEffect(() => {
+        if (params.reload) {
+            getUserData()
+            setSelectedTab("realizada")
+        }
+    } , [params])
 
     return (
         <>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Row, Spacing } from '../../components/Container'
 import AppInput from '../../components/AppInput'
-import {Image} from 'react-native'
+import { Image } from 'react-native'
 import { AppAssets } from '../../assets/AppAssets'
 import { TitleSemiBold } from '../../settings/AppFonts'
 import AppButton, { LinkButton } from '../../components/AppButton'
@@ -23,20 +23,19 @@ import { validateEmail } from '../../settings/AppUtils'
 
 export default function Login({ navigation }) {
 
-  //const [email, setEmail] = useState('carol@email')
 
-  //const [email, setEmail] = useState('carol.josefa@gmail.com')
-  //const [senha, setSenha] = useState('123')
+  //const [email, setEmail] = useState('martin.medico@vitalhub.com')
+  const [senha, setSenha] = useState('123')
 
-
+  const [email, setEmail] = useState('carol.josefa@gmail.com')
   //const [email, setEmail] = useState('samuel@email.com')
   //const [email, setEmail] = useState('nelson@email.com')
   //const [email, setEmail] = useState('ian@email.com')
-  const [email, setEmail] = useState('luizaeliane@email.com')
+  // const [email, setEmail] = useState('luizaeliane@email.com')
   //const [email, setEmail] = useState('evertonaraujosenai@gmail.com')
-  
 
-  
+
+
   //const [senha, setSenha] = useState('123')
   // const [senha, setSenha] = useState('senai123')
 
@@ -134,7 +133,7 @@ export default function Login({ navigation }) {
           try {
             setIsLoading(true)
 
-            await AuthRepository.login(email, senha, navigation)  
+            await AuthRepository.login(email, senha, navigation)
 
             setIsLoading(false)
           } catch (e) {

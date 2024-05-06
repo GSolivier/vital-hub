@@ -53,7 +53,7 @@ const CameraIconBox = styled.TouchableOpacity`
   z-index: 10000;
 `;
 
-export default function ProfileScreen({ user, navigation }) {
+export default function ProfileScreen({ user, navigation, navigation: {setParams} }) {
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
   const [isEditable, setIsEditable] = useState(false);
@@ -73,6 +73,7 @@ export default function ProfileScreen({ user, navigation }) {
       setImage(params.image);
 
       AlterarFotoPerfil();
+      setParams({image: undefined})
     }
     getDataUser();
   }, [userData, params]);
@@ -81,8 +82,8 @@ export default function ProfileScreen({ user, navigation }) {
     const formData = new FormData();
     formData.append("Arquivo", {
       uri: params.image,
-      name: `image.${params.image.split(".")[1]}`,
-      type: `image/${params.image.split(".")[1]}`,
+      name: `image.jpg`,
+      type: `image/jpg`,
     });
 
     await api

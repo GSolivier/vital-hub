@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import styled from 'styled-components/native'
 import { AppColors } from '../settings/AppColors'
 import { Flex } from '../settings/AppEnums'
-import { KeyboardAvoidingView, Platform } from 'react-native'
+import { KeyboardAvoidingView, Platform, View } from 'react-native'
 
 export const Dialog = styled.Modal`
 `
@@ -24,33 +24,37 @@ export const DialogBox = styled.View`
 `
 
 export default function AppDialog({
-    visible, onClose, children, animationType = "fade", justifyContentContainer, justifyContentBox, flex, padding, isFaded, paddingInside
+    visible, onClose, children, animationType = "fade", justifyContentContainer, justifyContentBox, flex, padding, isFaded, paddingInside, isAvoiding = false,
 }) {
     return (
         <Dialog
             visible={visible}
             animationType={animationType}
             transparent={true}
-            onRequestClose={() => onClose}
+            onRequestClose={onClose}
             statusBarTranslucent
-
         >
-
             <DialogContainer
                 padding={padding}
                 justifyContent={justifyContentContainer}
                 isFaded={isFaded}
             >
-                <KeyboardAvoidingView
-                    
-                    behavior={'padding'}
-                    keyboardVerticalOffset={Platform.OS == 'ios' ? 0 : 0}
-
-                >
-                    <DialogBox justifyContentBox={justifyContentBox} flex={flex} paddingInside={paddingInside}>
-                        {children}
-                    </DialogBox>
-                </KeyboardAvoidingView>
+                {isAvoiding ? (
+                    <KeyboardAvoidingView
+                        behavior="padding"
+                        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}
+                    >
+                        <DialogBox justifyContentBox={justifyContentBox} flex={flex} paddingInside={paddingInside}>
+                            {children}
+                        </DialogBox>
+                    </KeyboardAvoidingView>
+                ) : (
+                    <Fragment>
+                        <DialogBox justifyContentBox={justifyContentBox} flex={flex} paddingInside={paddingInside}>
+                            {children}
+                        </DialogBox>
+                    </Fragment>
+                )}
             </DialogContainer>
         </Dialog>
     )

@@ -1,4 +1,4 @@
-import { ScrollView, TouchableOpacity } from 'react-native'
+import { ScrollView, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Container, Row, Spacing } from '../../components/Container'
 import styled from 'styled-components/native'
@@ -32,14 +32,31 @@ const Line = styled.View`
     background-color: ${AppColors.grayV4};
 `
 
+const OcrText = styled.View`
+    background-color: ${AppColors.whiteDarker};
+    border-radius: 5px;
+    height: 120px;
+    padding: 16px;
+`
+
 export default function MedicalRecord({ navigation, navigation: { setParams } }) {
     const { params } = useRoute();
     const [photoList, setPhotoList] = useState([])
     const [selectedImage, setSelectedImage] = useState()
     const [imageModalIsVisible, setImageModalIsVisible] = useState(false)
     const [descricaoExame, setDescricaoExame] = useState('')
+    const [ocrText, setOcrText] = useState()
 
     useEffect(() => {
+
+        let descricaoCompleta = '';
+
+        params.appointment.exames.forEach(element => {
+            descricaoCompleta += element.descricao + "\n"; 
+        });
+
+
+        setOcrText(descricaoCompleta);
         
         if (params.image) {
             setPhotoList([...photoList, params.image])
@@ -64,9 +81,6 @@ export default function MedicalRecord({ navigation, navigation: { setParams } })
         const formData = new FormData();
 
         formData.append("ConsultaId", params.appointment.id)
-
-
-
         formData.append("Imagem", {
             uri: photoList[0],
             name: `image.${photoList[0].split('.').pop()}`,
@@ -78,9 +92,9 @@ export default function MedicalRecord({ navigation, navigation: { setParams } })
                 "Content-Type" : "multipart/form-data"
             }
         }).then(response => {
-            setDescricaoExame( descricaoExame + "/n" + response.data.descricao)
+            console.log(response.data);
+            setOcrText(ocrText => ocrText + response.data.descricao + "\n");
 
-            console.log(response);
         }).catch(e => {
             console.log(e.request);
         })
@@ -129,20 +143,27 @@ export default function MedicalRecord({ navigation, navigation: { setParams } })
                                 textButton={t(AppLocalizations.send)}
                                 isDisabled={photoList.length == 0}
                                 mainColor={AppColors.primary}
-                                // SvgIcon={<SvgIcon name={Icon.cameraPlus} color={AppColors.white} />}
                                 onTap={()=> {InserirExame()}}
-
-
                             />
                         </ButtonContainer>
                         <ButtonContainer>
                             <LinkButton
-                                onTap={() => setPhotoList([])}
+                                onTap={() => {
+                                    setPhotoList([])
+                                    }}
                                 textDecoration={TextDecoration.none}
                                 text={t(AppLocalizations.cancel)}
                                 color={AppColors.red} />
                         </ButtonContainer>
                     </Row>
+                    <Spacing height={20} />
+                    {ocrText ? <OcrText>
+                        <ScrollView nestedScrollEnabled={true}>
+                        <TextMedium>
+                            {ocrText}
+                        </TextMedium>
+                        </ScrollView>
+                    </OcrText> : <Spacing/>}
                     <Spacing height={20} />
                     <Line />
                     <Spacing height={20} />
@@ -152,7 +173,7 @@ export default function MedicalRecord({ navigation, navigation: { setParams } })
                         isTextArea={true}
                         textValue={'Resultado do exame de sangue: tudo normal'} />
                     <Spacing height={30} /> */}
-                    <LinkButton text={t(AppLocalizations.back)} onTap={() => AppNavigation.pop(navigation)} />
+                    <LinkButton text={t(AppLocalizations.back)} onTap={() => AppNavigation.popWithData(navigation, RouteKeys.homeScreen, {reload: true})} />
                     <SeeImageModal
                         visible={imageModalIsVisible}
                         image={selectedImage}
