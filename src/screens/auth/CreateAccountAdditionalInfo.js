@@ -53,6 +53,7 @@ export default function CreateAccountAdditionalInfo({ navigation }) {
     const [cpf, setCpf] = useState('')
     const [cpfUnmasked, setCpfUnmasked] = useState()
     const [cepUnmasked, setCepUnmasked] = useState()
+    const [cep, setCep] = useState()
     const [street, setStreet] = useState()
     const [number, setNumber] = useState()
     const [city, setCity] = useState()
