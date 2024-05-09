@@ -143,12 +143,19 @@ export default function ProfileScreen({ user, navigation, navigation: {setParams
   const onChange = ({ type }, selectedDate) => {
     if (type == "set") {
       const currentDate = selectedDate;
-      setDate(currentDate);
-
-      if (Platform.OS === "android") {
-        toggleDatePicker();
-
-        setDateOfBirth(formatDate(currentDate));
+  
+      
+      if (currentDate > new Date()) {
+        AppToast.showErrorToast("Por favor, selecione uma data válida.")
+       
+      } else {
+        setDate(currentDate);
+  
+        if (Platform.OS === "android") {
+          toggleDatePicker();
+  
+          setDateOfBirth(formatDate(currentDate));
+        }
       }
     } else {
       toggleDatePicker();

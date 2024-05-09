@@ -51,7 +51,9 @@ export default function CreateAccountAdditionalInfo({ navigation }) {
     const [nome, setNome] = useState()
     const [rg, setRg] = useState()
     const [cpf, setCpf] = useState('')
+    const [cpfUnmasked, setCpfUnmasked] = useState()
     const [cep, setCep] = useState()
+    const [cepUnmasked, setCepUnMaskef] = useState()
     const [street, setStreet] = useState()
     const [number, setNumber] = useState()
     const [city, setCity] = useState()
@@ -106,22 +108,21 @@ export default function CreateAccountAdditionalInfo({ navigation }) {
         setIsLoading(true)
         const form = new FormData()
         var datestr = (new Date(date)).toUTCString();
-        form.append("Arquivo", {
+        image ? form.append("Arquivo", {
             uri: image, name: 'image.jpg', type: 'image/jpg'
-        })
+        }) : null
         form.append("Nome", nome)
         form.append("Email", params.email)
         form.append("Senha", params.password)
         form.append("Rg", rg)
-        form.append("Cpf", cpf)
+        form.append("Cpf", cpfUnmasked)
         form.append("DataNascimento", datestr)
-        form.append("Cep", cep)
+        form.append("Cep", cepUnmasked)
         form.append("Logradouro", street)
         form.append("Numero", number)
         form.append("Cidade", city)
-        // v    WVBHNJKL
-        4
-        UYTFform.append("IdTipoUsuario", "1990EBA5-E406-4594-AF63-3B1DFE478CF1")//Gui
+    
+        //form.append("IdTipoUsuario", "1990EBA5-E406-4594-AF63-3B1DFE478CF1")//Gui
         form.append("IdTipoUsuario", "E3881E56-B13E-4916-9382-C2582FB96EE1")//Everton
 
         await api.post("/Pacientes", form, {
@@ -131,9 +132,10 @@ export default function CreateAccountAdditionalInfo({ navigation }) {
         })
             .then(response => {
                 AppNavigation.push(navigation, RouteKeys.loginScreen, true)
+                AppToast.showSucessToast('Contra criada com sucesso')
             }).catch(error => {
                 console.log(error.request);
-
+               
             })
 
         setIsLoading(false)
@@ -170,6 +172,7 @@ export default function CreateAccountAdditionalInfo({ navigation }) {
                         textValue={cpf}
                         onChangeText={(masked, unmasked) => {
                             setCpf(masked);
+                            setCpfUnmasked(unmasked)
                         }} />
                     <Spacing height={15} />
                     <AppDatePicker textValue={dateView} toggleDatePicker={() => toggleDatePicker()} hasLabel={false} />
@@ -179,7 +182,10 @@ export default function CreateAccountAdditionalInfo({ navigation }) {
                         hint={"CEP"}
                         isMasked
                         mask={Masks.ZIP_CODE}
-                        onChangeText={(masked, unmasked) => setCep(masked)}
+                        onChangeText={(masked, unmasked) => {
+                            setCep(masked)
+                            setCepUnMaskef(unmasked)
+                        } }
                         textValue={cep}
                         onEndEditing={async () => await getAdress()}
                     />

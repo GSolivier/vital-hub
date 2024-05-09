@@ -14,6 +14,7 @@ import moment from 'moment';
 import { DoctorRepository } from '../../repositories/DoctorRepository';
 import api from '../../settings/AppApi';
 import TabNavigation from '../../settings/routes/TabNavigation';
+import { AppToast } from '../../components/AppToast';
 
 const HeaderImage = styled.Image`
     width: 100%;
@@ -76,6 +77,9 @@ export default function InsertMedicalRecord({ navigation, navigation: { setParam
                        
                           await EditStatus()
                           setIsLoading(false)
+
+                          AppToast.showSucessToast('Prontuário cadastrado!')
+                          
                         } catch (e) {
                           console.log(e.request);
                           setIsLoading(false)

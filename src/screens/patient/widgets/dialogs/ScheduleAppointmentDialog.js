@@ -22,7 +22,7 @@ export default function ScheduleAppointmentDialog({ visible, onClose, navigation
   };
 
   const handleInsertMedicalRecord = () => {
-    AppNavigation.push(navigation, RouteKeys.selectClinicScreen, { prioridadeTipo: selectedAppointmentType, cidade: local, pacienteId: userId });
+    AppNavigation.push(navigation, RouteKeys.selectClinicScreen, { prioridadeTipo: selectedAppointmentType, cidade: local.trim(), pacienteId: userId });
     setSelectedAppointmentType()
     setLocal()
     onClose();
