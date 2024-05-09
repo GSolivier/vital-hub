@@ -26,17 +26,14 @@ const ButtonContainer = styled.View`
     align-items: center;
 `
 
-const Line = styled.View`
-    width: 100%;
-    height: 2px;
-    background-color: ${AppColors.grayV4};
-`
+
 
 const OcrText = styled.View`
     background-color: ${AppColors.whiteDarker};
     border-radius: 5px;
     height: 120px;
     padding: 16px;
+    width: 100%;
 `
 
 export default function MedicalRecord({ navigation, navigation: { setParams } }) {
@@ -48,7 +45,7 @@ export default function MedicalRecord({ navigation, navigation: { setParams } })
     const [ocrText, setOcrText] = useState()
 
     useEffect(() => {
-
+        console.log(params.appointment.exames);
         let descricaoCompleta = '';
 
         params.appointment.exames.forEach(element => {
@@ -158,7 +155,8 @@ export default function MedicalRecord({ navigation, navigation: { setParams } })
                         </ButtonContainer>
                     </Row>
                     <Spacing height={20} />
-                    {ocrText ? <OcrText>
+                    {ocrText ? 
+                    <OcrText>
                         <ScrollView nestedScrollEnabled={true}>
                         <TextMedium>
                             {ocrText}

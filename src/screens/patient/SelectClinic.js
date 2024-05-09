@@ -21,11 +21,11 @@ export default function SelectClinic({ navigation }) {
   }
 
   async function searchClinics() {
-    const queryEncoded = params.cidade.trim()
+    
       (async () => {
         api.get(GetClinicByCityPath, {
           params: {
-            cidade: queryEncoded
+            cidade: params.cidade
           }
         })
           .then(response => {

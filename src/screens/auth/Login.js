@@ -39,8 +39,8 @@ export default function Login({ navigation }) {
 
 
 
-  const [senha, setSenha] = useState('123')
-  //  const [senha, setSenha] = useState('senai123')
+  //const [senha, setSenha] = useState('123')
+  const [senha, setSenha] = useState('senai123')
 
 
   const { params } = useRoute();

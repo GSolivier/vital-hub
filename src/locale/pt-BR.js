@@ -137,7 +137,9 @@ const pt = {
     cep: 'Cep',
     city: 'Cidade',
     back: 'Voltar',
-    logOut: 'Sair'
+    logOut: 'Sair',
+
+    examResult: "Resultado dos Exames",
   };
   
   export default pt;
