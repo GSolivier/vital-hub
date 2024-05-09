@@ -96,7 +96,8 @@ export default function MedicalRecord({ navigation, navigation: { setParams } })
             setOcrText(ocrText => ocrText + response.data.descricao + "\n");
             setPhotoList(currentPhotoList => currentPhotoList.slice(1));
         }).catch(e => {
-            console.log(e.request);
+            console.log(e.request)
+            
         })
 
     }
