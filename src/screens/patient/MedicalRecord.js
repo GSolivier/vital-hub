@@ -26,12 +26,6 @@ const ButtonContainer = styled.View`
     align-items: center;
 `
 
-const Line = styled.View`
-    width: 100%;
-    height: 2px;
-    background-color: ${AppColors.grayV4};
-`
-
 const OcrText = styled.View`
     background-color: ${AppColors.whiteDarker};
     border-radius: 5px;
@@ -130,7 +124,7 @@ export default function MedicalRecord({ navigation, navigation: { setParams } })
                         isEditable={false}
                         label={t(AppLocalizations.doctorPrescriptionLabel)}
                         isTextArea={true}
-                        textValue={params.appointment.receita ? `${params.appointment.receita.medicamento}\n${params.appointment.receita.observacoes}` : "Nada cadastrado"} />
+                        textValue={params.appointment.receita ? `${params.appointment.receita.medicamento}` : "Nada cadastrado"} />
                     <Spacing height={20} />
                     <PhotoSelector
                         label={t(AppLocalizations.medicalExams)}
@@ -166,14 +160,6 @@ export default function MedicalRecord({ navigation, navigation: { setParams } })
                         </ScrollView>
                     </OcrText> : <Spacing/>}
                     <Spacing height={20} />
-                    <Line />
-                    <Spacing height={20} />
-                    {/* <AppInput
-                        isEditable={false}
-                        label={t(AppLocalizations.appointDescriptionLabel)}
-                        isTextArea={true}
-                        textValue={'Resultado do exame de sangue: tudo normal'} />
-                    <Spacing height={30} /> */}
                     <LinkButton text={t(AppLocalizations.back)} onTap={() => AppNavigation.popWithData(navigation, RouteKeys.homeScreen, {reload: true})} />
                     <SeeImageModal
                         visible={imageModalIsVisible}

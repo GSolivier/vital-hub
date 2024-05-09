@@ -131,6 +131,36 @@ const en = {
     photoReported: 'photo reported',
     photosReported: 'photos reporteds',
 
+    createdAccount: "Account successfully created",
+    almostThereTitle: "Almost There",
+    registerLastInformationDescription: "Enter the last pieces of information to create your account.",
+    completeNameLabel: "Full name",
+
+    medicalRecordNotRegistered: "Medical record not registered by the doctor",
+    noAppointmentRegistered: "No registered appointment found.",
+
+    loading: "Loading",
+    youAreHereTag: "You are here",
+    yourDestinyTag: "Appointment local",
+
+    addNewExamLabel: "Add new exam",
+    scanExamLabel: "Scan exam",
+    appointmenteRegisteredLabel: "Appointment successfully scheduled",
+
+    loginSucessfuly: "Login successful",
+    photoChanged: "Photo changed successfully",
+    accountCreated: "Account created successfully",
+    medicalRecordRegistered: "Medical record registered successfully",
+
+    unknownError: "An unknown error occurred",
+    selectValidDate: "Please select a valid date.",
+    passNotEqual: "The passwords are not the same",
+
+    cameraAccessDeniedTitle: "Camera Access Denied",
+    cameraAccessDeniedDescription: "To access this feature, go to your phone's settings and grant permission for the app to use the camera.",
+
+    specialityLabel: "Speciality",
+
     dateOfBirth: 'Date of birth',
     cpf: 'CPF',
     cep: 'Postal code',

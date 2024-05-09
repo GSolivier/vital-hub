@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components/native'
 import { Row, Spacing } from '../../../components/Container'
 import { TextSemiBold, TitleSemiBold } from '../../../settings/AppFonts'
-import SvgIcon, { Icon } from '../../../assets/icons/Icons'
 import { AppColors } from '../../../settings/AppColors'
 import { Flex } from '../../../settings/AppEnums'
 
@@ -37,20 +36,20 @@ export default function ClinicCard({selected, item, onTap}) {
         >
             <Row width={'100%'} justifyContent={Flex.spaceBetween}>
                 <TitleSemiBold size={16}>{item.nomeFantasia}</TitleSemiBold>
-                <Row alignItems={Flex.center}>
+                {/* <Row alignItems={Flex.center}>
                     <SvgIcon name={Icon.star} color={AppColors.yellow} />
                     <Spacing width={2} />
                     <TextSemiBold size={14} color={AppColors.yellow}>4,5</TextSemiBold>
-                </Row>
+                </Row> */}
             </Row>
             <Spacing height={10}/>
             <Row width={'100%'} justifyContent={Flex.spaceBetween}>
                 <TextSemiBold size={14}>{item.endereco.logradouro}</TextSemiBold>
-                <DayBox>
+                {/* <DayBox>
                     <SvgIcon name={Icon.calendar} color={AppColors.primary}/>
                     <Spacing width={5} />
                     <TextSemiBold size={14} color={AppColors.primary}>seg-sex</TextSemiBold>
-                </DayBox>
+                </DayBox> */}
             </Row>
         </ClinicCardBox>
     )

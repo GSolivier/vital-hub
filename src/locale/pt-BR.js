@@ -132,12 +132,45 @@ const pt = {
     photoReported: 'foto reportada',
     photosReported: 'fotos reportadas',
 
+    createdAccount: 'Conta criada com sucesso',
+    almostThereTitle: 'Quase lá',
+    registerLastInformationDescription: 'Insira as últimas informações para a criação da sua conta.',
+    completeNameLabel: 'Nome completo',
+
+    medicalRecordNotRegistered: "Prontuário não cadastrado pelo médico",
+    noAppointmentRegistered: "Nenhuma consulta cadastrada encontrada.",
+
+    loading: "Carregando",
+    youAreHereTag: "Você está aqui",
+    yourDestinyTag: "Local da consulta",
+
+    addNewExamLabel: "Adicionar novo exame",
+    scanExamLabel: "Escanear exame",
+    appointmenteRegisteredLabel: "Consulta agendada com sucesso",
+
+    loginSucessfuly: "Login efetuado com sucesso",
+    photoChanged: "Foto alterada com sucesso",
+    accountCreated: "Conta criada com sucesso",
+    medicalRecordRegistered: "Prontuário cadastrado com sucesso",
+
+
+    unknownError: "Ocorreu um erro desconhecido",
+    selectValidDate: "Por favor, selecione uma data válida.",
+    passNotEqual: "As senhas não são iguais",
+
+    cameraAcessDeniedTitle: "Sem acesso a camêra",
+    cameraAcessDenidDescription: "Para acessar essa funcionalidade, vá até as configurações do seu celular e conceda a permissão para o aplicativo utilizar a camêra.",
+
+    specialityLabel: "Especialidade",
+
     dateOfBirth: 'Data de nascimento',
     cpf: 'CPF',
     cep: 'Cep',
     city: 'Cidade',
     back: 'Voltar',
-    logOut: 'Sair'
+    logOut: 'Sair',
+
+    
   };
   
   export default pt;

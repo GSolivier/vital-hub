@@ -6,7 +6,6 @@ import t from '../../locale'
 import AppButton, { LinkButton } from '../../components/AppButton'
 import { AppNavigation, RouteKeys } from '../../settings/routes/RouteActions'
 import DoctorList from './widgets/DoctorList'
-import { getDoctors } from '../../repositories/DoctorRepository'
 import apiClient, { GetMedicoByIdClinicPath, MedicoPath } from '../../settings/AppApi'
 import { useRoute } from '@react-navigation/native'
 

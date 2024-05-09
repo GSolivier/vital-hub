@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import AppDialog from '../../../../components/AppDialog'
 import { TitleSemiBold } from '../../../../settings/AppFonts'
 import { AppointmentLevelsButtons, Flex } from '../../../../settings/AppEnums'
@@ -7,11 +7,9 @@ import { Spacing } from '../../../../components/Container'
 import AppInput from '../../../../components/AppInput'
 import t from '../../../../locale'
 import AppLocalizations from '../../../../settings/AppLocalizations'
-import AppDropdown from '../../../../components/AppDropdown'
 import { AppColors } from '../../../../settings/AppColors'
 import ButtonSelecter from '../../../widgets/ButtonSelecter'
 import { AppNavigation, RouteKeys } from '../../../../settings/routes/RouteActions'
-import { KeyboardAvoidingView } from 'react-native'
 
 export default function ScheduleAppointmentDialog({ visible, onClose, navigation, userId }) {
   const [selectedAppointmentType, setSelectedAppointmentType] = useState();

@@ -4,7 +4,6 @@ import styled from 'styled-components/native';
 import { Spacing } from '../../../components/Container';
 import { AppColors } from '../../../settings/AppColors';
 import AppointmentPatientCard from './AppointmentPatientCard';
-import { HomeCardActionType } from '../../../settings/AppEnums';
 import moment from 'moment';
 import { decodePriority } from '../../../settings/AppUtils';
 

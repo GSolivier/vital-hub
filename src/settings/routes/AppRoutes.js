@@ -20,6 +20,8 @@ import TabNavigation from './TabNavigation';
 import CreateAccountAdditionalInfo from '../../screens/auth/CreateAccountAdditionalInfo';
 import ChangeProfileImage from '../../screens/ChangeProfileImage';
 import CreateAccountTakePic from '../../screens/auth/CreateAccountTakePic';
+import t from '../../locale';
+import AppLocalizations from '../AppLocalizations';
 
 const Stack = createNativeStackNavigator();
 
@@ -45,7 +47,7 @@ export default function AppRoutes() {
                 <Stack.Screen
                     options={{
                         headerShown: true,
-                        title: 'ESCANEAR EXAME',
+                        title: t(AppLocalizations.scanExamLabel).toUpperCase(),
                         headerTitleAlign: Flex.center,
 
                         headerTitleStyle: {

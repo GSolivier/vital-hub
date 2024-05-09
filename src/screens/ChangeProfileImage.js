@@ -9,6 +9,8 @@ import SvgIcon, { Icon } from "../assets/icons/Icons"
 import { Flex } from "../settings/AppEnums"
 import * as MediaLibrary from 'expo-media-library'
 import * as ImagePicker from 'expo-image-picker'
+import { AppToast } from "../components/AppToast"
+import AppLocalizations from "../settings/AppLocalizations"
 
 const AppCamera = styled(Camera)`
     flex: 1;
@@ -109,10 +111,9 @@ export default function ChangeProfileImage({ navigation , getMediaLibrary = true
     }
 
     if (hasCameraPermission === false) {
-        ToastAndroid.showWithGravity(
-            'Acesso a camera nao permitido',
-            ToastAndroid.SHORT,
-            ToastAndroid.BOTTOM,
+        AppToast.showErrorToast(
+            t(AppLocalizations.cameraAccessDeniedTitle),
+            t(AppLocalizations.cameraAccessDeniedDescription)
         );
         AppNavigation.pop(navigation)
     }

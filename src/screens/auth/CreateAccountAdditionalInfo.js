@@ -1,4 +1,4 @@
-import { Image, ScrollView, Platform } from 'react-native'
+import { ScrollView, Platform } from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import React, { useEffect, useRef, useState } from 'react'
 import AuthContainer from './widgets/AuthContainer'
@@ -53,6 +53,7 @@ export default function CreateAccountAdditionalInfo({ navigation }) {
     const [cpf, setCpf] = useState('')
     const [cpfUnmasked, setCpfUnmasked] = useState()
     const [cepUnmasked, setCepUnmasked] = useState()
+    const [cep, setCep] = useState()
     const [street, setStreet] = useState()
     const [number, setNumber] = useState()
     const [city, setCity] = useState()
@@ -132,7 +133,7 @@ export default function CreateAccountAdditionalInfo({ navigation }) {
         })
             .then(response => {
                 AppNavigation.push(navigation, RouteKeys.loginScreen, true)
-                AppToast.showSucessToast('Conta criada com sucesso!')
+                AppToast.showSucessToast(t(AppLocalizations.accountCreated))
             }).catch(error => {
                 console.log(error.request);
                
@@ -155,11 +156,11 @@ export default function CreateAccountAdditionalInfo({ navigation }) {
 
             <ScrollView>
                 <AuthContainer>
-                    <TitleSemiBold size={20}>{"Quase lá"}</TitleSemiBold>
+                    <TitleSemiBold size={20}>{t(AppLocalizations.almostThereTitle)}</TitleSemiBold>
                     <Spacing height={15} />
-                    <TextMedium textAlign={TextAlign.center}>{"Insira as últimas informações para a criação da sua conta."}</TextMedium>
+                    <TextMedium textAlign={TextAlign.center}>{t(AppLocalizations.registerLastInformationDescription)}</TextMedium>
                     <Spacing height={20} />
-                    <AppInput hint={"Nome completo"} textValue={nome} onChangeText={(value) => setNome(value)} />
+                    <AppInput hint={t(AppLocalizations.completeNameLabel)} textValue={nome} onChangeText={(value) => setNome(value)} />
                     <Spacing height={15} />
                     <AppInput hint={"RG"} textValue={rg} keyboardType='numeric' onChangeText={(value) => setRg(value)} />
                     <Spacing height={15} />
@@ -179,7 +180,7 @@ export default function CreateAccountAdditionalInfo({ navigation }) {
                     <Spacing height={15} />
                     <AppInput
                         keyboardType='numeric'
-                        hint={"CEP"}
+                        hint={t(AppLocalizations.cep)}
                         isMasked
                         mask={Masks.ZIP_CODE}
                         onChangeText={(masked, unmasked) => {
@@ -191,15 +192,15 @@ export default function CreateAccountAdditionalInfo({ navigation }) {
                         onEndEditing={async () => await getAdress()}
                     />
                     <Spacing height={15} />
-                    <AppInput hint={"Logradouro"} textValue={street} onChangeText={(value) => setStreet(value)} />
+                    <AppInput hint={t(AppLocalizations.adress)} textValue={street} onChangeText={(value) => setStreet(value)} />
                     <Spacing height={15} />
                     <Row width={'100%'}>
                         <InputContainer>
-                            <AppInput textValue={number} hint={"Número"} onChangeText={(value) => setNumber(value)} keyboardType='numeric' />
+                            <AppInput textValue={number} hint={t(AppLocalizations.number)} onChangeText={(value) => setNumber(value)} keyboardType='numeric' />
                         </InputContainer>
                         <Spacing width={15} />
                         <InputContainer>
-                            <AppInput hint={"Cidade"} textValue={city} onChangeText={(value) => setCity(value)} />
+                            <AppInput hint={t(AppLocalizations.city)} textValue={city} onChangeText={(value) => setCity(value)} />
                         </InputContainer>
                     </Row>
                     <Spacing height={30} />

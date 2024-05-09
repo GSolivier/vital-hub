@@ -47,7 +47,7 @@ export default function CreateAccount({ navigation }) {
 
       <AppInput
         isValid={confirmPassword ? validatePassword(password, confirmPassword) : true}
-        errorMessage={'As senhas não coincidem'}
+        errorMessage={t(AppLocalizations.passNotEqual)}
         isObscure
         onChangeText={(value) => setConfirmPassword(value)}
         hint={t(AppLocalizations.confirmPassword)}

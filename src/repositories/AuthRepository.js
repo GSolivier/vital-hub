@@ -6,6 +6,8 @@ import { decode, encode } from 'base-64'
 import { ToastAndroid } from "react-native";
 import { AppToast } from '../components/AppToast'
 import { UserRepository } from "./UserRepository";
+import t from "../locale";
+import AppLocalizations from "../settings/AppLocalizations";
 if (!global.atob) {
     global.atob = decode
 }
@@ -70,7 +72,7 @@ export async function login(email, senha, navigation) {
                 }
             })
 
-            AppToast.showSucessToast("Login efetuado com sucesso!")
+            AppToast.showSucessToast(t(AppLocalizations.loginSucessfuly))
         })
         .catch(function (error) {
             if (error.request) {

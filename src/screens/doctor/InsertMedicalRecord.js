@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useRoute } from '@react-navigation/native';
 import styled from 'styled-components/native';
 import { Container, Row, Spacing } from '../../components/Container';
@@ -13,7 +13,6 @@ import AppLocalizations from '../../settings/AppLocalizations';
 import moment from 'moment';
 import { DoctorRepository } from '../../repositories/DoctorRepository';
 import api from '../../settings/AppApi';
-import TabNavigation from '../../settings/routes/TabNavigation';
 import { AppToast } from '../../components/AppToast';
 
 const HeaderImage = styled.Image`
@@ -59,11 +58,11 @@ export default function InsertMedicalRecord({ navigation, navigation: { setParam
                         <TextMedium size={14} textAlign={TextAlign.center}>{params.appointment.paciente.idNavigation.email}</TextMedium>
                     </Row>
                     <Spacing height={24} />
-                    <AppInput  label={t(AppLocalizations.appointDescriptionLabel)} hint={"Descreva os sintomas do paciente..."}textValue={descricao} isTextArea={true} onChangeText={(value) => { setDescricao(value) }} />
+                    <AppInput  label={t(AppLocalizations.appointDescriptionLabel)} hint={t(AppLocalizations.appointDescriptionLabel)}textValue={descricao} isTextArea={true} onChangeText={(value) => { setDescricao(value) }} />
                     <Spacing height={20} />
-                    <AppInput  label={t(AppLocalizations.patientDiagnosisLabel)} hint={"Descreva o diagnóstico do paciente..."}textValue={diagnostico} onChangeText={(value) => { setDiagnostico(value) }} />
+                    <AppInput  label={t(AppLocalizations.patientDiagnosisLabel)} hint={t(AppLocalizations.patientDiagnosisLabel)}textValue={diagnostico} onChangeText={(value) => { setDiagnostico(value) }} />
                     <Spacing height={20} />
-                    <AppInput  label={t(AppLocalizations.doctorPrescriptionLabel)} hint={"Descreva o tratamento..."}textValue={medicamento} isTextArea={true} onChangeText={(value) => { setMedicamento(value) }} />
+                    <AppInput  label={t(AppLocalizations.doctorPrescriptionLabel)} hint={t(AppLocalizations.doctorPrescriptionLabel)}textValue={medicamento} isTextArea={true} onChangeText={(value) => { setMedicamento(value) }} />
                     <Spacing height={30} />
                     {params.appointment.situacao.situacao == "agendada" ? (
                     <AppButton textButton={t(AppLocalizations.saveButton).toUpperCase()}
@@ -78,7 +77,7 @@ export default function InsertMedicalRecord({ navigation, navigation: { setParam
                           await EditStatus()
                           setIsLoading(false)
 
-                          AppToast.showSucessToast('Prontuário cadastrado!')
+                          AppToast.showSucessToast(t(AppLocalizations.medicalRecordRegistered))
                           
                         } catch (e) {
                           console.log(e.request);

@@ -10,7 +10,7 @@ import AppLocalizations from '../../settings/AppLocalizations'
 import AppButton from '../../components/AppButton'
 import { AppNavigation } from '../../settings/routes/RouteActions'
 import * as Location from 'expo-location';
-import { ActivityIndicator, Appearance, Text, TouchableOpacity, useColorScheme } from 'react-native'
+import { ActivityIndicator,  useColorScheme } from 'react-native'
 import { AppColors } from '../../settings/AppColors'
 import MapViewDirections from 'react-native-maps-directions'
 import { mapskey } from '../../settings/AppUtils'
@@ -60,10 +60,6 @@ export default function SeeAppointmentLocalScreen({ navigation }) {
   }
 
   useEffect(() => {
-    console.log('====================================');
-    console.log(params);
-    console.log('====================================');
-
     getCurrentLocalization()
     setTheme(colorScheme)
     setFinalPosition({
@@ -102,7 +98,7 @@ export default function SeeAppointmentLocalScreen({ navigation }) {
 
   if (initialPosition == null) {
     return <Container>
-      <TitleSemiBold>Carregando</TitleSemiBold>
+      <TitleSemiBold>{t(AppLocalizations.loading)}</TitleSemiBold>
       <Spacing height={10} />
       <ActivityIndicator />
     </Container>
@@ -127,7 +123,7 @@ export default function SeeAppointmentLocalScreen({ navigation }) {
             longitude: initialPosition.coords.longitude,
 
           }}
-          title='Você está aqui'
+          title={t(AppLocalizations.youAreHereTag)}
           pinColor={AppColors.red}
         />
         <MapViewDirections
@@ -147,7 +143,7 @@ export default function SeeAppointmentLocalScreen({ navigation }) {
             latitude: finalPosition.latitude,
             longitude: finalPosition.longitude,
           }}
-          title='Seu destino'
+          title={t(AppLocalizations.yourDestinyTag)}
           pinColor={AppColors.primary}
         />
 
