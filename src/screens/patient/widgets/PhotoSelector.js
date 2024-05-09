@@ -46,7 +46,7 @@ export default function PhotoSelector({ label, photoList = [], openImage, onTap 
 
                     <SvgIcon name={Icon.cameraPlus} />
                     <Spacing width={10} />
-                    <TitleMedium size={14}>Adicionar novo exame</TitleMedium>
+                    <TitleMedium size={14}>{t(AppLocalizations.addNewExamLabel)}</TitleMedium>
                 </Row>
 
 

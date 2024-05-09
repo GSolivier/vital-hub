@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import AppDialog from '../../../../components/AppDialog'
 import AppButton, { LinkButton } from '../../../../components/AppButton'
 import t from '../../../../locale'
@@ -24,7 +24,7 @@ export default function ConfirmAppointmentDialog({ visible, onClose, navigation,
       dataConsulta: appointment.dataConsulta
     }).then(response => {
       AppNavigation.pop(navigation, 1)
-      AppToast.showSucessToast("Consulta agendada com sucesso")
+      AppToast.showSucessToast(t(AppLocalizations.appointmenteRegisteredLabel))
       onClose()
     }).catch(error => {
 

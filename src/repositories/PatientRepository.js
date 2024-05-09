@@ -1,4 +1,4 @@
-import api, { AppointmentPath, GetPatientAppointmentPath, GetPatientByIdPath, PatientPath } from "../settings/AppApi"
+import api, { GetPatientAppointmentPath, GetPatientByIdPath, PatientPath } from "../settings/AppApi"
 
 export const PatientRepository = {
     getPatient: getPatient,

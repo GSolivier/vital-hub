@@ -4,10 +4,9 @@ import { TitleSemiBold } from '../../settings/AppFonts'
 import AppButton, { LinkButton } from '../../components/AppButton'
 import t from '../../locale'
 import AppLocalizations from '../../settings/AppLocalizations'
-import { ClinicListData } from '../../settings/AppUtils'
 import ClinicList from './widgets/ClinicList'
-import { AppNavigation, RouteKeys, pop, push } from '../../settings/routes/RouteActions'
-import api, { GetClinicByCityPath, GetClinicPath } from '../../settings/AppApi'
+import { AppNavigation, RouteKeys } from '../../settings/routes/RouteActions'
+import api, { GetClinicByCityPath } from '../../settings/AppApi'
 import { useRoute } from '@react-navigation/native'
 
 export default function SelectClinic({ navigation }) {
@@ -21,11 +20,11 @@ export default function SelectClinic({ navigation }) {
   }
 
   async function searchClinics() {
-    const queryEncoded = params.cidade.trim()
+    
       (async () => {
         api.get(GetClinicByCityPath, {
           params: {
-            cidade: queryEncoded
+            cidade: params.cidade
           }
         })
           .then(response => {

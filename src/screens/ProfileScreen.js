@@ -93,7 +93,7 @@ export default function ProfileScreen({ user, navigation, navigation: {setParams
         },
       })
       .then((response) => {
-        AppToast.showSucessToast("Foto alterada com sucesso!");
+        AppToast.showSucessToast(t(AppLocalizations.photoChanged));
       })
       .catch((error) => {
         console.log(error.request);
@@ -146,7 +146,7 @@ export default function ProfileScreen({ user, navigation, navigation: {setParams
   
       
       if (currentDate > new Date()) {
-        AppToast.showErrorToast("Por favor, selecione uma data válida.")
+        AppToast.showErrorToast(t(AppLocalizations.selectValidDate))
        
       } else {
         setDate(currentDate);
@@ -210,7 +210,7 @@ export default function ProfileScreen({ user, navigation, navigation: {setParams
           ) : (
             <AppInput
               isEditable={false}
-              label={"Especialidade"}
+              label={t(AppLocalizations.specialityLabel)}
               textValue={
                 dataUser.especialidade
                   ? dataUser.especialidade.especialidade1

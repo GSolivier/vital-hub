@@ -30,7 +30,7 @@ export default function RedefinePassword({ navigation }) {
                 AppNavigation.push(navigation, RouteKeys.loginScreen, {email: params.email}, true)
             })
         } else {
-            AppToast.showErrorToast("As senhas não são iguais.")
+            AppToast.showErrorToast(t(AppLocalizations.passNotEqual))
         }
         setIsLoading(false)
     }

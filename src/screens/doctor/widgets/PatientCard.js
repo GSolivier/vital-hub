@@ -9,7 +9,6 @@ import {
 } from "../../../settings/AppFonts";
 import {
   Flex,
-  HomeCardActionType,
   TextDecoration,
 } from "../../../settings/AppEnums";
 import { LinkButton } from "../../../components/AppButton";

@@ -4,7 +4,6 @@ import { Column, Spacing } from '../../../components/Container'
 import { TextMedium, TitleSemiBold } from '../../../settings/AppFonts'
 import { AppColors } from '../../../settings/AppColors'
 import { Flex } from '../../../settings/AppEnums'
-import { AppAssets } from '../../../assets/AppAssets'
 
 export const DoctorCardBox = styled.TouchableOpacity`
     width: 100%;

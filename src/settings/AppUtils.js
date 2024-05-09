@@ -1,4 +1,6 @@
+import t from "../locale";
 import { HomeCardActionType } from "./AppEnums";
+import AppLocalizations from "./AppLocalizations";
 
 export const DATA = [
     {
@@ -337,14 +339,11 @@ export const mapskey = "AIzaSyAqIF5MN4yo8ZHwg9WsKP14I-fAK6hpKWY";
 export function decodePriority(code) {
     switch (code) {
         case 1:
-            return "Rotina"
+            return t(AppLocalizations.routine)
         case 2:
-            return "Exame"
+            return t(AppLocalizations.exam)
         case 3:
-            return "Urgência"
-        default:
-            return "Sem prioridade"
-            break;
+            return t(AppLocalizations.urgency)
     }
 }
 

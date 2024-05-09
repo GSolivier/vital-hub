@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import HomeContainer from './widgets/HomeContainer'
-import { AppAssets } from '../assets/AppAssets'
 import HomeCalendar from './widgets/HomeCalendar'
 import { AppointmentFilterList, TextAlign } from '../settings/AppEnums'
 import ButtonSelecter from './widgets/ButtonSelecter'
@@ -21,7 +20,8 @@ import { DoctorRepository } from '../repositories/DoctorRepository'
 import { AppToast } from '../components/AppToast'
 import { TextMedium } from '../settings/AppFonts'
 import { useRoute } from '@react-navigation/native'
-import { UserRepository } from '../repositories/UserRepository'
+import t from '../locale'
+import AppLocalizations from '../settings/AppLocalizations'
 
 
 const FixedButton = styled.TouchableOpacity`
@@ -69,7 +69,7 @@ export default function HomeScreen({ navigation, navigation: { setParams } }) {
         if (appointment.receitaId) {
             AppNavigation.push(navigation, RouteKeys.medicalRecordScreen, { appointment: appointment })
         } else {
-            AppToast.showInfoToast("Prontuário não cadastrado pelo médico")
+            AppToast.showInfoToast(t(AppLocalizations.medicalRecordNotRegistered))
         }
 
     }
@@ -132,7 +132,7 @@ export default function HomeScreen({ navigation, navigation: { setParams } }) {
 
                 {listIsLoading ?
                     <ActivityIndicator color={AppColors.primary} /> :
-                    filteredList.length == 0 ? <TextMedium textAlign={TextAlign.center}>{`Nenhuma consulta ${selectedTab} cadastrada na data atual`}</TextMedium>
+                    filteredList.length == 0 ? <TextMedium textAlign={TextAlign.center}>{t(AppLocalizations.noAppointmentRegistered)}</TextMedium>
                         : params.userData.role == "paciente" ? (
                             <AppointmentPatientList
                                 DATA={filteredList}

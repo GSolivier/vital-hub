@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import styled from 'styled-components/native'
 import { AppColors } from '../settings/AppColors'
-import { FontFamily, TextMedium, TextSemiBold } from '../settings/AppFonts'
+import { FontFamily, TextSemiBold } from '../settings/AppFonts'
 import { CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell } from 'react-native-confirmation-code-field'
 import { Spacing } from './Container'
 import AppLocalizations from '../settings/AppLocalizations'
@@ -220,7 +220,7 @@ export function AppDatePicker({ hasLabel = true, isEditable = true, textValue, t
                 <AppInput
                     isEditable={isEditable}
                     label={hasLabel ? t(AppLocalizations.dateOfBirth) : undefined}
-                    textValue={textValue ? formatDate(textValue) : "Data de nascimento"}
+                    textValue={textValue ? formatDate(textValue) : t(AppLocalizations.dateOfBirth)}
                     showSoftInputOnFocus={false}
                     Icon={<SvgIcon name={Icon.calendar} color={isEditable ? AppColors.primary : AppColors.gray} />}
                 />

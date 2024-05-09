@@ -130,6 +130,36 @@ export default AppLocalizations = {
     deleteImage: 'deleteImage',
     photoReported: 'photoReported',
     photosReported: 'photosReported',
+
+    createdAccount: "createdAccount",
+    almostThereTitle: "almostThereTitle",
+    registerLastInformationDescription: "registerLastInformationDescription",
+    completeNameLabel: "completeNameLabel",
+
+    medicalRecordNotRegistered: "medicalRecordNotRegistered",
+    noAppointmentRegistered: "noAppointmentRegistered",
+
+    loading: "loading",
+    youAreHereTag: "youAreHereTag",
+    yourDestinyTag: "yourDestinyTag",
+
+    addNewExamLabel: "addNewExamLabel",
+    scanExamLabel: "scanExamLabel",
+    appointmenteRegisteredLabel: "appointmenteRegisteredLabel",
+
+    loginSucessfuly: "loginSucessfuly",
+    photoChanged: "photoChanged",
+    accountCreated: "accountCreated",
+    medicalRecordRegistered: "medicalRecordRegistered",
+
+    cameraAccessDeniedTitle: "cameraAccessDeniedTitle",
+    cameraAccessDeniedDescription: "cameraAccessDeniedDescription",
+
+    specialityLabel: "specialityLabel",
+
+    unknownError: "unknownError",
+    selectValidDate: "selectValidDate",
+    passNotEqual: "passNotEqual",
     
     dateOfBirth: 'dateOfBirth',
     cpf: 'cpf',
