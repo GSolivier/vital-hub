@@ -94,7 +94,7 @@ export default function AppInput({
                         isTextArea={isTextArea}
                         textAlignVertical={isTextArea ? 'top' : 'center'}
                         value={textValue}
-                        onChangeText={handleInputChange}
+                        onChangeText={handleInputChangeMasked}
                         onChange={onChange}
                         borderColor={isEditable ? borderColor : AppColors.transparent}
                         onFocus={focus}

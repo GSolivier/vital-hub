@@ -60,6 +60,10 @@ export default function SeeAppointmentLocalScreen({ navigation }) {
   }
 
   useEffect(() => {
+    console.log('====================================');
+    console.log(params);
+    console.log('====================================');
+
     getCurrentLocalization()
     setTheme(colorScheme)
     setFinalPosition({

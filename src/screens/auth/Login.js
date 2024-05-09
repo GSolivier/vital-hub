@@ -27,7 +27,7 @@ export default function Login({ navigation }) {
   //const [email, setEmail] = useState('martin.medico@vitalhub.com')
   // const [senha, setSenha] = useState('123')
 
-  const [email, setEmail] = useState('carol.josefa@gmail.com')
+  const [email, setEmail] = useState('martin.medico@vitalhub.com')
   //const [email, setEmail] = useState('samuel@email.com')
   //const [email, setEmail] = useState('filipe@email.com')
 
@@ -38,8 +38,8 @@ export default function Login({ navigation }) {
 
 
 
-  //const [senha, setSenha] = useState('123')
-   const [senha, setSenha] = useState('senai123')
+  const [senha, setSenha] = useState('123')
+  //  const [senha, setSenha] = useState('senai123')
 
 
   const { params } = useRoute();

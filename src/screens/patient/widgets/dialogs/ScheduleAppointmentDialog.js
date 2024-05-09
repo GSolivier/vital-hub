@@ -15,7 +15,7 @@ import { KeyboardAvoidingView } from 'react-native'
 
 export default function ScheduleAppointmentDialog({ visible, onClose, navigation, userId }) {
   const [selectedAppointmentType, setSelectedAppointmentType] = useState();
-  const [local, setLocal] = useState('São Caetano do Sul')
+  const [local, setLocal] = useState('')
 
   const handleTabSelected = (value) => {
     setSelectedAppointmentType(value);
