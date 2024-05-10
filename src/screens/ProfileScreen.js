@@ -19,6 +19,7 @@ import { ActivityIndicator } from "react-native-paper";
 import { AppNavigation, RouteKeys } from "../settings/routes/RouteActions";
 import api from "../settings/AppApi";
 import { AppToast } from "../components/AppToast";
+import { useUser } from "../contexts/UserContext";
 
 const HeaderImage = styled.Image`
   width: 100%;
@@ -68,6 +69,8 @@ export default function ProfileScreen({ user, navigation, navigation: {setParams
   const [cep, setCep] = useState(cep);
   const [cidade, setCidade] = useState(cidade);
 
+  const { updateUserData } = useUser();
+
   useEffect(() => {
     if (params.image) {
       setImage(params.image);
@@ -94,6 +97,7 @@ export default function ProfileScreen({ user, navigation, navigation: {setParams
       })
       .then((response) => {
         AppToast.showSucessToast(t(AppLocalizations.photoChanged));
+        updateUserData({ ...userData, foto: params.image });
       })
       .catch((error) => {
         console.log(error.request);

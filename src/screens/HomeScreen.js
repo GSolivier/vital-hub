@@ -22,6 +22,7 @@ import { TextMedium } from '../settings/AppFonts'
 import { useRoute } from '@react-navigation/native'
 import t from '../locale'
 import AppLocalizations from '../settings/AppLocalizations'
+import { useUser } from '../contexts/UserContext'
 
 
 const FixedButton = styled.TouchableOpacity`
@@ -47,6 +48,7 @@ export default function HomeScreen({ navigation, navigation: { setParams } }) {
     const [date, setDate] = useState()
 
     const { params } = useRoute()
+    const { userData } = useUser();
 
 
     const handleTabSelected = async (value) => {
@@ -102,6 +104,7 @@ export default function HomeScreen({ navigation, navigation: { setParams } }) {
     }
 
     useEffect(() => {
+
         getUserData()
 
     }, [date]);
@@ -111,6 +114,9 @@ export default function HomeScreen({ navigation, navigation: { setParams } }) {
     }, [rawList, selectedTab]);
 
     useEffect(() => {
+        console.log('====================================');
+        console.log(userData);
+        console.log('====================================');
         if (params.reload) {
             getUserData()
             setSelectedTab("realizada")
@@ -119,7 +125,7 @@ export default function HomeScreen({ navigation, navigation: { setParams } }) {
 
     return (
         <>
-            <HomeContainer name={params.userData.name} imagePath={params.userData.foto}>
+            <HomeContainer name={params.userData.name} imagePath={userData.foto}>
                 <HomeCalendar setDate={setDate} />
                 <Spacing height={20} />
                 <ButtonSelecter

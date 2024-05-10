@@ -25,7 +25,7 @@ export default function ForgotPassword({ navigation }) {
         await api.post(`/RecuperarSenha?email=${email}`)
 
         .then(() => {
-            AppNavigation.push(navigation, RouteKeys.emailVerify, {email : email} )
+            AppNavigation.push(navigation, RouteKeys.emailVerify, {email : email}, true)
         }).catch(error => {
             AppToast.showErrorToast(error.response.data)
         })

@@ -166,5 +166,7 @@ export default AppLocalizations = {
     cep: 'cep',
     city: 'city',
     back: 'back',
-    logOut: 'logOut'
+    logOut: 'logOut',
+
+    examResult: "examResult",
 }

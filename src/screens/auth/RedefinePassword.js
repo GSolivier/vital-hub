@@ -12,6 +12,7 @@ import { AppNavigation, RouteKeys } from '../../settings/routes/RouteActions';
 import api from '../../settings/AppApi';
 import { AppToast } from '../../components/AppToast';
 import { useRoute } from '@react-navigation/native';
+import { validatePassword } from '../../settings/AppUtils';
 
 export default function RedefinePassword({ navigation }) {
 
@@ -49,12 +50,17 @@ export default function RedefinePassword({ navigation }) {
             onChangeText={(value)=>setNovaSenha(value)}
             />
             <Spacing height={15} />
-            <AppInput isObscure hint={t(AppLocalizations.confirmNewPasswordPlaceHolder)}
+            <AppInput
+            isValid={confirmaSenha ? validatePassword(novaSenha, confirmaSenha) : true}
+            isObscure 
+            hint={t(AppLocalizations.confirmNewPasswordPlaceHolder)}
             textValue={confirmaSenha}
+            errorMessage={t(AppLocalizations.passNotEqual)}
             onChangeText={(value)=>setConfirmaSenha(value)}
             />
             <Spacing height={30} />
-            <AppButton isDisabled={(!confirmaSenha && !novaSenha) && confirmaSenha != novaSenha} isLoading={isLoading} textButton={t(AppLocalizations.confirmNewPasswordPlaceHolder).toUpperCase()}
+            <AppButton 
+            isDisabled={!validatePassword(novaSenha, confirmaSenha) || !novaSenha || !confirmaSenha} isLoading={isLoading} textButton={t(AppLocalizations.confirmNewPasswordPlaceHolder).toUpperCase()}
             onTap={() =>{ValidarSenha()}}
             />
         </AuthContainer>

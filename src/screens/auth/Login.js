@@ -17,6 +17,7 @@ import { AuthRepository } from '../../repositories/AuthRepository'
 import { AppToast } from '../../components/AppToast'
 import { useRoute } from '@react-navigation/native'
 import { validateEmail } from '../../settings/AppUtils'
+import { useUser } from '../../contexts/UserContext'
 
 
 
@@ -24,22 +25,10 @@ import { validateEmail } from '../../settings/AppUtils'
 export default function Login({ navigation }) {
 
 
-  // const [senha, setSenha] = useState('123')
-
-  const [email, setEmail] = useState('carol.josefa@gmail.com')
-  //const [email, setEmail] = useState('samuel@email.com')
-  // const [email, setEmail] = useState('filipe@email.com')
-
-  //const [email, setEmail] = useState('nelson@email.com')
-  //const [email, setEmail] = useState('ian@email.com')
-  // const [email, setEmail] = useState('luizaeliane@email.com')
-  //const [email, setEmail] = useState('evertonaraujosenai@gmail.com')
-  //const [email, setEmail] = useState('caio@gmail.com')
 
 
-
-  const [senha, setSenha] = useState('123')
-  //  const [senha, setSenha] = useState('senai123')
+  const [email, setEmail] = useState('')
+  const [senha, setSenha] = useState('')
 
 
   const { params } = useRoute();
@@ -47,6 +36,7 @@ export default function Login({ navigation }) {
   const [hasBio, setHasBio] = useState(false)
   const [isAuth, setIsAuth] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const { updateUserData, clearUserData } = useUser();
 
   async function CheckAuth() {
 
@@ -135,7 +125,7 @@ export default function Login({ navigation }) {
           try {
             setIsLoading(true)
 
-            await AuthRepository.login(email, senha, navigation)
+            await AuthRepository.login(email, senha, navigation, updateUserData)
 
             setIsLoading(false)
           } catch (e) {

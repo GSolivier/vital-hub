@@ -1,9 +1,8 @@
 import { jwtDecode } from "jwt-decode";
-import api, { LoginPath, _post } from "../settings/AppApi";
+import api, { LoginPath, _post, handleApiErrors } from "../settings/AppApi";
 import { AppStorage, AppStorageKeys } from "../settings/AppStorage";
 import { AppNavigation, RouteKeys, } from "../settings/routes/RouteActions";
 import { decode, encode } from 'base-64'
-import { ToastAndroid } from "react-native";
 import { AppToast } from '../components/AppToast'
 import { UserRepository } from "./UserRepository";
 import t from "../locale";
@@ -46,57 +45,30 @@ async function tokenDecode() {
 
 
 
-export async function login(email, senha, navigation) {
-    await api.post(LoginPath, { email: email, senha: senha })
-        .then(async function (response) {
+export async function login(email, senha, navigation, updateUserData) {
+    try {
+        const response = await api.post(LoginPath, { email: email, senha: senha });
+        const data = response.data;
+        await AppStorage.write(AppStorageKeys.token, data.token);
 
-            const data = response.data
+        const userData = await tokenDecode();
+        const userExtraData = await UserRepository.getUserById(userData.id);
 
+        const completeUserData = {
+            ...userData,
+            ...userExtraData.data
+        };
 
-            await AppStorage.write(AppStorageKeys.token, data.token)
+        await updateUserData(completeUserData); 
 
-            const userData = await tokenDecode();
+        AppNavigation.push(navigation, RouteKeys.tabNavigation, {
+            userData: completeUserData
+        });
 
-            await AppStorage.write(AppStorageKeys.userData, userData)
-
-            const userExtraData = await UserRepository.getUserById(userData.id)
-            console.log('=================Usuário Logado===================');
-            console.log(userExtraData.data)
-            console.log(userData);
-            console.log('====================================');
-
-            AppNavigation.push(navigation, RouteKeys.tabNavigation, {
-                userData: {
-                    ...userData,
-                    ...userExtraData.data
-                }
-            })
-
-            AppToast.showSucessToast(t(AppLocalizations.loginSucessfuly))
-        })
-        .catch(function (error) {
-            if (error.request) {
-                AppToast.showErrorToast(
-                    error.request.response,
-                    ToastAndroid.SHORT,
-                    ToastAndroid.BOTTOM,
-                );
-            } else if (error.response) {
-
-                AppToast.showErrorToast(
-                    error.response.data.message,
-                    ToastAndroid.SHORT,
-                    ToastAndroid.BOTTOM,
-                );
-            } else {
-                AppToast.showErrorToast(
-                    "Ocorreu um erro desconhecido",
-                    ToastAndroid.SHORT,
-                    ToastAndroid.BOTTOM,
-                );
-            }
-
-        })
+        AppToast.showSucessToast(t(AppLocalizations.loginSucessfuly));
+    } catch (error) {
+        handleApiErrors(error);
+    }
 }
 
 export async function Logout(navigation) {

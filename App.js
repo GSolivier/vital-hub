@@ -4,6 +4,7 @@ import AppRoutes from './src/settings/routes/AppRoutes';
 import { StatusBar } from 'react-native';
 import Toast from 'react-native-toast-message';
 import { toastConfig } from './src/components/AppToast';
+import { UserProvider } from './src/contexts/UserContext';
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useFonts({
@@ -22,12 +23,14 @@ export default function App() {
 
   return (
     <>
+    <UserProvider>
       <AppRoutes />
       <Toast
       config={toastConfig}
         position='bottom'
         bottomOffset={20}
          />
+         </UserProvider>
     </>
   );
 }

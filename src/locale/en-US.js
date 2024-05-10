@@ -166,7 +166,9 @@ const en = {
     cep: 'Postal code',
     city: 'City',
     back: 'Back',
-    logOut: 'Logout'
+    logOut: 'Logout',
+
+    examResult: "Exam Result"
   };
   
   export default en;

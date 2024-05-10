@@ -170,7 +170,7 @@ const pt = {
     back: 'Voltar',
     logOut: 'Sair',
 
-    
+    examResult: "Resultado dos Exames",
   };
   
   export default pt;

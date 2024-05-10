@@ -14,25 +14,63 @@ import { TextAlign } from "../../settings/AppEnums";
 import { AppNavigation, RouteKeys } from "../../settings/routes/RouteActions";
 import api from "../../settings/AppApi";
 import { AppToast } from "../../components/AppToast";
+import { ActivityIndicator } from "react-native-paper";
 
 export default function EmailVerify({ navigation }) {
     const [codeValue, setCodeValue] = useState('');
     const [isLoading, setIsLoading] = useState(false)
+    const [isLoadingResent, setIsLoadingResent] = useState(false)
+    const [timeStarted, setTimeStarded] = useState(false)
+    const [timer, setTimer] = useState({time: 40})
     const { params } = useRoute();
 
     useEffect(()=> {
-        console.log(codeValue);
-    },[codeValue])
+       if (timeStarted) {
+        if (timer.time == 0) {
+            stopTimer()
+        }
+       }
+    },[timer])
+
+    const startTimer = () => {
+        setTimeStarded(true)
+        this.interval = setInterval(() => {
+            setTimer(state => ({
+            time: state.time - 1,
+          }));
+        }, 1000);
+      };
+      
+    const stopTimer = () => {
+        setTimeStarded(false)
+        setTimer({
+            time: 40,
+          })
+        clearInterval(this.interval);
+      };
 
     async function ValidarCodigo() {
         console.log(codeValue);
 
         await api.post(`/RecuperarSenha/ValidarCodigoRecuperacaoSenha?email=${params.email}&codigo=${codeValue}`)
         .then( ()=> {
-            AppNavigation.push(navigation,RouteKeys.redefinePassword, {email: params.email});
+            AppNavigation.push(navigation,RouteKeys.redefinePassword, {email: params.email}, true);
         }).catch(error => {
             AppToast.showErrorToast(error.response.data)
         })
+    }
+
+    async function EnviarEmail() {
+        setIsLoadingResent(true)
+        await api.post(`/RecuperarSenha?email=${params.email}`)
+
+        .then((response) => {
+            startTimer()
+            AppToast.showSucessToast(response.data)
+        }).catch(error => {
+            AppToast.showErrorToast(error.response.data)
+        })
+        setIsLoadingResent(false)
     }
 
     return (
@@ -49,7 +87,12 @@ export default function EmailVerify({ navigation }) {
             isDisabled={codeValue.length < 4}
              isLoading={isLoading} textButton={t(AppLocalizations.confirm).toUpperCase()} onTap={() => { ValidarCodigo()}}/>
             <Spacing height={30}/>
-            <LinkButton text={t(AppLocalizations.resentCode)} color={AppColors.secondaryV1} />
+            {isLoadingResent ?
+            <ActivityIndicator/> : !timeStarted ?
+            <LinkButton text={t(AppLocalizations.resentCode)} color={AppColors.secondaryV1} onTap={() => {
+                EnviarEmail()
+            }} /> : <Spacing/>}
+            {timeStarted ? <TextMedium>Tente novamente em {timer.time} segundos</TextMedium>: null}
         </AuthContainer>
     );
 }

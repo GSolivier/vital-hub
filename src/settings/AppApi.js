@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { AppStorage, AppStorageKeys } from './AppStorage';
+import { AppToast } from '../components/AppToast';
 
 const apiPort = '4466';
 
@@ -37,6 +38,25 @@ const api = axios.create({
   baseURL: BASE_URL_LOCAL,
   timeout: 10000
 });
+
+export function handleApiErrors(error) {
+  console.log('====================================');
+  console.log(error);
+  console.log('====================================');
+  if (error.request) {
+      AppToast.showErrorToast(
+          error.request.response,
+      );
+  } else if (error.response) {
+      AppToast.showErrorToast(
+          error.response.data.message,
+      );
+  } else {
+      AppToast.showErrorToast(
+          "Ocorreu um erro desconhecido",
+      );
+  }
+}
 
 api.interceptors.request.use(async (config) => {
   const token = await AppStorage.read(AppStorageKeys.token)

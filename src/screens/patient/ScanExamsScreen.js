@@ -71,7 +71,7 @@ export default function ScanExamsScreen({ navigation }) {
 
     const takePicture = async () => {
         if (cameraRef) {
-            const data = await cameraRef.current.takePictureAsync({quality: 1})
+            const data = await cameraRef.current.takePictureAsync({quality:1})
             setImage(data.uri);
         }
     }
