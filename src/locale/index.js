@@ -33,7 +33,7 @@ export const setLanguageToI18n = () => {
   const iHaveThisLanguage = i18n.translations.hasOwnProperty(translateNormalize)
   iHaveThisLanguage
     ? i18n.locale = translateNormalize
-    : i18n.defaultLocale = 'en_US'
+    : i18n.defaultLocale = 'pt_BR'
 }
 
 setLanguageToI18n()

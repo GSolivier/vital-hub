@@ -24,9 +24,6 @@ import { useUser } from '../../contexts/UserContext'
 
 export default function Login({ navigation }) {
 
-
-
-
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
 

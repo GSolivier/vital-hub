@@ -6,7 +6,7 @@ import { CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell } from 'react-
 import { Spacing } from './Container'
 import AppLocalizations from '../settings/AppLocalizations'
 import SvgIcon, { Icon } from '../assets/icons/Icons'
-import { Pressable, View } from 'react-native'
+import { Pressable, TouchableOpacity, View } from 'react-native'
 import t from '../locale'
 import MaskInput from 'react-native-mask-input'
 
@@ -49,7 +49,7 @@ const IconBox = styled.View`
 export default function AppInput({
     label,
     hint,
-    Icon,
+    SuffixIcon,
     textColor = AppColors.primaryV1,
     borderColor,
     isObscure = false,
@@ -77,9 +77,12 @@ export default function AppInput({
     const handleInputChangeMasked = (masked, unmasked) => {
         onChangeText === null ? null : onChangeText(masked, unmasked);
     }
-
+    const [newIsObscure, setNewIsObscure] = useState(isObscure)
 
     return (
+        
+
+
         <InputBox>
             {label ? (<TextSemiBold size={16}>{label}</TextSemiBold>) : null}
             {
@@ -88,7 +91,7 @@ export default function AppInput({
                         placeholder={hint}
                         placeholderTextColor={!isValid ? AppColors.red : isEditable ? textColor : AppColors.grayV2}
                         color={isValid ? textColor : AppColors.red}
-                        secureTextEntry={isObscure}
+                        secureTextEntry={newIsObscure}
                         multiline={isTextArea}
                         numberOfLines={isTextArea ? numberOfLines : 1}
                         isTextArea={isTextArea}
@@ -113,7 +116,7 @@ export default function AppInput({
                         placeholder={hint}
                         placeholderTextColor={!isValid ? AppColors.red : isEditable ? textColor : AppColors.grayV2}
                         color={isValid ? textColor : AppColors.red}
-                        secureTextEntry={isObscure}
+                        secureTextEntry={newIsObscure}
                         multiline={isTextArea}
                         numberOfLines={isTextArea ? 5 : 1}
                         isTextArea={isTextArea}
@@ -134,7 +137,13 @@ export default function AppInput({
                     />
             }
             <IconBox label={label}>
-                {Icon ? Icon : <Spacing />}
+                {isObscure ?
+                    <TouchableOpacity onPress={() => {setNewIsObscure(!newIsObscure)}}>
+                        <SvgIcon name={newIsObscure ? Icon.eye : Icon.eyeWithLine} color={AppColors.primary} />
+                    </TouchableOpacity> :
+                    SuffixIcon ? SuffixIcon :
+                        <Spacing />}
+
             </IconBox>
 
             {!isValid && errorMessage ? <TextSemiBold size={14} color={AppColors.red}>{errorMessage}</TextSemiBold> : null}
@@ -222,7 +231,7 @@ export function AppDatePicker({ hasLabel = true, isEditable = true, textValue, t
                     label={hasLabel ? t(AppLocalizations.dateOfBirth) : undefined}
                     textValue={textValue ? formatDate(textValue) : t(AppLocalizations.dateOfBirth)}
                     showSoftInputOnFocus={false}
-                    Icon={<SvgIcon name={Icon.calendar} color={isEditable ? AppColors.primary : AppColors.gray} />}
+                    SuffixIcon={<SvgIcon name={Icon.calendar} color={isEditable ? AppColors.primary : AppColors.gray} />}
                 />
             </View>
         </Pressable>

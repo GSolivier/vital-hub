@@ -202,7 +202,7 @@ export default function ProfileScreen({ user, navigation, navigation: {setParams
                   label={t(AppLocalizations.dateOfBirth)}
                   textValue={formatDate(date)}
                   showSoftInputOnFocus={false}
-                  Icon={
+                  SuffixIcon={
                     <SvgIcon
                       name={Icon.calendar}
                       color={isEditable ? AppColors.primary : AppColors.gray}

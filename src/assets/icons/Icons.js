@@ -116,6 +116,14 @@ export const Icon = {
     addPhoto: {
         name: 'add-photo-alternate',
         family: IconFamily.materialIcons
+    },
+    eye: {
+        name:'eye',
+        family: IconFamily.entypo
+    },
+    eyeWithLine: {
+        name:'eye-with-line',
+        family: IconFamily.entypo
     }
 };
 
