@@ -168,6 +168,9 @@ const en = {
     back: 'Back',
     logOut: 'Logout',
 
+    tryAgainResentCodeHint: "Try again in %{seconds} seconds",
+    passwordChangeSuccessfully: "Password changed successfully",
+
     examResult: "Exam Result"
   };
   

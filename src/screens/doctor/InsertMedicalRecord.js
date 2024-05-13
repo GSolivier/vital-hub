@@ -100,11 +100,11 @@ export default function InsertMedicalRecord({
                         <TextMedium size={14} textAlign={TextAlign.center}>{params.appointment.paciente.idNavigation.email}</TextMedium>
                     </Row>
                     <Spacing height={24} />
-                    <AppInput  label={t(AppLocalizations.appointDescriptionLabel)} hint={"Descreva os sintomas do paciente..."}textValue={descricao} isTextArea={true} onChangeText={(value) => { setDescricao(value) }} />
+                    <AppInput  label={t(AppLocalizations.appointDescriptionLabel)} hint={t(AppLocalizations.appointDescriptionLabel)}textValue={descricao} isTextArea={true} onChangeText={(value) => { setDescricao(value) }} />
                     <Spacing height={20} />
-                    <AppInput  label={t(AppLocalizations.patientDiagnosisLabel)} hint={"Descreva o diagnóstico do paciente..."}textValue={diagnostico} onChangeText={(value) => { setDiagnostico(value) }} />
+                    <AppInput  label={t(AppLocalizations.patientDiagnosisLabel)} hint={t(AppLocalizations.patientDiagnosisLabel)}textValue={diagnostico} onChangeText={(value) => { setDiagnostico(value) }} />
                     <Spacing height={20} />
-                    <AppInput  label={t(AppLocalizations.doctorPrescriptionLabel)} hint={"Descreva o tratamento..."}textValue={medicamento} isTextArea={true} onChangeText={(value) => { setMedicamento(value) }} />
+                    <AppInput  label={t(AppLocalizations.doctorPrescriptionLabel)} hint={t(AppLocalizations.doctorPrescriptionLabel)}textValue={medicamento} isTextArea={true} onChangeText={(value) => { setMedicamento(value) }} />
                     <Spacing height={30} />
                     {params.appointment.situacao.situacao == "agendada" ? (
                     <AppButton textButton={t(AppLocalizations.saveButton).toUpperCase()}

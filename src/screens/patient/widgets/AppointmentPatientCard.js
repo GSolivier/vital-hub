@@ -50,56 +50,60 @@ export default function AppointmentPatientCard({
         <CardContainer activeOpacity={1} onPress={isTappable ? cardTap : null}>
             <CardBox>
                 <Row justifyContent={Flex.spaceBetween} alignItems={Flex.center}>
-                        <CardImage source={imagePath ? { uri: imagePath } : AppAssets.placeholder} />
-                        <Spacing width={10} />
-                        <Column justifyContent={Flex.spaceBetween}>
-                            <Column width={'90%'}>
-                                <TitleSemiBold size={16}>Dr. {name}</TitleSemiBold>
-                                <Row justifyContent={Flex.flexStart} alignItems={Flex.center}>
-                                    <TextRegular size={14}>CRM - {crm}</TextRegular>
-                                    <Spacing width={7} />
-                                    <TextSemiBold size={14} color={AppColors.grayV6}>•</TextSemiBold>
-                                    <Spacing width={7} />
-                                    <TextSemiBold size={14} color={AppColors.grayV4}>{examType}</TextSemiBold>
-                                </Row>
-                            </Column>
-                            <Spacing height={5} />
-                            <Row width={'80%'} justifyContent={Flex.spaceBetween} alignItems={Flex.center}>
-                                <SchedulesBox actionCard={actionType}>
-                                    <SvgIcon name={Icon.clock} size={15} color={actionType == "agendada" ? AppColors.primary : AppColors.grayV1} />
-                                    <Spacing width={6} />
-                                    <TextSemiBold alignSelf={Flex.center} color={actionType == "agendada" ? AppColors.primary : AppColors.grayV1} size={14}>{schedule}</TextSemiBold>
-                                </SchedulesBox>
-                                {
-                                    actionType == "agendada" ?
-                                        (
-                                            <LinkButton
-                                                color={AppColors.red}
-                                                text={t(AppLocalizations.cancel)}
-                                                textDecoration={TextDecoration.none}
-                                                alignSelf={Flex.flexEnd}
-
-                                                onTap={actionTap}
-                                            />
-                                        )
-                                        :
-                                        actionType == "realizada" ?
-                                            (
-                                                <LinkButton
-                                                    color={AppColors.secondaryV1}
-                                                    text={t(AppLocalizations.seeMedicalRecord)}
-                                                    textDecoration={TextDecoration.none}
-                                                    alignSelf={Flex.flexEnd}
-                                                    justifySelf={Flex.flexEnd}
-                                                   
-                                                    onTap={actionTap}
-                                                />
-                                            ) :
-                                            (<Spacing />)}
-
+                    <CardImage source={imagePath ? { uri: imagePath } : AppAssets.placeholder} />
+                    <Spacing width={10} />
+                    <Column justifyContent={Flex.spaceBetween}>
+                        <Column width={'90%'}>
+                            <TitleSemiBold size={16}>Dr. {name}</TitleSemiBold>
+                            <Row justifyContent={Flex.flexStart} alignItems={Flex.center}>
+                                <TextRegular size={14}>CRM - {crm}</TextRegular>
+                                <Spacing width={7} />
+                                <TextSemiBold size={14} color={AppColors.grayV6}>•</TextSemiBold>
+                                <Spacing width={7} />
+                                <TextSemiBold size={14} color={AppColors.grayV4}>{examType}</TextSemiBold>
                             </Row>
                         </Column>
-                    </Row>
+                        <Spacing height={5} />
+                        <Row
+                            width={"85%"}
+                            justifyContent={Flex.spaceBetween}
+                            alignItems={Flex.center}
+                        >
+                            <SchedulesBox actionCard={actionType}>
+                                <SvgIcon name={Icon.clock} size={15} color={actionType == "agendada" ? AppColors.primary : AppColors.grayV1} />
+                                <Spacing width={6} />
+                                <TextSemiBold alignSelf={Flex.center} color={actionType == "agendada" ? AppColors.primary : AppColors.grayV1} size={14}>{schedule}</TextSemiBold>
+                            </SchedulesBox>
+                            {
+                                actionType == "agendada" ?
+                                    (
+                                        <LinkButton
+                                            color={AppColors.red}
+                                            text={t(AppLocalizations.cancel)}
+                                            textDecoration={TextDecoration.none}
+                                            alignSelf={Flex.flexEnd}
+
+                                            onTap={actionTap}
+                                        />
+                                    )
+                                    :
+                                    actionType == "realizada" ?
+                                        (
+                                            <LinkButton
+                                                color={AppColors.secondaryV1}
+                                                text={t(AppLocalizations.seeMedicalRecord)}
+                                                textDecoration={TextDecoration.none}
+                                                alignSelf={Flex.flexEnd}
+                                                justifySelf={Flex.flexEnd}
+                                                size={12}
+                                                onTap={actionTap}
+                                            />
+                                        ) :
+                                        (<Spacing />)}
+
+                        </Row>
+                    </Column>
+                </Row>
             </CardBox>
         </CardContainer>
     )

@@ -29,6 +29,7 @@ export default function RedefinePassword({ navigation }) {
             await api.put(`/Usuario/AlterarSenha?email=${params.email}`, {senhaNova: novaSenha})
             .then(response => {
                 AppNavigation.push(navigation, RouteKeys.loginScreen, {email: params.email}, true)
+                AppToast.showSucessToast(t(AppLocalizations.passwordChangeSuccessfully))
             })
         } else {
             AppToast.showErrorToast(t(AppLocalizations.passNotEqual))

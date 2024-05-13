@@ -39,6 +39,6 @@ export const setLanguageToI18n = () => {
 setLanguageToI18n()
 
 
-export default function t(key) {
-  return i18n.t(key)
+export default function t(key, opt = {}) {
+  return i18n.t(key, opt)
 }
