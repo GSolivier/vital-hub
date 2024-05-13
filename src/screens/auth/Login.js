@@ -27,8 +27,13 @@ export default function Login({ navigation }) {
 
 
 
-  const [email, setEmail] = useState('')
-  const [senha, setSenha] = useState('')
+  //const [email, setEmail] = useState('')
+  //const [email, setEmail] = useState('ian@email.com')
+  const [email, setEmail] = useState('filipe@email.com')
+
+
+  //const [senha, setSenha] = useState('')
+ const [senha, setSenha] = useState('senai123')
 
 
   const { params } = useRoute();
