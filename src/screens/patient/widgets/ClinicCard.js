@@ -44,7 +44,7 @@ export default function ClinicCard({selected, item, onTap}) {
             </Row>
             <Spacing height={10}/>
             <Row width={'100%'} justifyContent={Flex.spaceBetween}>
-                <TextSemiBold size={14}>{item.endereco.logradouro}</TextSemiBold>
+                <TextSemiBold size={14}>{item.endereco.logradouro}, {item.endereco.numero} - {item.endereco.cidade}</TextSemiBold>
                 {/* <DayBox>
                     <SvgIcon name={Icon.calendar} color={AppColors.primary}/>
                     <Spacing width={5} />
