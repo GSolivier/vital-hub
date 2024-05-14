@@ -126,15 +126,14 @@ export default function Login({ navigation }) {
 
             setIsLoading(false)
           } catch (e) {
-
-            AppToast.showErrorToast(e.response)
+            
             setIsLoading(false)
           }
         }} />
 
       <Spacing height={15} />
 
-      <AppButton
+      {/* <AppButton
         textButton={t(AppLocalizations.enterWithGoogle).toUpperCase()}
         isOutlined={true}
         SvgIcon={
@@ -142,11 +141,10 @@ export default function Login({ navigation }) {
             name={Icon.google}
             color={AppColors.secondaryV6}
             size={15} />
-        } />
+        } /> */}
 
-      <Spacing height={30} />
 
-      <Row alignItems={Flex.center} justifyContent={Flex.center} >
+      <Row alignItems={Flex.center} justifyContent={Flex.center} width={'90%'} >
         <TitleSemiBold
           size={14}
           color={AppColors.grayV2}>

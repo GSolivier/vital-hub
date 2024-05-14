@@ -107,7 +107,9 @@ export default function HomeScreen({ navigation, navigation: { setParams } }) {
 
     useEffect(() => {
 
-        getUserData()
+            getUserData()
+            
+    
 
     }, [date]);
 
@@ -126,13 +128,19 @@ export default function HomeScreen({ navigation, navigation: { setParams } }) {
             
 
             setDate(params.date)
+            setSelectedTab("agendada")
             setParams({ date: undefined })
         }
     }, [params])
 
     return (
         <>
-            <HomeContainer name={params.userData.name} imagePath={userData.foto}>
+            <HomeContainer 
+            name={params.userData.name} 
+            imagePath={userData.foto} 
+            onTapProfileImage={() => {
+                navigation.navigate(RouteKeys.profileScreen)
+            }}>
                 <HomeCalendar setDate={setDate} date={date} />
                 <Spacing height={20} />
                 <ButtonSelecter

@@ -53,7 +53,7 @@ export default function AppointmentPatientCard({
                     <CardImage source={imagePath ? { uri: imagePath } : AppAssets.placeholder} />
                     <Spacing width={10} />
                     <Column justifyContent={Flex.spaceBetween}>
-                        <Column width={'90%'}>
+                        <Column width={'80%'}>
                             <TitleSemiBold size={16}>Dr. {name}</TitleSemiBold>
                             <Row justifyContent={Flex.flexStart} alignItems={Flex.center}>
                                 <TextRegular size={14}>CRM - {crm}</TextRegular>

@@ -30,7 +30,7 @@ export const ProfileImage = styled.Image`
 `
 
 
-export default function HomeHeader({ imagePath, name, onTapNotification }) {
+export default function HomeHeader({ imagePath, name, onTapNotification, onTapProfileImage }) {
 
     return (
 
@@ -42,14 +42,19 @@ export default function HomeHeader({ imagePath, name, onTapNotification }) {
             justifyContent={Flex.spaceBetween} 
             width={'100%'}>
                 <Row alignItems={Flex.center}>
-                    <ProfileImage source={imagePath ? {uri : imagePath} : AppAssets.placeholder} />
+                <TouchableOpacity onPress={onTapProfileImage}>
+                    <ProfileImage 
+                    source={imagePath ? {uri : imagePath} : AppAssets.placeholder} 
+
+                    />
+                    </TouchableOpacity>
                     <Spacing width={10} />
                     <Column width={'70%'}>
                         <TextMedium size={14}>{t(AppLocalizations.welcome)}</TextMedium>
                         <TitleSemiBold size={16} color={AppColors.white}>{name}</TitleSemiBold>
                     </Column>
                 </Row>
-                <TouchableOpacity onPress={onTapNotification}><SvgIcon name={Icon.notifications} color={AppColors.white}/></TouchableOpacity>
+                {/* <TouchableOpacity onPress={onTapNotification}><SvgIcon name={Icon.notifications} color={AppColors.white}/></TouchableOpacity> */}
 
             </Row>
 

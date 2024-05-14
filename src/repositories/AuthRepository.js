@@ -46,8 +46,13 @@ async function tokenDecode() {
 
 
 export async function login(email, senha, navigation, updateUserData) {
-    try {
-        const response = await api.post(LoginPath, { email: email, senha: senha });
+
+        const response = await api.post(LoginPath, { email: email, senha: senha })
+        .catch(error => {
+            handleApiErrors(error);
+        })
+
+
         const data = response.data;
         await AppStorage.write(AppStorageKeys.token, data.token);
 
@@ -63,12 +68,10 @@ export async function login(email, senha, navigation, updateUserData) {
 
         AppNavigation.push(navigation, RouteKeys.tabNavigation, {
             userData: completeUserData
-        });
+        } , true);
 
         AppToast.showSucessToast(t(AppLocalizations.loginSucessfuly));
-    } catch (error) {
-        handleApiErrors(error);
-    }
+
 }
 
 export async function Logout(navigation) {

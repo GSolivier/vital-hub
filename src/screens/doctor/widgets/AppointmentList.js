@@ -37,7 +37,7 @@ export default function AppointmentList({ DATA, tapAction, cardTapAction }) {
         }
         keyExtractor={item => item.id}
         ItemSeparatorComponent={<Spacing height={10} />}
-        contentContainerStyle={{ paddingVertical: 5, paddingHorizontal: 5 }}
+        contentContainerStyle={{ paddingVertical: 10, paddingHorizontal: 5 }}
         showsVerticalScrollIndicator={false}
       />
     </List>
