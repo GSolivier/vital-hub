@@ -23,7 +23,7 @@ export default function ConfirmAppointmentDialog({ visible, onClose, navigation,
       prioridadeTipo: appointment.prioridadeTipo,
       dataConsulta: appointment.dataConsulta
     }).then(response => {
-      AppNavigation.pop(navigation, 1)
+      AppNavigation.popWithData(navigation, RouteKeys.homeScreen, {date : appointment.dataConsulta })
       AppToast.showSucessToast(t(AppLocalizations.appointmenteRegisteredLabel))
       onClose()
     }).catch(error => {

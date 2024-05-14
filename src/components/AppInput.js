@@ -43,7 +43,7 @@ const InputBox = styled.View`
 const IconBox = styled.View`
     position: absolute;
     right: 5%;
-    top: ${({ label }) => label ? '55%' : '35%'};
+    top: ${({ label, errorMessage, isValid }) => label ? '55%' : !isValid && errorMessage ? '23%' : '35%'};
 `
 
 export default function AppInput({
@@ -136,7 +136,7 @@ export default function AppInput({
                         {...rest}
                     />
             }
-            <IconBox label={label}>
+            <IconBox isValid={isValid} errorMessage={errorMessage} label={label}>
                 {isObscure ?
                     <TouchableOpacity onPress={() => {setNewIsObscure(!newIsObscure)}}>
                         <SvgIcon name={newIsObscure ? Icon.eye : Icon.eyeWithLine} color={AppColors.primary} />

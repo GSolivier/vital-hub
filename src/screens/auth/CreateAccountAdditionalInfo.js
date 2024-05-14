@@ -148,7 +148,7 @@ export default function CreateAccountAdditionalInfo({ navigation }) {
             <HeaderImage source={image ? { uri: image } : AppAssets.placeholder} />
             <CameraIconBox
                 onPress={() => {
-                    AppNavigation.push(navigation, RouteKeys.createAccountTakePicScreen)
+                    AppNavigation.push(navigation, RouteKeys.appCameraScreen, {screenToPop: RouteKeys.createAccountAdditionalInfo})
                 }}
             >
                 <SvgIcon name={Icon.cameraPlus} color={AppColors.white} />

@@ -78,14 +78,16 @@ export default function HomeScreen({ navigation, navigation: { setParams } }) {
 
     const handleInsertMedicalRecord = (appointment) => {
 
-        {appointment.situacao == "agendada" ? (
-            setSelectedAppointment(appointment),
-            setSeeMedicalRecordIsVisible(true)
-        ):(
-            setSelectedAppointment(appointment),
-            AppNavigation.push(navigation, RouteKeys.insertMedicalRecordScreen, { appointment: appointment })
-          )}
-        
+        {
+            appointment.situacao == "agendada" ? (
+                setSelectedAppointment(appointment),
+                setSeeMedicalRecordIsVisible(true)
+            ) : (
+                setSelectedAppointment(appointment),
+                AppNavigation.push(navigation, RouteKeys.insertMedicalRecordScreen, { appointment: appointment })
+            )
+        }
+
     }
 
     async function getAppointmentList() {
@@ -114,19 +116,24 @@ export default function HomeScreen({ navigation, navigation: { setParams } }) {
     }, [rawList, selectedTab]);
 
     useEffect(() => {
-        console.log('====================================');
-        console.log(userData);
-        console.log('====================================');
+
+
+
         if (params.reload) {
             getUserData()
             setSelectedTab("realizada")
+        } else if (params.date) {
+            
+
+            setDate(params.date)
+            setParams({ date: undefined })
         }
-    } , [params])
+    }, [params])
 
     return (
         <>
             <HomeContainer name={params.userData.name} imagePath={userData.foto}>
-                <HomeCalendar setDate={setDate} />
+                <HomeCalendar setDate={setDate} date={date} />
                 <Spacing height={20} />
                 <ButtonSelecter
                     selected={selectedTab}
@@ -149,9 +156,9 @@ export default function HomeScreen({ navigation, navigation: { setParams } }) {
                         ) : (
                             <AppointmentList
                                 DATA={filteredList}
-                                tapAction={selectedTab == "agendada" ? handleCancelAppointment : handleInsertMedicalRecord} 
+                                tapAction={selectedTab == "agendada" ? handleCancelAppointment : handleInsertMedicalRecord}
                                 cardTapAction={selectedTab == "agendada" ? handleInsertMedicalRecord : null}
-                                
+
                             />
                         )
                 }
@@ -168,11 +175,11 @@ export default function HomeScreen({ navigation, navigation: { setParams } }) {
                             visible={cancelModalIsVisible}
                             onClose={async (reload) => {
                                 setCancelModalIsVisible(false)
-                                if(reload){
+                                if (reload) {
                                     await getUserData()
                                     setSelectedTab("cancelada")
                                 }
-                                }}
+                            }}
                             appointment={appointment} />
 
                         <SeeMedicalRecordDialog

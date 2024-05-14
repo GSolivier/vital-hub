@@ -124,6 +124,10 @@ export const Icon = {
     eyeWithLine: {
         name:'eye-with-line',
         family: IconFamily.entypo
+    },
+    rotateCamera: {
+        name: 'camera-rotate',
+        family: IconFamily.fontAwesome6
     }
 };
 

@@ -33,7 +33,7 @@ const currentDate = new Date();
 const startingDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
 
 //define a data final como sendo o último dia do mês
-const endingDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+const endingDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 12, 0);
 
 const styles = StyleSheet.create({
     iconsStyle: {
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     }
 })
 
-export default function HomeCalendar({ setDate }) {
+export default function HomeCalendar({ setDate, date }) {
     return (
         <StyledCalendarStrip
             // animação e seleção de cada data
@@ -85,13 +85,13 @@ export default function HomeCalendar({ setDate }) {
             daySelectionAnimation={styles.selectedAnimationStyle}
             onDateSelected={(date) => { 
                  setDate(date.toDate()) }}
-
+            
             // seta esquerda e direita para avançar e voltar(aqui como display none)
             iconLeftStyle={styles.iconsStyle}
             iconRightStyle={styles.iconsStyle}
 
             // deixa uma marcação default - data atual
-            selectedDate={currentDate}
+            selectedDate={date}
             // dia que começamos a visualizar a barra
             startingDate={moment()}
 

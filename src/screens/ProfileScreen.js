@@ -174,7 +174,7 @@ export default function ProfileScreen({ user, navigation, navigation: {setParams
       <HeaderImage source={{ uri: image ? image : params.userData.foto }} />
       <CameraIconBox
         onPress={() => {
-          AppNavigation.push(navigation, RouteKeys.changeProfileImage);
+          AppNavigation.push(navigation, RouteKeys.appCameraScreen, {screenToPop: RouteKeys.profileScreen});
         }}
       >
         <SvgIcon name={Icon.cameraPlus} color={AppColors.white} />

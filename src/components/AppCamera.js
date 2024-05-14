@@ -11,8 +11,9 @@ import * as MediaLibrary from 'expo-media-library'
 import * as ImagePicker from 'expo-image-picker'
 import { AppToast } from "../components/AppToast"
 import AppLocalizations from "../settings/AppLocalizations"
+import { useRoute } from "@react-navigation/native"
 
-const AppCamera = styled(Camera)`
+const AppCameraView = styled(Camera)`
     flex: 1;
     width: 100%;
 
@@ -64,24 +65,33 @@ const LastPhoto = styled.Image`
 `
 
 
-export default function ChangeProfileImage({ navigation , getMediaLibrary = true}) {
+export default function AppCamera({ navigation }) {
     const cameraRef = useRef(null)
+    const [facing, setFacing] = useState(CameraType.back);
     const [image, setImage] = useState(null);
     const [hasCameraPermission, setHasCameraPermission] = useState(null);
     const [latestPhoto, setLatestPhoto] = useState(null) //salva a ultima foto na galeria
     const [galeryImage, setGaleryImage] = useState([])
+    const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
+
+    const { params } = useRoute()
 
     useEffect(() => {
+        if (params.screenToPop == RouteKeys.medicalRecordScreen) {
+            navigation.setOptions({ headerShown: true});
+        } else {
+            navigation.setOptions({ headerShown: false});
+        }
+
         (async () => {
             const cameraStatus = await Camera.requestCameraPermissionsAsync();
-            await MediaLibrary.requestPermissionsAsync();
 
             setHasCameraPermission(cameraStatus.status === 'granted');
         })();
 
-        if (getMediaLibrary) {
+     
             GetLastPhoto();
-        }
+    
     }, []);
 
     async function SelectImageGallery() {
@@ -121,16 +131,15 @@ export default function ChangeProfileImage({ navigation , getMediaLibrary = true
         <Container paddingTop={0} paddingRight={0} paddingLeft={0} paddingBottom={0} alignItems={Flex.flexStart}>
 
             {image == null ? (
-                <AppCamera
+                <AppCameraView
                     ratio='16:9'
                     ref={cameraRef}
-                    type={CameraType.back}
-                    
+                    type={facing}
                 >
                     <CameraBox>
 
                         <ButtonBox>
-                           {galeryImage && galeryImage.map ((assets) => ( <TouchableOpacity onPress= {() => (SelectImageGallery())}><LastPhoto
+                           {galeryImage && galeryImage.map ((assets) => ( <TouchableOpacity key={Math.random()} onPress= {() => (SelectImageGallery())}><LastPhoto
                                 source ={{uri: assets.uri}}
                                
                             /></TouchableOpacity>))}
@@ -138,32 +147,35 @@ export default function ChangeProfileImage({ navigation , getMediaLibrary = true
                             <ButtonCamera activeOpacity={0.5} onPress={() => takePicture()}>
                                 <SvgIcon name={Icon.camera} color={AppColors.primary} size={30} />
                             </ButtonCamera>
-                        <Spacing/>
-                        <Spacing/>
+
+                            <ButtonCamera activeOpacity={0.5} onPress={() => setFacing(facing == CameraType.front ? CameraType.back : CameraType.front)}>
+                                <SvgIcon name={Icon.rotateCamera} color={AppColors.primary} size={30} />
+                            </ButtonCamera>
+                      
                         </ButtonBox>
 
                     </CameraBox>
 
-                </AppCamera>
+                </AppCameraView>
             ) :
                 (
                     <>
                         <ImageBox>
                             <RenderedImage source={{ uri: image }} resizeMode="cover" >
 
-                                <ButtonBox isWhite={true}>
-                                    <TouchableOpacity activeOpacity={0.5} onPress={() => setImage(null)}>
-                                        <SvgIcon name={Icon.wrong} color={AppColors.primary} size={80} />
-                                    </TouchableOpacity>
+                                <ButtonBox isWhite={false}>
+                                    <ButtonCamera activeOpacity={0.5} onPress={() => setImage(null)}>
+                                        <SvgIcon name={Icon.wrong} color={AppColors.primary} size={35} />
+                                    </ButtonCamera>
 
-                                    <TouchableOpacity
+                                    <ButtonCamera
                                     getMediaLibrary = {true}
                                     onPress={() => {
-                                        AppNavigation.popWithData(navigation, RouteKeys.profileScreen, {image: image})
+                                        AppNavigation.popWithData(navigation, params.screenToPop, {image: image})
                                     }}
                                     activeOpacity={0.5}>
-                                        <SvgIcon name={Icon.check} color={AppColors.primary} size={80} />
-                                    </TouchableOpacity>
+                                        <SvgIcon name={Icon.check} color={AppColors.primary} size={35} />
+                                    </ButtonCamera>
                                 </ButtonBox>
 
                             </RenderedImage>

@@ -24,15 +24,12 @@ export const RouteKeys = {
   selectDateScreen: "SelectDateScreen",
   seeAppointmentLocalScreen: "seeAppointmentLocalScreen",
   medicalRecordScreen: "medicalRecordScreen",
-  scanExamsScreen: "ScanExamsScreen",
-  changeProfileImage: "ChangeProfileImage",
-  createAccountTakePicScreen: "createAccountTakePicScreen"
+  appCameraScreen: "AppCameraScreen",
 };
 
 
 export const AppNavigation = {
   push: push,
-
   pop: pop, 
   popWithData: popWithData,
   popToTop: popToTop

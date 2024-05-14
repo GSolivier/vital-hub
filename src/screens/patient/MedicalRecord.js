@@ -41,6 +41,7 @@ export default function MedicalRecord({ navigation, navigation: { setParams } })
     const [imageModalIsVisible, setImageModalIsVisible] = useState(false)
     const [descricaoExame, setDescricaoExame] = useState('')
     const [ocrText, setOcrText] = useState()
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
         console.log(params.appointment.exames);
@@ -73,6 +74,7 @@ export default function MedicalRecord({ navigation, navigation: { setParams } })
     }
 
     async function InserirExame() {
+        setIsLoading(true)
         const formData = new FormData();
 
         formData.append("ConsultaId", params.appointment.id)
@@ -90,8 +92,10 @@ export default function MedicalRecord({ navigation, navigation: { setParams } })
             console.log(response.data);
             setOcrText(ocrText => ocrText + response.data.descricao + "\n");
             setPhotoList(currentPhotoList => currentPhotoList.slice(1));
+            setIsLoading(false)
         }).catch(e => {
             console.log(e.request)
+            setIsLoading(false)
             
         })
 
@@ -131,7 +135,7 @@ export default function MedicalRecord({ navigation, navigation: { setParams } })
                         label={t(AppLocalizations.medicalExams)}
                         photoList={photoList}
                         openImage={handleOpenImage}
-                        onTap={() => AppNavigation.push(navigation, RouteKeys.scanExamsScreen)}/>
+                        onTap={() => AppNavigation.push(navigation, RouteKeys.appCameraScreen, {screenToPop: RouteKeys.medicalRecordScreen})}/>
                     <Spacing height={10} />
                     <Row>
                         <ButtonContainer>
@@ -139,7 +143,10 @@ export default function MedicalRecord({ navigation, navigation: { setParams } })
                                 textButton={t(AppLocalizations.send)}
                                 isDisabled={photoList.length == 0}
                                 mainColor={AppColors.primary}
-                                onTap={()=> {InserirExame()}}
+                                onTap={()=> {
+                                    InserirExame()
+                                    }}
+                                    isLoading={isLoading}
                             />
                         </ButtonContainer>
                         <ButtonContainer>

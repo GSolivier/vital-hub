@@ -13,15 +13,13 @@ import SelectDoctor from '../../screens/patient/SelectDoctor';
 import SelectDate from '../../screens/patient/SelectDate';
 import SeeAppointmentLocalScreen from '../../screens/patient/SeeAppointmentLocalScreen';
 import MedicalRecord from '../../screens/patient/MedicalRecord';
-import ScanExamsScreen from '../../screens/patient/ScanExamsScreen';
 import { Flex } from '../AppEnums';
 import { FontFamily } from '../AppFonts';
 import TabNavigation from './TabNavigation';
 import CreateAccountAdditionalInfo from '../../screens/auth/CreateAccountAdditionalInfo';
-import ChangeProfileImage from '../../screens/ChangeProfileImage';
-import CreateAccountTakePic from '../../screens/auth/CreateAccountTakePic';
 import t from '../../locale';
 import AppLocalizations from '../AppLocalizations';
+import AppCamera from '../../components/AppCamera';
 
 const Stack = createNativeStackNavigator();
 
@@ -43,22 +41,6 @@ export default function AppRoutes() {
                 <Stack.Screen
                     name={RouteKeys.medicalRecordScreen}
                     component={MedicalRecord} />
-
-                <Stack.Screen
-                    options={{
-                        headerShown: true,
-                        title: t(AppLocalizations.scanExamLabel).toUpperCase(),
-                        headerTitleAlign: Flex.center,
-
-                        headerTitleStyle: {
-                            fontFamily: FontFamily.montSerratBold,
-                            fontSize: 16
-                        },
-                        animation: "fade"
-                    }}
-                    name={RouteKeys.scanExamsScreen}
-                    component={ScanExamsScreen} />
-
 
                 <Stack.Screen
                     name={RouteKeys.selectDateScreen}
@@ -87,7 +69,7 @@ export default function AppRoutes() {
                 <Stack.Screen
                     name={RouteKeys.createAccount}
                     component={CreateAccount} />
-                
+
                 <Stack.Screen
                     name={RouteKeys.createAccountAdditionalInfo}
                     component={CreateAccountAdditionalInfo}
@@ -96,13 +78,21 @@ export default function AppRoutes() {
                 <Stack.Screen
                     name={RouteKeys.insertMedicalRecordScreen}
                     component={InsertMedicalRecord} />
-                <Stack.Screen
-                    name={RouteKeys.createAccountTakePicScreen}
-                    component={CreateAccountTakePic} />
 
                 <Stack.Screen
-                    name={RouteKeys.changeProfileImage}
-                    component={ChangeProfileImage} />
+                    options={{
+                        headerShown: true,
+                        title: t(AppLocalizations.scanExamLabel).toUpperCase(),
+                        headerTitleAlign: Flex.center,
+
+                        headerTitleStyle: {
+                            fontFamily: FontFamily.montSerratBold,
+                            fontSize: 16
+                        },
+                        animation: "fade"
+                    }}
+                    name={RouteKeys.appCameraScreen}
+                    component={AppCamera} />
 
             </Stack.Navigator>
         </NavigationContainer>
