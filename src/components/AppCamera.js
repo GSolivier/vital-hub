@@ -13,6 +13,7 @@ import { AppToast } from "../components/AppToast"
 import AppLocalizations from "../settings/AppLocalizations"
 import { useRoute } from "@react-navigation/native"
 import { FontFamily } from "../settings/AppFonts"
+import t from "../locale"
 
 const AppCameraView = styled(Camera)`
     flex: 1;
@@ -93,7 +94,8 @@ export default function AppCamera({ navigation }) {
         }
 
         (async () => {
-            const cameraStatus = await Camera.requestCameraPermissionsAsync();
+            const cameraStatus = await Camera.requestCameraPermissionsAsync()
+            await requestPermission()
 
             setHasCameraPermission(cameraStatus.status === 'granted');
         })();
@@ -117,6 +119,10 @@ export default function AppCamera({ navigation }) {
     }
 
     async function GetLastPhoto() {
+
+        if (permissionResponse && permissionResponse.status !== 'granted') {
+            await requestPermission();
+        }
         const { assets } = await MediaLibrary.getAssetsAsync({ sortBy: [[MediaLibrary.SortBy.creationTime, false]], first: 1 })
         setGaleryImage(assets)
 
