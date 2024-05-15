@@ -172,4 +172,14 @@ export default AppLocalizations = {
     passwordChangeSuccessfully: "passwordChangeSuccessfully",
 
     examResult: "examResult",
+
+    noClinicFound: "noClinicFound",
+    noDoctorFound: "noDoctorFound",
+    appointmentNotCarriedOut: "appointmentNotCarriedOut",
+    emailOrPasswordIncorrect: "emailOrPasswordIncorrect",
+
+    
+    unknownError: "unknownError",
+    newProfilePic: "newProfilePic",
+    editProfilePic: "editProfilePic"
 }

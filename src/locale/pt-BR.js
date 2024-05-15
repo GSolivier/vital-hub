@@ -173,6 +173,15 @@ const pt = {
     passwordChangeSucessfully: "Senha alterada com sucesso",
 
     examResult: "Resultado dos Exames",
+
+    noClicicFound: "Nenhuma clinca encontrada",
+    noDoctorFound: "Nenhum médico encontrado",
+    appointmentNotCarriedOut: "A consulta ainda não foi realizada.",
+    emailOrPasswordIncorret: "Email e/ou senha incorretos",
+
+    unknownError: "Erro desconhecido",
+    newProfilePic: "Nova foto de perfil",
+    editProfilePic: "Editar foto de perfil",
   };
   
   export default pt;

@@ -1,11 +1,13 @@
 import axios from 'axios';
 import { AppStorage, AppStorageKeys } from './AppStorage';
 import { AppToast } from '../components/AppToast';
+import t from '../locale';
+import AppLocalizations from './AppLocalizations';
 
 const apiPort = '4466';
 
 //const ip = '172.16.39.113'; /* Gui */
-const ip = '192.168.21.87'; /* Everton */
+const ip = '172.16.39.113'; /* Everton */
 
 //const ip = '192.168.0.4';
 
@@ -44,17 +46,25 @@ export function handleApiErrors(error) {
   console.log(error);
   console.log('====================================');
   if (error.request) {
+    if (error.request.response == "Email ou senha inválidos!") {
       AppToast.showErrorToast(
-          error.request.response,
+        t(AppLocalizations.emailOrPasswordIncorrect),
       );
+    } else {
+      AppToast.showErrorToast(
+        error.request.response,
+      );
+    }
   } else if (error.response) {
-      AppToast.showErrorToast(
-          error.response.data.message,
-      );
+
+    AppToast.showErrorToast(
+      error.response.data.message,
+    );
+
   } else {
-      AppToast.showErrorToast(
-          "Ocorreu um erro desconhecido",
-      );
+    AppToast.showErrorToast(
+     t(AppLocalizations.unknownError),
+    );
   }
 }
 

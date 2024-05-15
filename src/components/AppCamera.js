@@ -13,6 +13,7 @@ import { AppToast } from "../components/AppToast"
 import AppLocalizations from "../settings/AppLocalizations"
 import { useRoute } from "@react-navigation/native"
 import { FontFamily } from "../settings/AppFonts"
+import t from "../locale"
 
 const AppCameraView = styled(Camera)`
     flex: 1;
@@ -71,7 +72,7 @@ export default function AppCamera({ navigation }) {
     const [facing, setFacing] = useState(CameraType.back);
     const [image, setImage] = useState(null);
     const [hasCameraPermission, setHasCameraPermission] = useState(null);
-    const [latestPhoto, setLatestPhoto] = useState(null) //salva a ultima foto na galeria
+    const [latestPhoto, setLatestPhoto] = useState(null)
     const [galeryImage, setGaleryImage] = useState([])
     const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
 
@@ -84,17 +85,17 @@ export default function AppCamera({ navigation }) {
             });
         } else if (params.screenToPop == RouteKeys.createAccountAdditionalInfo) {
             navigation.setOptions({
-                title: "Nova foto de perfil".toUpperCase(),
+                title: t(AppLocalizations.newProfilePic).toUpperCase(),
             });
         } else if (params.screenToPop == RouteKeys.profileScreen) {
             navigation.setOptions({
-                title: "Alterar foto de perfil".toUpperCase(),
+                title: t(AppLocalizations.editProfilePic).toUpperCase(),
             });
         }
 
         (async () => {
             const cameraStatus = await Camera.requestCameraPermissionsAsync();
-
+          
             setHasCameraPermission(cameraStatus.status === 'granted');
         })();
 
@@ -117,6 +118,10 @@ export default function AppCamera({ navigation }) {
     }
 
     async function GetLastPhoto() {
+
+        if (permissionResponse && permissionResponse.status !== 'granted') {
+            await requestPermission();
+        }
         const { assets } = await MediaLibrary.getAssetsAsync({ sortBy: [[MediaLibrary.SortBy.creationTime, false]], first: 1 })
         setGaleryImage(assets)
 

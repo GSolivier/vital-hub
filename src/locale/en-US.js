@@ -171,7 +171,16 @@ const en = {
     tryAgainResentCodeHint: "Try again in %{seconds} seconds",
     passwordChangeSuccessfully: "Password changed successfully",
 
-    examResult: "Exam Result"
+    examResult: "Exam Result",
+
+    noClinicFound: "No clinic found",
+    noDoctorFound: "No doctor found",
+    appointmentNotCarriedOut: "The appointment has not been carried out.",
+    emailOrPasswordIncorrect: "Email and/or password incorrect",
+
+    unknownError: "Unknown error",
+    newProfilePic: "New profile picture",
+    editProfilePic: "Edit profile picture"
   };
   
   export default en;
