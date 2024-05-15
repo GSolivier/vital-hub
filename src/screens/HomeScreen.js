@@ -78,13 +78,20 @@ export default function HomeScreen({ navigation, navigation: { setParams } }) {
 
     const handleInsertMedicalRecord = (appointment) => {
 
-        {appointment.situacao == "agendada" ? (
+        console.log(appointment.dataConsulta);
+        
+        const appointmentDate = new Date(appointment.dataConsulta);
+
+        if (appointmentDate <= new Date() ) {
+            {appointment.situacao == "agendada" ? (
             setSelectedAppointment(appointment),
             setSeeMedicalRecordIsVisible(true)
         ):(
             setSelectedAppointment(appointment),
             AppNavigation.push(navigation, RouteKeys.insertMedicalRecordScreen, { appointment: appointment })
           )}
+        }
+        
         
     }
 
@@ -104,7 +111,7 @@ export default function HomeScreen({ navigation, navigation: { setParams } }) {
     }
 
     useEffect(() => {
-
+        
         getUserData()
 
     }, [date]);
