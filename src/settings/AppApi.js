@@ -4,8 +4,8 @@ import { AppToast } from '../components/AppToast';
 
 const apiPort = '4466';
 
-const ip = '172.16.39.113';
-//const ip = '192.168.19.137';
+//const ip = '172.16.39.113'; /* Gui */
+const ip = '192.168.21.87'; /* Everton */
 
 //const ip = '192.168.0.4';
 
