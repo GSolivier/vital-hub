@@ -53,7 +53,7 @@ export default function EmailVerify({ navigation }) {
         console.log(codeValue);
 
         await api.post(`/RecuperarSenha/ValidarCodigoRecuperacaoSenha?email=${params.email}&codigo=${codeValue}`)
-        .then( ()=> {
+        .then(()=> {
             AppNavigation.push(navigation,RouteKeys.redefinePassword, {email: params.email}, true);
         }).catch(error => {
             AppToast.showErrorToast(error.response.data)
@@ -92,7 +92,7 @@ export default function EmailVerify({ navigation }) {
             <LinkButton text={t(AppLocalizations.resentCode)} color={AppColors.secondaryV1} onTap={() => {
                 EnviarEmail()
             }} /> : <Spacing/>}
-            {timeStarted ? <TextMedium>Tente novamente em {timer.time} segundos</TextMedium>: null}
+            {timeStarted ? <TextMedium>{t(AppLocalizations.tryAgainResentCodeHint, {seconds: timer.time})}</TextMedium>: null}
         </AuthContainer>
     );
 }

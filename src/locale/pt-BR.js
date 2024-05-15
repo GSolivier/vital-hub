@@ -153,7 +153,6 @@ const pt = {
     accountCreated: "Conta criada com sucesso",
     medicalRecordRegistered: "Prontuário cadastrado com sucesso",
 
-
     unknownError: "Ocorreu um erro desconhecido",
     selectValidDate: "Por favor, selecione uma data válida.",
     passNotEqual: "As senhas não são iguais",
@@ -169,6 +168,9 @@ const pt = {
     city: 'Cidade',
     back: 'Voltar',
     logOut: 'Sair',
+
+    tryAgainResentCodeHint: "Tente novamente em %{seconds} segundos",
+    passwordChangeSucessfully: "Senha alterada com sucesso",
 
     examResult: "Resultado dos Exames",
   };

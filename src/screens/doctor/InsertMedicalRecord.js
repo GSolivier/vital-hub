@@ -205,13 +205,60 @@ export default function InsertMedicalRecord({
             />
           )}
 
-          <Spacing height={25} />
-          <LinkButton
-            text={t(AppLocalizations.cancel)}
-            onTap={() => AppNavigation.pop(navigation)}
-          />
-        </Container>
-      </ScrollView>
-    </>
-  );
+                        <TextMedium size={14} textAlign={TextAlign.center}>{moment(moment()).diff(params.appointment.paciente.dataNascimento, 'years')} {t(AppLocalizations.yearsOld)}</TextMedium>
+                        <TextMedium size={14} textAlign={TextAlign.center}>{params.appointment.paciente.idNavigation.email}</TextMedium>
+                    </Row>
+                    <Spacing height={24} />
+                    <AppInput  label={t(AppLocalizations.appointDescriptionLabel)} hint={t(AppLocalizations.appointDescriptionLabel)}textValue={descricao} isTextArea={true} onChangeText={(value) => { setDescricao(value) }} />
+                    <Spacing height={20} />
+                    <AppInput  label={t(AppLocalizations.patientDiagnosisLabel)} hint={t(AppLocalizations.patientDiagnosisLabel)}textValue={diagnostico} onChangeText={(value) => { setDiagnostico(value) }} />
+                    <Spacing height={20} />
+                    <AppInput  label={t(AppLocalizations.doctorPrescriptionLabel)} hint={t(AppLocalizations.doctorPrescriptionLabel)}textValue={medicamento} isTextArea={true} onChangeText={(value) => { setMedicamento(value) }} />
+                    <Spacing height={30} />
+                    {params.appointment.situacao.situacao == "agendada" ? (
+                    <AppButton textButton={t(AppLocalizations.saveButton).toUpperCase()}
+                    isLoading={isLoading} 
+                    onTap={async () => {
+
+                        try {
+                          setIsLoading(true)
+              
+                          await DoctorRepository.PutAppointmentMedicalRecord(params.appointment.id, descricao, diagnostico, medicamento)
+                       
+                          await EditStatus()
+                          setIsLoading(false)
+
+                          AppToast.showSucessToast('Prontuário cadastrado!')
+                          
+                        } catch (e) {
+                          console.log(e.request);
+                          setIsLoading(false)
+                        }
+                      }} 
+                    /> ) : (<AppButton textButton={t(AppLocalizations.editButton).toUpperCase()} 
+                    isLoading={isLoading} 
+                    onTap={async () => {
+
+                        try {
+                          setIsLoading(true)
+              
+                          await DoctorRepository.PutAppointmentMedicalRecord(params.appointment.id, descricao, diagnostico, medicamento)  
+                          AppNavigation.popWithData(navigation, RouteKeys.homeScreen, {reload:true})
+                          setIsLoading(false)
+                          
+
+                        } catch (e) {
+                          console.log(e.request);
+                          setIsLoading(false)
+                        }
+                      }} 
+                    />
+                    )}
+                    
+                    <Spacing height={25} />
+                    <LinkButton text={t(AppLocalizations.cancel)} onTap={() => AppNavigation.pop(navigation)} />
+                </Container>
+            </ScrollView>
+        </>
+    )
 }

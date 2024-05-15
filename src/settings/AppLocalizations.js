@@ -168,5 +168,8 @@ export default AppLocalizations = {
     back: 'back',
     logOut: 'logOut',
 
+    tryAgainResentCodeHint: "tryAgainResentCodeHint",
+    passwordChangeSuccessfully: "passwordChangeSuccessfully",
+
     examResult: "examResult",
 }
