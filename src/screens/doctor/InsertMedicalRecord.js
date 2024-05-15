@@ -45,8 +45,11 @@ export default function InsertMedicalRecord({
 }) {
   const { params } = useRoute();
   const [isLoading, setIsLoading] = useState(false);
+  
 
-  const [descricao, setDescricao] = useState(params.appointment.descricao);
+  const [descricao, setDescricao] = useState(
+    params.appointment.descricao
+  );
   const [diagnostico, setDiagnostico] = useState(
     params.appointment.diagnostico
   );
@@ -56,9 +59,8 @@ export default function InsertMedicalRecord({
   const [ocrText, setOcrText] = useState();
 
   useEffect(() => {
-    console.log(params.appointment.descricao);
-    console.log(params.appointment.diagnostico);
-    console.log(params.appointment.medicamento);
+    console.log(params.appointment);
+    
 
     let descricaoCompleta = "";
 
@@ -89,6 +91,14 @@ export default function InsertMedicalRecord({
       .catch((error) => console.log(error.request.data));
   }
 
+  const hasEdit = () => {
+    return(
+      descricao !== params.appointment.descricao ||
+      diagnostico !== params.appointment.diagnostico ||
+      medicamento !== params.appointment.receita.medicamento
+    )
+  };
+
   return (
     <>
       <HeaderImage
@@ -114,14 +124,15 @@ export default function InsertMedicalRecord({
           </Row>
           <Spacing height={24} />
           <AppInput
-             label={t(AppLocalizations.appointDescriptionLabel)}
-             hint={"Descreva os sintomas do paciente..."}
-             textValue={descricao}
-             isTextArea={true}
-             onChangeText={(value) => {
-                 setDescricao(value);
-             }}
-             value={descricao}
+            label={t(AppLocalizations.appointDescriptionLabel)}
+            hint={"Descreva os sintomas do paciente..."}
+            textValue={descricao}
+            isTextArea={true}
+            onChangeText={(value) => {
+              setDescricao(value);
+              
+            }}
+            value={descricao}
           />
           <Spacing height={20} />
           <AppInput
@@ -130,6 +141,7 @@ export default function InsertMedicalRecord({
             textValue={diagnostico}
             onChangeText={(value) => {
               setDiagnostico(value);
+             
             }}
             value={diagnostico}
           />
@@ -141,124 +153,101 @@ export default function InsertMedicalRecord({
             isTextArea={true}
             onChangeText={(value) => {
               setMedicamento(value);
+             
             }}
             value={medicamento}
           />
           <Spacing height={30} />
           {params.appointment.situacao.situacao == "agendada" ? (
             <AppButton
-            textButton={t(AppLocalizations.saveButton).toUpperCase()}
-            isLoading={isLoading}
-            onTap={async () => {
+              textButton={t(AppLocalizations.saveButton).toUpperCase()}
+              isLoading={isLoading}
+              isDisabled={ 
+                !descricao || !diagnostico || !medicamento || 
+                !hasEdit()
+              } 
+              onTap={async () => {
                 try {
-                    setIsLoading(true);
-        
-                    // Verificar se algum input foi alterado
-                    if (descricao === params.appointment.descricao || diagnostico === params.appointment.diagnostico || medicamento === params.appointment.receita.medicamento) {
-                        setIsLoading(false);
-                        AppToast.showErrorToast('Por favor, preencha todos os campos.');
-                        return;
-                    }
-        
-                    await DoctorRepository.PutAppointmentMedicalRecord(params.appointment.id, descricao, diagnostico, medicamento);
-        
-                    await EditStatus();
+                  setIsLoading(true);
+
+                  
+                  if (
+                    descricao === params.appointment.descricao ||
+                    diagnostico === params.appointment.diagnostico ||
+                    medicamento === params.appointment.receita.medicamento
+                  ) {
                     setIsLoading(false);
-        
-                    AppToast.showSucessToast('Prontuário cadastrado!');
+                    AppToast.showErrorToast(
+                      "Por favor, preencha todos os campos."
+                    );
+                    return;
+                  }
+
+                  await DoctorRepository.PutAppointmentMedicalRecord(
+                    params.appointment.id,
+                    descricao,
+                    diagnostico,
+                    medicamento
+                  );
+
+                  await EditStatus();
+                  setIsLoading(false);
+
+                  AppToast.showSucessToast("Prontuário cadastrado!");
                 } catch (e) {
-                    console.log(e.request);
-                    setIsLoading(false);
+                  console.log(e.request);
+                  setIsLoading(false);
                 }
-            }}
-            
-            
+              }}
             />
           ) : (
             <AppButton
-            textButton={t(AppLocalizations.editButton).toUpperCase()}
-            isLoading={isLoading}
-            onTap={async () => {
+              textButton={t(AppLocalizations.editButton).toUpperCase()}
+              isLoading={isLoading}
+              isDisabled={ 
+                !descricao || !diagnostico || !medicamento || 
+                !hasEdit()
+              } 
+              onTap={async () => {
                 try {
-                    setIsLoading(true);
-        
-                    if (descricao === params.appointment.descricao && diagnostico === params.appointment.diagnostico && medicamento === params.appointment.receita.medicamento) {
-                        setIsLoading(false);
-                        AppToast.showErrorToast('Por favor, faça alguma alteração antes de salvar.');
-                        return;
-                    }
-        
-                    await DoctorRepository.PutAppointmentMedicalRecord(params.appointment.id, descricao, diagnostico, medicamento);
-        
-                    AppNavigation.popWithData(navigation, RouteKeys.homeScreen, {
-                        reload: true,
-                    });
-        
-                    setIsLoading(false);
-        
-                    AppToast.showSucessToast('Prontuário atualizado!');
+                  setIsLoading(true);
+
+                  if (
+                   descricao && diagnostico && medicamento
+                  ) {
+                    
+                    await DoctorRepository.PutAppointmentMedicalRecord(
+                    params.appointment.id,
+                    descricao,
+                    diagnostico,
+                    medicamento
+                  );
+
+                  AppNavigation.popWithData(navigation, RouteKeys.homeScreen, {
+                    reload: true,
+                  });
+
+                  setIsLoading(false);
+                  AppToast.showSucessToast("Prontuário atualizado!");
+
+                  }               
+
+                  
                 } catch (e) {
-                    console.log(e.request);
-                    setIsLoading(false);
+                  console.log(e.request);
+                  setIsLoading(false);
                 }
-            }}
+              }}
             />
           )}
 
-                        <TextMedium size={14} textAlign={TextAlign.center}>{moment(moment()).diff(params.appointment.paciente.dataNascimento, 'years')} {t(AppLocalizations.yearsOld)}</TextMedium>
-                        <TextMedium size={14} textAlign={TextAlign.center}>{params.appointment.paciente.idNavigation.email}</TextMedium>
-                    </Row>
-                    <Spacing height={24} />
-                    <AppInput  label={t(AppLocalizations.appointDescriptionLabel)} hint={t(AppLocalizations.appointDescriptionLabel)}textValue={descricao} isTextArea={true} onChangeText={(value) => { setDescricao(value) }} />
-                    <Spacing height={20} />
-                    <AppInput  label={t(AppLocalizations.patientDiagnosisLabel)} hint={t(AppLocalizations.patientDiagnosisLabel)}textValue={diagnostico} onChangeText={(value) => { setDiagnostico(value) }} />
-                    <Spacing height={20} />
-                    <AppInput  label={t(AppLocalizations.doctorPrescriptionLabel)} hint={t(AppLocalizations.doctorPrescriptionLabel)}textValue={medicamento} isTextArea={true} onChangeText={(value) => { setMedicamento(value) }} />
-                    <Spacing height={30} />
-                    {params.appointment.situacao.situacao == "agendada" ? (
-                    <AppButton textButton={t(AppLocalizations.saveButton).toUpperCase()}
-                    isLoading={isLoading} 
-                    onTap={async () => {
-
-                        try {
-                          setIsLoading(true)
-              
-                          await DoctorRepository.PutAppointmentMedicalRecord(params.appointment.id, descricao, diagnostico, medicamento)
-                       
-                          await EditStatus()
-                          setIsLoading(false)
-
-                          AppToast.showSucessToast('Prontuário cadastrado!')
-                          
-                        } catch (e) {
-                          console.log(e.request);
-                          setIsLoading(false)
-                        }
-                      }} 
-                    /> ) : (<AppButton textButton={t(AppLocalizations.editButton).toUpperCase()} 
-                    isLoading={isLoading} 
-                    onTap={async () => {
-
-                        try {
-                          setIsLoading(true)
-              
-                          await DoctorRepository.PutAppointmentMedicalRecord(params.appointment.id, descricao, diagnostico, medicamento)  
-                          AppNavigation.popWithData(navigation, RouteKeys.homeScreen, {reload:true})
-                          setIsLoading(false)
-                          
-
-                        } catch (e) {
-                          console.log(e.request);
-                          setIsLoading(false)
-                        }
-                      }} 
-                    />
-                    )}
-                    
-                    <Spacing height={25} />
-                    <LinkButton text={t(AppLocalizations.cancel)} onTap={() => AppNavigation.pop(navigation)} />
-                </Container>
-            </ScrollView>
-        </>
-    )
+          <Spacing height={25} />
+          <LinkButton
+            text={t(AppLocalizations.cancel)}
+            onTap={() => AppNavigation.pop(navigation)}
+          />
+        </Container>
+      </ScrollView>
+    </>
+  );
 }
