@@ -3,6 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 import DoctorCard from './DoctorCard'
 import { Spacing } from '../../../components/Container'
+import AppEmptyListWarning from '../../../components/AppEmptyListWarning'
 
 export const ListDoctor = styled.View`
     flex: 0.9;
@@ -26,6 +27,7 @@ export default function DoctorList({DATA, tapAction, selected}) {
         )}
         keyExtractor={item => item.id}
         ItemSeparatorComponent={<Spacing height={12}/>}
+        ListEmptyComponent={<AppEmptyListWarning description={'Nenhum médico encontrado'}/>}
         contentContainerStyle={{ paddingVertical: 5, paddingHorizontal: 5 }}
         showsVerticalScrollIndicator={false}
       />

@@ -128,6 +128,10 @@ export const Icon = {
     rotateCamera: {
         name: 'camera-rotate',
         family: IconFamily.fontAwesome6
+    },
+    warning: {
+        name: 'exclamationcircle',
+        family: IconFamily.antDesign
     }
 };
 

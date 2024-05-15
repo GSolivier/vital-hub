@@ -82,9 +82,7 @@ export default function AppRoutes() {
                 <Stack.Screen
                     options={{
                         headerShown: true,
-                        title: t(AppLocalizations.scanExamLabel).toUpperCase(),
                         headerTitleAlign: Flex.center,
-
                         headerTitleStyle: {
                             fontFamily: FontFamily.montSerratBold,
                             fontSize: 16

@@ -12,6 +12,7 @@ import * as ImagePicker from 'expo-image-picker'
 import { AppToast } from "../components/AppToast"
 import AppLocalizations from "../settings/AppLocalizations"
 import { useRoute } from "@react-navigation/native"
+import { FontFamily } from "../settings/AppFonts"
 
 const AppCameraView = styled(Camera)`
     flex: 1;
@@ -28,7 +29,7 @@ justify-content: flex-end;
 const ButtonBox = styled.View`
     flex: 0.15;
     width: 100%;
-    background-color: ${({isWhite = false}) => !isWhite ? AppColors.transparent : AppColors.white};
+    background-color: ${({ isWhite = false }) => !isWhite ? AppColors.transparent : AppColors.white};
     align-items: center;
     justify-content: space-around;
     flex-direction: row;
@@ -78,9 +79,17 @@ export default function AppCamera({ navigation }) {
 
     useEffect(() => {
         if (params.screenToPop == RouteKeys.medicalRecordScreen) {
-            navigation.setOptions({ headerShown: true});
-        } else {
-            navigation.setOptions({ headerShown: false});
+            navigation.setOptions({
+                title: t(AppLocalizations.scanExamLabel).toUpperCase(),
+            });
+        } else if (params.screenToPop == RouteKeys.createAccountAdditionalInfo) {
+            navigation.setOptions({
+                title: "Nova foto de perfil".toUpperCase(),
+            });
+        } else if (params.screenToPop == RouteKeys.profileScreen) {
+            navigation.setOptions({
+                title: "Alterar foto de perfil".toUpperCase(),
+            });
         }
 
         (async () => {
@@ -89,9 +98,9 @@ export default function AppCamera({ navigation }) {
             setHasCameraPermission(cameraStatus.status === 'granted');
         })();
 
-     
-            GetLastPhoto();
-    
+
+        GetLastPhoto();
+
     }, []);
 
     async function SelectImageGallery() {
@@ -100,15 +109,15 @@ export default function AppCamera({ navigation }) {
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             quality: 1
         });
-    
+
         if (!result.canceled) {
-            setImage( result.assets[0].uri)
+            setImage(result.assets[0].uri)
         }
-        
+
     }
 
     async function GetLastPhoto() {
-        const {assets} = await MediaLibrary.getAssetsAsync({sortBy : [[MediaLibrary.SortBy.creationTime, false]], first: 1 })
+        const { assets } = await MediaLibrary.getAssetsAsync({ sortBy: [[MediaLibrary.SortBy.creationTime, false]], first: 1 })
         setGaleryImage(assets)
 
     }
@@ -139,9 +148,9 @@ export default function AppCamera({ navigation }) {
                     <CameraBox>
 
                         <ButtonBox>
-                           {galeryImage && galeryImage.map ((assets) => ( <TouchableOpacity key={Math.random()} onPress= {() => (SelectImageGallery())}><LastPhoto
-                                source ={{uri: assets.uri}}
-                               
+                            {galeryImage && galeryImage.map((assets) => (<TouchableOpacity key={Math.random()} onPress={() => (SelectImageGallery())}><LastPhoto
+                                source={{ uri: assets.uri }}
+
                             /></TouchableOpacity>))}
 
                             <ButtonCamera activeOpacity={0.5} onPress={() => takePicture()}>
@@ -151,7 +160,7 @@ export default function AppCamera({ navigation }) {
                             <ButtonCamera activeOpacity={0.5} onPress={() => setFacing(facing == CameraType.front ? CameraType.back : CameraType.front)}>
                                 <SvgIcon name={Icon.rotateCamera} color={AppColors.primary} size={30} />
                             </ButtonCamera>
-                      
+
                         </ButtonBox>
 
                     </CameraBox>
@@ -169,11 +178,11 @@ export default function AppCamera({ navigation }) {
                                     </ButtonCamera>
 
                                     <ButtonCamera
-                                    getMediaLibrary = {true}
-                                    onPress={() => {
-                                        AppNavigation.popWithData(navigation, params.screenToPop, {image: image})
-                                    }}
-                                    activeOpacity={0.5}>
+                                        getMediaLibrary={true}
+                                        onPress={() => {
+                                            AppNavigation.popWithData(navigation, params.screenToPop, { image: image })
+                                        }}
+                                        activeOpacity={0.5}>
                                         <SvgIcon name={Icon.check} color={AppColors.primary} size={35} />
                                     </ButtonCamera>
                                 </ButtonBox>

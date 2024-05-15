@@ -90,7 +90,10 @@ export default function SelectDateCalendar({setDate}) {
                     textMonthFontSize: 20,
                     textDayHeaderFontSize: 12
                 }}
-                hideArrows={true}
+                disableAllTouchEventsForDisabledDays
+                disableAllTouchEventsForInactiveDays
+                minDate={new Date().toString()}
+                hideArrows={false}
                 hideExtraDays={false}
                 enableSwipeMonths={true}
                 showSixWeeks={true}

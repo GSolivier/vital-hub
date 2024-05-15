@@ -45,7 +45,7 @@ export default function HomeScreen({ navigation, navigation: { setParams } }) {
     const [appointment, setSelectedAppointment] = useState({})
     const [seeMedicalRecordModalIsVisible, setSeeMedicalRecordIsVisible] = useState(false)
     const [listIsLoading, setListIsLoading] = useState(false)
-    const [date, setDate] = useState()
+    const [date, setDate] = useState(new Date())
 
     const { params } = useRoute()
     const { userData } = useUser();
@@ -109,8 +109,6 @@ export default function HomeScreen({ navigation, navigation: { setParams } }) {
 
             getUserData()
             
-    
-
     }, [date]);
 
     useEffect(() => {
