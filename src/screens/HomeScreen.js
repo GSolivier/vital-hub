@@ -77,8 +77,6 @@ export default function HomeScreen({ navigation, navigation: { setParams } }) {
     }
 
     const handleInsertMedicalRecord = (appointment) => {
-
-        console.log(appointment.dataConsulta);
         
         const appointmentDate = new Date(appointment.dataConsulta);
 
